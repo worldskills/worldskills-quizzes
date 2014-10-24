@@ -1,0 +1,36 @@
+
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+
+        <div class="page-header">
+            <h1>Technical Descriptions Quiz</h1>
+        </div>
+
+        <form name="form" novalidate focus-error ng-submit="save()">
+
+            <div class="panel panel-default" ng-repeat="question in attempt.questions">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Question {{question.sort}}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="lead">{{question.text.text}}</p>
+                    <p>Please select one answer:</p>
+                    <div class="form-group">
+                        <div class="radio" ng-repeat="answer in question.answers">
+                            <label>
+                                <input type="radio" id="identify_judges" name="question1" ng-model="model.identify_judges">
+                                {{alphabet[answer.sort-1]}}: {{answer.text.text}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Submit and finish Quiz
+                <spinner ng-show="loading" class="ng-hide"></spinner>
+            </button>
+        </form>
+
+    </div>
+</div>

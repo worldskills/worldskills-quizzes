@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>WorldSkills Quiz</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<!-- build:css styles/main.css -->
+<link rel="stylesheet" href="bower_components/worldskills-bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="bower_components/select2/select2.css">
+<link rel="stylesheet" href="bower_components/select2/select2-bootstrap.css">
+<link rel="stylesheet" href="styles/app.css">
+<!-- endbuild -->
+
+</head>
+<body ng-app="quizzesApp" ng-controller="ContainerCtrl">
+    <!--[if lt IE 9]>
+        <script src="bower_components/es5-shim/es5-shim.js"></script>
+        <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <div class="navbar navbar-worldskills navbar-static-top">
+        <div class="cube-container">
+            <div class="cube-right-bottom-blue">&nbsp;</div>
+        </div>
+        <div class="container" ng-cloak>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" ng-show="auth.loggedIn">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Quiz</a>
+            </div>
+            <div ng-show="auth.loggedIn">
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                {{auth.user.first_name || ""}} {{auth.user.last_name || ""}} <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="" ng-click="logout()">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" ng-cloak ng-show="auth.loggedIn">
+        <div ui-view></div>
+
+        <hr class="hr-extended">
+
+        <footer>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>© 2014 WorldSkills</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <!-- build:js scripts/vendor.js -->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+
+    <script src="bower_components/select2/select2.min.js"></script>
+    <script src="bower_components/angular-ui-select2/src/select2.js"></script>
+
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.min.js"></script>
+    <script src="bower_components/angular-worldskills-utils/src/angular-worldskills-utils.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/app.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/directives/form.js"></script>
+    <script src="scripts/directives/spinner.js"></script>
+    <script src="scripts/directives/alerts.js"></script>
+    <script src="scripts/controllers/container.js"></script>
+    <script src="scripts/controllers/quizzes.js"></script>
+    <script src="scripts/services/alert.js"></script>
+    <script src="scripts/services/Quiz.js"></script>
+    <script src="scripts/services/QuizAttempt.js"></script>
+    <!-- endbuild -->
+</body>
+</html>
