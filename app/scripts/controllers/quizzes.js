@@ -13,9 +13,10 @@
         
     });
 
-    angular.module('quizzesApp').controller('QuizAttemptCtrl', function($scope, $stateParams, QuizAttempt) {
+    angular.module('quizzesApp').controller('QuizAttemptCtrl', function($scope, $stateParams, Quiz, QuizAttempt) {
         $scope.id = $stateParams.id;
         $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        $scope.quiz = Quiz.get({id: $scope.id});
         $scope.attempt = QuizAttempt.save({id: $scope.id});
         console.log($scope.attempt)
     });
