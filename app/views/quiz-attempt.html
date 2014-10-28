@@ -10,6 +10,8 @@
 
         <div ng-show="attempt.state === 'finished' && attempt.score === attempt.questions_count" class="alert alert-success" role="alert">Congratulations, all answers were correct. You have passed this quiz, please move on.</div>
 
+        <div ng-show="attempt.state === 'running'"><p>Your answers are automatically saved, to finish this attempt click “Submit and finish Quiz” at the end of the page. All answers must be correct to pass.</p><br/></div>
+
         <div class="panel" ng-class="{'panel-default': question.correct === null, 'panel-danger': question.correct === false, 'panel-success': question.correct === true}" ng-repeat="question in attempt.questions">
             <div class="panel-heading">
                 <h3 class="panel-title">Question {{question.sort}}</h3>
