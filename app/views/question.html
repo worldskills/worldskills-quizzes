@@ -1,0 +1,26 @@
+<ol class="breadcrumb">
+    <li><a ui-sref="quizzes.list">Quizzes</a></li>
+    <li><a ui-sref="quizzes.quiz.form({id: question.quiz.id})">{{question.quiz.title.text}}</a></li>
+    <li><a ui-sref="quizzes.quiz.questions({id: question.quiz.id})">Questions</a></li>
+    <li class="active">Question</li>
+</ol>
+
+<alerts></alerts>
+
+<div class="alert alert-warning" role="alert" ng-show="question.quiz.has_attempts">
+    <p>The Quiz of this Question already has attempts. Answers cannot be deleted or added.</p>
+</div>
+
+<p class="pull-right">
+    <button ng-click="deleteQuestion()" class="btn btn-danger" ng-show="!question.quiz.has_attempts">Delete Question<spinner ng-show="deleteLoading" class="ng-hide"></spinner></button>
+</p>
+
+<h1>Question</h1>
+
+<ul class="nav nav-tabs">
+    <li ui-sref-active="active"><a ui-sref="quizzes.question.form">Question</a></li>
+    <!-- <li ui-sref-active="active"><a ui-sref="quizzes.question.translations">Translations</a></li> -->
+</ul>
+
+<div id="content" ui-view>
+</div>

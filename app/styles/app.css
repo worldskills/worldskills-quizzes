@@ -1,5 +1,23 @@
+
+.nav.nav-tabs {
+    margin: 20px 0 30px 0;
+}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
 .ng-cloak, .x-ng-cloak,
 .ng-hide {
     display: none !important;
+}
+
+@media (min-width: 768px) {
+
+    .table {
+        table-layout:fixed;
+    }
+
+    .table td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }

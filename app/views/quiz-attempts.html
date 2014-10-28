@@ -1,0 +1,34 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+        <colgroup>
+            <col width="10%" />
+            <col width="60%" />
+            <col width="20%" />
+            <col width="10%" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Started</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tfoot><tr><td colspan="4"></td></tr></tfoot>
+        <tbody>
+            <tr ng-repeat="attempt in attempts">
+                <td>{{attempt.id}}</td>
+                <td>{{attempt.user.firstName}} {{attempt.user.lastName}}</td>
+                <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
+                <td><span ng-show="attempt.score !== null">{{attempt.score}} of {{attempt.questions_count}}</span></td>
+            </tr>
+            <tr ng-show="questions.length === 0">
+                <td colspan="4">No attempts found.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p ng-show="!quiz.has_attempts">
+    <a ui-sref="quizzes.question_create.form({quizId: quiz.id})" class="btn btn-success">Add Question</a>
+</p>

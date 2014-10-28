@@ -1,0 +1,43 @@
+<ol class="breadcrumb">
+    <li>Quizzes</li>
+</ol>
+
+<alerts></alerts>
+
+<p class="pull-right">
+    <a ui-sref="quiz_create.form" class="btn btn-success">Add Quiz</a>
+</p>
+
+<h1>Quizzes</h1>
+
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <colgroup>
+            <col width="10%" />
+            <col width="50%" />
+            <col width="40%" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tfoot><tr><td colspan="3"></td></tr></tfoot>
+        <tbody>
+            <tr ng-repeat="quiz in quizzes.quizzes">
+                <td><a ui-sref="quizzes.quiz.form({ id: quiz.id })">{{quiz.id}}</a></td>
+                <td><a ui-sref="quizzes.quiz.form({ id: quiz.id })" title="{{quiz.title.text}}">{{quiz.title.text}}</a></td>
+                <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
+            </tr>
+            <tr ng-show="quizzes.total_count == 0">
+                <td colspan="3">No quizzes found.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<pagination items-per-page="pagination.itemsPerPage" total-items="quizzes.total_count || pagination.currentPage * pagination.itemsPerPage" page="pagination.currentPage" on-select-page="changePage(page)" max-size="10" boundary-links="true" rotate="false"></pagination>

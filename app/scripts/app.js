@@ -37,6 +37,68 @@
                 requireLoggedIn: true
             },
             reloadOnSearch: false
+        }).state('quiz_create', {
+            url: '/quizzes/create',
+            templateUrl: 'views/quiz-create.html',
+            controller: 'QuizCreateCtrl',
+            abstract: true
+        }).state('quiz_create.form', {
+            url: '',
+            templateUrl: 'views/quiz-form.html',
+            controller: 'QuizFormCtrl',
+            data: {
+                requireLoggedIn: true
+            }
+        }).state('quizzes.quiz', {
+            url: '/{id}',
+            templateUrl: 'views/quiz.html',
+            controller: 'QuizCtrl',
+            abstract: true
+        }).state('quizzes.quiz.form', {
+            url: '',
+            templateUrl: 'views/quiz-form.html',
+            controller: 'QuizFormCtrl',
+            data: {
+                requireLoggedIn: true
+            }
+        }).state('quizzes.quiz.questions', {
+            url: '/questions',
+            templateUrl: 'views/quiz-questions.html',
+            controller: 'QuizQuestionsCtrl',
+            data: {
+                requireLoggedIn: true
+            }
+        }).state('quizzes.quiz.attempts', {
+            url: '/attempts',
+            templateUrl: 'views/quiz-attempts.html',
+            controller: 'QuizAttemptsCtrl',
+            data: {
+                requireLoggedIn: true
+            }
+        }).state('quizzes.question_create', {
+            url: '/{quizId}/questions/create',
+            templateUrl: 'views/question-create.html',
+            controller: 'QuestionCreateCtrl',
+            abstract: true
+        }).state('quizzes.question_create.form', {
+            url: '',
+            templateUrl: 'views/question-form.html',
+            controller: 'QuestionFormCtrl',
+            data: {
+                requireLoggedIn: true
+            }
+        }).state('quizzes.question', {
+            url: '/questions/{id}',
+            templateUrl: 'views/question.html',
+            controller: 'QuestionCtrl',
+            abstract: true
+        }).state('quizzes.question.form', {
+            url: '',
+            templateUrl: 'views/question-form.html',
+            controller: 'QuestionFormCtrl',
+            data: {
+                requireLoggedIn: true
+            }
         }).state('quiz', {
             url: '/quiz/{id}',
             templateUrl: 'views/quiz-attempt.html',

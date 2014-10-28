@@ -1,0 +1,20 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+        <colgroup>
+            <col width="100%" />
+        </colgroup>
+        <tfoot><tr><td colspan="1"></td></tr></tfoot>
+        <tbody>
+            <tr ng-repeat="question in questions">
+                <td><a ui-sref="quizzes.question.form({id: question.id})">{{txt(question.text.text)}}</a></td>
+            </tr>
+            <tr ng-show="questions.length === 0">
+                <td colspan="1">No Questions found.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p ng-show="!quiz.has_attempts">
+    <a ui-sref="quizzes.question_create.form({quizId: quiz.id})" class="btn btn-success">Add Question</a>
+</p>
