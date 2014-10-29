@@ -18,3 +18,10 @@ Run local development server for [http://localhost:11300](http://localhost:11300
 ```
 grunt server
 ```
+
+To test the build process, run 
+
+```
+grunt build --env=dev
+php -S localhost:11300 -t dist/
+```

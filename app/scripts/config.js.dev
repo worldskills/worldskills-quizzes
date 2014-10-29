@@ -4,7 +4,7 @@
     var quizzesApp = angular.module('quizzesApp'); 
     quizzesApp.constant('WORLDSKILLS_API_QUIZZES', 'http://localhost:8080/quizzes');
     quizzesApp.constant('WORLDSKILLS_API_IMAGES', 'http://localhost:8080/images');
-    quizzesApp.constant('WORLDSKILLS_CLIENT_ID', '');
+    quizzesApp.constant('WORLDSKILLS_CLIENT_ID', '269f5d21');
     quizzesApp.constant('WORLDSKILLS_API_AUTH', 'http://localhost:8080/auth');
     quizzesApp.constant('WORLDSKILLS_AUTHORIZE_URL', 'http://worldskills_auth.dev/oauth/authorize');
 
