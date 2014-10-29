@@ -176,6 +176,7 @@ module.exports = function (grunt) {
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'languages/{,*/}*.json',
+            'bower_components/ckeditor/ckeditor.js'
           ]
         }, {
           expand: true,
