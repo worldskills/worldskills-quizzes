@@ -193,6 +193,13 @@ module.exports = function (grunt) {
           ]
         }, {
           expand: true,
+          cwd: '<%= yeoman.app %>/bower_components/worldskills-bootstrap/fonts',
+          dest: '<%= yeoman.dist %>/fonts',
+          src: [
+            '**'
+          ]
+        }, {
+          expand: true,
           cwd: '<%= yeoman.app %>/bower_components/ckeditor',
           dest: '<%= yeoman.dist %>/bower_components/ckeditor',
           src: [
