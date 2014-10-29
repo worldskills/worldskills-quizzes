@@ -1,15 +1,23 @@
 <div class="table-responsive">
     <table class="table table-striped">
         <colgroup>
-            <col width="100%" />
+            <col width="5%" />
+            <col width="95%" />
         </colgroup>
-        <tfoot><tr><td colspan="1"></td></tr></tfoot>
+        <thead>
+            <tr>
+                <th>Nr.</th>
+                <th>Question</th>
+            </tr>
+        </thead>
+        <tfoot><tr><td colspan="2"></td></tr></tfoot>
         <tbody>
             <tr ng-repeat="question in questions">
-                <td><a ui-sref="quizzes.question.form({id: question.id})">{{txt(question.text.text)}}</a></td>
+                <td><a ui-sref="quizzes.question.form({id: question.id})">{{question.sort}}</a></td>
+                <td><a ui-sref="quizzes.question.form({id: question.id})" ng-bind-html="txt(question.text.text)"></a></td>
             </tr>
             <tr ng-show="questions.length === 0">
-                <td colspan="1">No Questions found.</td>
+                <td colspan="2">No Questions found.</td>
             </tr>
         </tbody>
     </table>
