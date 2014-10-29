@@ -6,6 +6,6 @@
     quizzesApp.constant('WORLDSKILLS_API_IMAGES', 'http://diaz.worldskills.org:8080/images');
     quizzesApp.constant('WORLDSKILLS_CLIENT_ID', 'e7a23a88163b');
     quizzesApp.constant('WORLDSKILLS_API_AUTH', 'http://diaz.worldskills.org:8080/auth');
-    quizzesApp.constant('WORLDSKILLS_AUTHORIZE_URL', 'http://auth.diaz.worldskills.org/oauth/authorize');
+    quizzesApp.constant('WORLDSKILLS_AUTHORIZE_URL', 'https://staging-auth.worldskills.org/oauth/authorize');
 
 })();
