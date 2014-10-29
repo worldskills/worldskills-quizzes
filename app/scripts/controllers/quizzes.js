@@ -80,9 +80,9 @@
                         $state.go('quizzes.list');
                     });
                 } else {
-                    $scope.quiz.$save(function () {
-                        alert.success('The Quiz has been added successfully.');
-                        $state.go('quizzes.list');
+                    $scope.quiz.$save(function (quiz) {
+                        alert.success('The Quiz has been added successfully. Please add now questions for the Quiz.');
+                        $state.go('quizzes.quiz.questions', {id: quiz.id});
                     });
                 }
             }
