@@ -35,6 +35,7 @@ module.exports = function(config) {
             'app/bower_components/select2/select2.min.js',
             'app/bower_components/angular-ui-select2/src/select2.js',
             'app/bower_components/ng-file-upload/angular-file-upload.min.js',
+            'app/bower_components/ckeditor/ckeditor.js',
             'app/bower_components/angular-worldskills-utils/src/angular-worldskills-utils.js',
             'app/scripts/*.js',
             'app/scripts/**/*.js',
