@@ -22,7 +22,7 @@
                 <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
                 <td><span ng-show="attempt.score !== null">{{attempt.score}} of {{attempt.questions_count}}</span></td>
             </tr>
-            <tr ng-show="questions.length === 0">
+            <tr ng-show="attempts.length === 0">
                 <td colspan="4">No attempts found.</td>
             </tr>
         </tbody>
