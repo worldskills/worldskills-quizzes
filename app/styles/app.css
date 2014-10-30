@@ -9,6 +9,10 @@
     display: none !important;
 }
 
+footer {
+    padding-bottom: 70px;
+}
+
 @media (min-width: 768px) {
 
     .table {
