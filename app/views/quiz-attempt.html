@@ -45,9 +45,9 @@
             </div>
     
             <div class="col-sm-6">
-                <a class="btn btn-link pull-right" ng-show="attempt.state === 'running' && quiz.url_learning" href="{{quiz.url_learning}}">« Return to learning resources</a>
+                <a class="btn btn-link pull-right" ng-show="attempt.state === 'running' || (attempt.score < attempt.questions_count && quiz.url_learning)" href="{{quiz.url_learning}}">« Return to learning resources</a>
     
-                <a class="btn btn-success pull-right" ng-show="attempt.state === 'finished' && quiz.url_success" href="{{quiz.url_success}}">Continue »</a>
+                <a class="btn btn-success pull-right" ng-show="attempt.state === 'finished' && attempt.score === attempt.questions_count && quiz.url_success" href="{{quiz.url_success}}">Continue »</a>
             </div>
         </div>
 
