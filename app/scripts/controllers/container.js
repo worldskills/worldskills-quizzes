@@ -9,5 +9,6 @@
         $scope.$on('$stateChangeStart', function () {
             alert.clear();
         });
+        $scope.date = new Date();
     });
 })();
