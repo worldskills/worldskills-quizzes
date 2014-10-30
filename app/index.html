@@ -39,7 +39,7 @@
                                 {{auth.user.first_name || ""}} {{auth.user.last_name || ""}} <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="" ng-click="logout()">Logout</a></li>
+                                <li><a href="#" ng-click="logout()">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -56,13 +56,30 @@
 
         <footer>
             <div class="row">
-                <div class="col-md-12">
-                    <p>© 2014 WorldSkills</p>
+                <div class="col-sm-push-8 col-sm-4 col-md-push-10 col-md-2">
+                    <h5>WorldSkills</h5>
+                    <ul class="list-unstyled">
+                    <li><a href="https://www.worldskills.org/">Home</a></li>
+                    <li><a href="https://www.worldskills.org/internal/">Members Area</a></li>
+                    <li><a href="http://forums.worldskills.org/">Forums</a></li>
+                    <li><a href="http://glossary.worldskills.org/">Glossary</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-10 col-sm-8">
+                    <p>© 2014 WorldSkills International · <a href="/site/privacy/">Privacy</a> · <a href="/site/terms/">Terms</a></p>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div ng-show="auth.loggedIn">
+                        <p class="site-user">Fabian Vogler, <a href="#" ng-click="logout()">Logout</a></p>
+                    </div>
                 </div>
             </div>
         </footer>
-
     </div>
+
 
 
     <!-- build:js scripts/vendor.js -->
