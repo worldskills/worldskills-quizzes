@@ -6,9 +6,9 @@
             <h1>{{quiz.title.text}}</h1>
         </div>
 
-        <div ng-show="attempt.state === 'finished' && attempt.score < attempt.questions_count" class="alert alert-danger" role="alert">Sorry, not all answers were correct during this attempt. You got <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct. Please take the quiz again. All answers must be correct to pass.</div>
+        <div ng-show="attempt.state === 'finished' && attempt.score < attempt.questions_count" class="alert alert-danger" role="alert">Sorry, not all answers were correct during this attempt. You got <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct.<br/><a href="#" class="alert-link" ng-click="retry()">Please take the quiz again</a>. All answers must be correct to pass.</div>
 
-        <div ng-show="attempt.state === 'finished' && attempt.score === attempt.questions_count" class="alert alert-success" role="alert">Congratulations, all answers were correct. You have passed this quiz, please move on.</div>
+        <div ng-show="attempt.state === 'finished' && attempt.score === attempt.questions_count" class="alert alert-success" role="alert">Congratulations, all answers were correct. You have passed this quiz<span ng-show="quiz.url_success">, <a href="{{quiz.url_success}}" class="alert-link">please continue</a></span>.</div>
 
         <div ng-show="attempt.state === 'running'"><p>Your answers are automatically saved, to finish this attempt click “Submit and finish Quiz” at the end of the page. All answers must be correct to pass.</p><br/></div>
 
@@ -31,15 +31,25 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" ng-if="attempt.state === 'running'" ng-click="finish()">
-            Submit and finish Quiz
-            <spinner ng-show="loading" class="ng-hide"></spinner>
-        </button>
-
-        <button type="button" class="btn btn-primary" ng-if="attempt.state === 'finished'" ng-click="retry()">
-            Take Quiz again
-            <spinner ng-show="loading" class="ng-hide"></spinner>
-        </button>
+        <div class="row">
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-primary" ng-show="attempt.state === 'running'" ng-click="finish()">
+                    Submit and finish Quiz
+                    <spinner ng-show="loading" class="ng-hide"></spinner>
+                </button>
+    
+                <button type="button" class="btn btn-primary" ng-show="attempt.state === 'finished'" ng-click="retry()">
+                    Take Quiz again
+                    <spinner ng-show="loading" class="ng-hide"></spinner>
+                </button>
+            </div>
+    
+            <div class="col-sm-6">
+                <a class="btn btn-link pull-right" ng-show="attempt.state === 'running' && quiz.url_learning" href="{{quiz.url_learning}}">« Return to learning resources</a>
+    
+                <a class="btn btn-success pull-right" ng-show="attempt.state === 'finished' && quiz.url_success" href="{{quiz.url_success}}">Continue »</a>
+            </div>
+        </div>
 
     </div>
 </div>
