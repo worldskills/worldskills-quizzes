@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-md-2 col-sm-4">
                     <div ng-show="auth.loggedIn">
-                        <p class="site-user">Fabian Vogler, <a href="#" ng-click="logout()">Logout</a></p>
+                        <p class="site-user">{{auth.user.first_name || ""}} {{auth.user.last_name || ""}}, <a href="#" ng-click="logout()">Logout</a></p>
                     </div>
                 </div>
             </div>
