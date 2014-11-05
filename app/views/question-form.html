@@ -2,7 +2,7 @@
     <div class="form-group" ng-class="{'has-error': submitted && form.question.$invalid}">
         <label for="question" class="col-sm-3 control-label">Question <span class="required">*</span></label>
         <div class="col-sm-5">
-            <textarea class="form-control" id="question" rows="6" required ng-model="question.text.text" ck-editor></textarea>
+            <textarea class="form-control" id="question" name="question" rows="6" required ng-model="question.text.text" ck-editor></textarea>
         </div>
         <div class="col-sm-4">
             <span class="help-block" ng-show="submitted && form.question.$error.required">Please enter a question!</span>
@@ -11,7 +11,7 @@
 
     <div ng-repeat="answer in answers">
         <hr/>
-        <div class="form-group" ng-class="{'has-error': submitted && form.question.$invalid}" ng-show="!answer.removed">
+        <div class="form-group" ng-show="!answer.removed">
             <label for="question" class="col-sm-3 control-label">Answer</label>
             <div class="col-sm-5">
                 <textarea class="form-control" id="question" rows="2" ng-model="answer.text.text" ck-editor></textarea>
