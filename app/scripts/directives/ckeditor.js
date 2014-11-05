@@ -13,6 +13,7 @@
                 var options = {
                     enterMode : CKEDITOR.ENTER_BR,
                     height: 80,
+                    contentsCss: 'ckeditor/contents.css',
                     removePlugins : 'stylescombo,elementspath,resize,liststyle,tabletools,contextmenu',
                     toolbarGroups : [
                         {name : 'basicstyles', groups : [ 'basicstyles', 'cleanup' ]},

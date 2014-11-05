@@ -174,6 +174,7 @@ module.exports = function (grunt) {
             '.htaccess',
             '*.html',
             'views/{,*/}*.html',
+            'ckeditor/contents.css',
             'images/{,*/}*.{webp}',
             'languages/{,*/}*.json'
           ]
