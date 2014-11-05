@@ -58,7 +58,7 @@
                                     answer.$delete();
                                 }
                             } else {
-                                if (!answer.removed) {
+                                if (!answer.removed && answer.text.text !== '') {
                                     answer.$save();
                                 }
                             }
@@ -77,7 +77,7 @@
                         $scope.question.$save(function (question) {
                             $scope.answers.forEach(function (answer) {
                                 answer.questionId = question.id;
-                                if (!answer.removed) {
+                                if (!answer.removed && answer.text.text !== '') {
                                     answer.$save();
                                 }
                             });
