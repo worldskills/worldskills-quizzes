@@ -34,6 +34,16 @@
 
     angular.module('quizzesApp').controller('QuestionFormCtrl', function($scope, $stateParams, $state, $http, WorldSkills, alert, Question, Answer) {
         $scope.save = function() {
+            var hasCorrect = false;
+            $scope.answers.forEach(function (a) {
+                if (a.correct === true) {
+                    hasCorrect = true;
+                }
+            });
+            if (hasCorrect === false) {
+                window.alert('Please mark at least one answer as correct!');
+                return;
+            }
             $scope.submitted = true;
             if ($scope.form.$valid) {
                 $scope.loading = true;
