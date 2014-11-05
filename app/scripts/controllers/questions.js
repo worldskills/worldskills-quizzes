@@ -23,13 +23,19 @@
         };
     });
 
-    angular.module('quizzesApp').controller('QuestionCreateCtrl', function($scope, $stateParams, Question, Quiz) {
+    angular.module('quizzesApp').controller('QuestionCreateCtrl', function($scope, $stateParams, Question, Quiz, Answer) {
         $scope.question = new Question();
         $scope.question.text = {text: '', lang_code: 'en'};
         $scope.question.quiz = Quiz.get({id: $stateParams.quizId}, function (quiz) {
             $scope.question.quizId = quiz.id;
         });
         $scope.answers = [];
+        for (var i = 0; i < 4; i++) {
+            var answer = new Answer();
+            answer.text = {text: '', lang_code: 'en'};
+            answer.correct = false;
+            $scope.answers.push(answer);
+        }
     });
 
     angular.module('quizzesApp').controller('QuestionFormCtrl', function($scope, $stateParams, $state, $http, WorldSkills, alert, Question, Answer) {
