@@ -22,7 +22,7 @@
     <div class="form-group">
         <label for="skill" class="col-sm-3 control-label">Skill</label>
         <div class="col-sm-4">
-            <select ui-select2="{allowClear: true}" class="form-control" id="skill" name="skill" required ng-model="quiz.skill.id">
+            <select ui-select2="{allowClear: true}" class="form-control" id="skill" name="skill" ng-model="quiz.skill.id">
                 <option></option>
                 <option ng-repeat="skill in skills" value="{{skill.id}}">{{skill.name.text}}</option>
             </select>
