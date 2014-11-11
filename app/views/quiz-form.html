@@ -20,6 +20,15 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="skill" class="col-sm-3 control-label">Skill</label>
+        <div class="col-sm-4">
+            <select ui-select2="{allowClear: true}" class="form-control" id="skill" name="skill" required ng-model="quiz.skill.id">
+                <option></option>
+                <option ng-repeat="skill in skills" value="{{skill.id}}">{{skill.name.text}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="max_questions" class="col-sm-3 control-label">Max Questions</label>
         <div class="col-sm-3">
             <input type="text" class="form-control" id="max_questions" ng-model="quiz.max_questions">

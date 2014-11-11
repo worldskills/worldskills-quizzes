@@ -57,7 +57,7 @@
         $scope.quiz.title = {text: '', lang_code: 'en'};
     });
 
-    angular.module('quizzesApp').controller('QuizFormCtrl', function($scope, $stateParams, $state, $http, alert, Quiz, WORLDSKILLS_API_AUTH) {
+    angular.module('quizzesApp').controller('QuizFormCtrl', function($scope, $stateParams, $state, $http, alert, Quiz, WORLDSKILLS_API_AUTH, WORLDSKILLS_API_EVENTS, WORLDSKILLS_COMPETITION_ID) {
         var ROLE_EDIT_QUIZZES = 'EditQuizzes';
         var ROLE_APP_QUIZZES = '1300';
         $http({
@@ -70,6 +70,17 @@
             }
         }).success(function(data, status, headers, config) {
             $scope.entities = data.ws_entity_list;
+        });
+        $http({
+            method: 'GET',
+            url: WORLDSKILLS_API_EVENTS + '/' + WORLDSKILLS_COMPETITION_ID + '/skills',
+            params: {
+                limit: 100,
+                l: 'en',
+                sort: 'name_asc'
+            }
+        }).success(function(data, status, headers, config) {
+            $scope.skills = data.skills;
         });
         $scope.save = function() {
             $scope.submitted = true;
