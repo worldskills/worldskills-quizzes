@@ -3,14 +3,16 @@
     <div class="col-sm-offset-2 col-sm-8">
 
         <div class="page-header">
-            <h1>{{quiz.title.text}}</h1>
+            <h1 ng-show="quiz.title">{{quiz.title.text}}</h1>
+            <h1 ng-show="quizError.status == 404">Quiz not found</h1>
         </div>
 
         <div ng-show="attempt.state === 'finished' && attempt.score < attempt.questions_count" class="alert alert-danger" role="alert">Sorry, not all answers were correct during this attempt. You got <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct. <a href="#" class="alert-link" ng-click="retry()">Please take the quiz again</a>. All answers must be correct to pass.</div>
-
         <div ng-show="attempt.state === 'finished' && attempt.score === attempt.questions_count" class="alert alert-success" role="alert">Congratulations, all answers were correct. You have passed this quiz<span ng-show="quiz.url_success">, <a href="{{quiz.url_success}}" class="alert-link">please continue</a></span>.</div>
-
         <div ng-show="attempt.state === 'running'"><p>Your answers are automatically saved, to finish this attempt click “Submit and finish Quiz” at the end of the page. All answers must be correct to pass.</p><br/></div>
+
+        <div ng-show="quizError.status == 404" class="alert alert-danger" role="alert">The requested Quiz could not be found.</div>
+        <div ng-show="!quizError && attemptError.status == 401" class="alert alert-danger" role="alert">You do not have the required permissions to attempt this Quiz.</div>
 
         <div class="panel" ng-class="{'panel-default': question.correct === null, 'panel-danger': question.correct === false, 'panel-success': question.correct === true}" ng-repeat="question in attempt.questions">
             <div class="panel-heading">
@@ -47,7 +49,7 @@
             </div>
     
             <div class="col-sm-6">
-                <a class="btn btn-link pull-right" ng-show="quiz.url_learning && (attempt.state === 'running' || attempt.score < attempt.questions_count)" href="{{quiz.url_learning}}">« Return to learning resources</a>
+                <a class="btn btn-link pull-right" ng-show="quiz.url_learning && (attempt.state === 'running' || attempt.score < attempt.questions_count || attemptError.status == 401)" href="{{quiz.url_learning}}">« Return to learning resources</a>
     
                 <a class="btn btn-success pull-right" ng-show="attempt.state === 'finished' && attempt.score === attempt.questions_count && quiz.url_success" href="{{quiz.url_success}}">Continue »</a>
             </div>

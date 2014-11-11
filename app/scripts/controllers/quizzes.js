@@ -113,7 +113,10 @@
     angular.module('quizzesApp').controller('QuizAttemptCtrl', function($scope, $stateParams, $window, Quiz, QuizAttempt, Attempt, AttemptQuestionAnswer) {
         $scope.id = $stateParams.id;
         $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-        $scope.quiz = Quiz.get({id: $scope.id});
+        $scope.quiz = Quiz.get({id: $scope.id}, function () {
+        }, function (response) {
+            $scope.quizError = response;
+        });
         $scope.questions = {};
         $scope.attempt = QuizAttempt.save({id: $scope.id}, function () {
             $scope.attempt.questions.forEach(function (question) {
@@ -121,6 +124,8 @@
                     $scope.questions[question.id] = question.answer.id;
                 }
             });
+        }, function (response) {
+            $scope.attemptError = response;
         });
         $scope.selectAnswer = function () {
             var questionId = this.question.id;
