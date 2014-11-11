@@ -64,6 +64,7 @@
             method: 'GET',
             url: WORLDSKILLS_API_AUTH + '/ws_entities',
             params: {
+                limit: 100,
                 role: ROLE_EDIT_QUIZZES,
                 roleApp: ROLE_APP_QUIZZES
             }
