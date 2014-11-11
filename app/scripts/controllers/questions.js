@@ -34,6 +34,7 @@
             var answer = new Answer();
             answer.text = {text: '', lang_code: 'en'};
             answer.correct = false;
+            answer.sort = i + 1;
             $scope.answers.push(answer);
         }
     });
@@ -111,6 +112,7 @@
             var answer = new Answer();
             answer.text = {text: '', lang_code: 'en'};
             answer.correct = false;
+            answer.sort = $scope.answers.length + 1;
             $scope.answers.push(answer);
         };
     });
