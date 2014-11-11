@@ -136,6 +136,7 @@
         $scope.finish = function () {
             Attempt.finish({id: $scope.attempt.id}, function (attempt) {
                 $scope.attempt = attempt;
+                $('body,html').animate({scrollTop: 0});
             });
         };
         $scope.retry = function () {
