@@ -90,11 +90,21 @@
                     $scope.quiz.$update(function () {
                         alert.success('The Quiz has been saved successfully.');
                         $state.go('quizzes.list');
+                    }, function (response) {
+                        window.alert('Error saving Quiz.');
+                        $scope.loading = false;
                     });
                 } else {
                     $scope.quiz.$save(function (quiz) {
                         alert.success('The Quiz has been added successfully. Please add now questions for the Quiz.');
                         $state.go('quizzes.quiz.questions', {id: quiz.id});
+                    }, function (response) {
+                        if (response.status == 401) {
+                            window.alert('Insufficient permissions for to adding a new Quiz to this entity.');
+                        } else {
+                            window.alert('Error while adding Quiz.');
+                        }
+                        $scope.loading = false;
                     });
                 }
             }
