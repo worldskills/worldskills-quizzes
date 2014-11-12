@@ -33,7 +33,7 @@
         for (var i = 0; i < 4; i++) {
             var answer = new Answer();
             answer.text = {text: '', lang_code: 'en'};
-            answer.correct = false;
+            answer.correct = (i == 0 ? true : false);
             answer.sort = i + 1;
             $scope.answers.push(answer);
         }
