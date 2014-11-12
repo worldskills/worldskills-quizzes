@@ -2,7 +2,7 @@
     <div class="form-group" ng-class="{'has-error': submitted && form.question.$invalid}">
         <label for="question" class="col-sm-3 control-label">Question <span class="required">*</span></label>
         <div class="col-sm-5">
-            <textarea class="form-control" id="question" name="question" rows="6" required ng-model="question.text.text" ck-editor></textarea>
+            <textarea class="form-control" id="question" name="question" rows="6" required ng-model="question.text.text" tabindex="1" ck-editor></textarea>
         </div>
         <div class="col-sm-4">
             <span class="help-block" ng-show="submitted && form.question.$error.required">Please enter a question!</span>
@@ -14,7 +14,7 @@
         <div class="form-group" ng-show="!answer.removed">
             <label for="question" class="col-sm-3 control-label">Answer</label>
             <div class="col-sm-5">
-                <textarea class="form-control" id="question" rows="2" ng-model="answer.text.text" ck-editor></textarea>
+                <textarea class="form-control" id="question" rows="2" ng-model="answer.text.text" tabindex="2" ck-editor></textarea>
                 
                 <div class="checkbox">
                     <label>
@@ -49,7 +49,7 @@
     <hr/>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
-            <button type="submit" class="btn btn-success" id="saveQuiz">Save<spinner ng-show="loading" class="ng-hide"></spinner></button>
+            <button type="submit" class="btn btn-success" id="saveQuiz" tabindex="3">Save<spinner ng-show="loading" class="ng-hide"></spinner></button>
             <a ui-sref="quizzes.quiz.questions({id: question.quiz.id})" class="btn btn-default">Cancel</a>
         </div>
     </div>
