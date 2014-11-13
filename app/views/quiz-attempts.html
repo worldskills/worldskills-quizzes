@@ -11,7 +11,7 @@
                 <th>ID</th>
                 <th>User</th>
                 <th>Started</th>
-                <th>Result</th>
+                <th>Score</th>
             </tr>
         </thead>
         <tfoot><tr><td colspan="4"></td></tr></tfoot>
@@ -20,7 +20,7 @@
                 <td>{{attempt.id}}</td>
                 <td>{{attempt.user.firstName}} {{attempt.user.lastName}}</td>
                 <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
-                <td><span ng-show="attempt.score !== null">{{attempt.score}} of {{attempt.questions_count}}</span></td>
+                <td><span ng-show="attempt.score !== null">{{attempt.score}}</span></td>
             </tr>
             <tr ng-show="attempts.length === 0">
                 <td colspan="4">No attempts found.</td>
