@@ -9,6 +9,10 @@
     display: none !important;
 }
 
+.panel img {
+    vertical-align: top;
+}
+
 footer {
     padding-bottom: 70px;
 }

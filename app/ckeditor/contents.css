@@ -25,3 +25,7 @@ pre {
     -webkit-tab-size: 2;
     tab-size: 2;
 }
+
+img {
+    vertical-align: top;
+}

@@ -8,16 +8,20 @@
             require: '?ngModel',
             link: function ($scope, elm, attr, ngModel) {
 
+                CKEDITOR.plugins.addExternal('worldskillsimages', '/ckeditor/worldskillsimages/', 'plugin.js');
+
                 var isReady = false;
                 var data = [];
                 var options = {
                     enterMode : CKEDITOR.ENTER_BR,
                     height: 80,
                     contentsCss: 'ckeditor/contents.css',
-                    removePlugins : 'stylescombo,elementspath,resize,liststyle,tabletools,contextmenu',
+                    removePlugins : 'stylescombo,elementspath,resize,liststyle,image,specialchar,horizontalrule,table,tabletools,contextmenu',
+                    extraPlugins : 'worldskillsimages',
                     toolbarGroups : [
                         {name : 'basicstyles', groups : [ 'basicstyles', 'cleanup' ]},
                         {name : 'styles'},
+                        {name : 'insert'},
                         {name : 'tools'},
                         {name : 'document', groups : [ 'mode' ]}
                     ],
