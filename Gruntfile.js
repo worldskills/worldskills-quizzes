@@ -174,9 +174,15 @@ module.exports = function (grunt) {
             '.htaccess',
             '*.html',
             'views/{,*/}*.html',
-            'ckeditor/contents.css',
             'images/{,*/}*.{webp}',
             'languages/{,*/}*.json'
+          ]
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>/ckeditor',
+          dest: '<%= yeoman.dist %>/ckeditor',
+          src: [
+            '**'
           ]
         }, {
           expand: true,
