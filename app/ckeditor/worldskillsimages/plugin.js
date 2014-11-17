@@ -24,14 +24,17 @@ CKEDITOR.plugins.add( 'worldskillsimages', {
                 WorldSkills = injector.get('WorldSkills'),
                 WORLDSKILLS_API_IMAGES = injector.get('WORLDSKILLS_API_IMAGES');
 
-            var deferred = $q.defer();
-            var image = deferred.promise;
+            var deferred,
+                image;
 
             return {
                 title: 'Upload image',
                 minWidth: 300,
                 minHeight: 100,
-                onLoad: function () {
+                onShow: function () {
+
+                    deferred = $q.defer();
+                    image = deferred.promise;
 
                     this.getContentElement('upload', 'image').getInputElement().$.addEventListener('change', function (evt) {
 
