@@ -10,7 +10,7 @@
         <div ng-show="attempt.state === 'finished' && attempt.passed === false" class="alert alert-danger" role="alert">
             Your attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct. <a href="#" class="alert-link" ng-click="retry()">Please take the quiz again</a>.
         </div>
-        <div ng-show="attempt.state === 'finished' && attempt.passed" class="alert alert-success" role="alert">
+        <div ng-show="attempt.state === 'finished' && attempt.passed === true" class="alert alert-success" role="alert">
             You have passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct<span ng-show="quiz.url_success">, <a href="{{quiz.url_success}}" class="alert-link">please continue</a></span>.
         </div>
         <div ng-show="attempt.state === 'running'">
@@ -62,7 +62,7 @@
             <div class="col-sm-6">
                 <a class="btn btn-link pull-right" ng-show="quiz.url_learning && (attempt.state === 'running' || attempt.passed === false || attemptError.status == 401)" href="{{quiz.url_learning}}">« Return to learning resources</a>
     
-                <a class="btn btn-success pull-right" ng-show="attempt.state === 'finished' && attempt.passed && quiz.url_success" href="{{quiz.url_success}}">Continue »</a>
+                <a class="btn btn-success pull-right" ng-show="attempt.state === 'finished' && attempt.passed === true && quiz.url_success" href="{{quiz.url_success}}">Continue »</a>
             </div>
         </div>
 
