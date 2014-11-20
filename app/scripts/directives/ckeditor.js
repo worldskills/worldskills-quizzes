@@ -17,6 +17,7 @@
                     height: 80,
                     contentsCss: 'ckeditor/contents.css',
                     removePlugins : 'stylescombo,elementspath,resize,liststyle,image,specialchar,horizontalrule,table,tabletools,contextmenu',
+                    removeButtons : 'Underline',
                     extraPlugins : 'worldskillsimages',
                     toolbarGroups : [
                         {name : 'basicstyles', groups : [ 'basicstyles', 'cleanup' ]},
