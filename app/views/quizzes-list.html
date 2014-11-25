@@ -26,18 +26,23 @@
                 <th>Created</th>
             </tr>
         </thead>
-        <tfoot><tr><td colspan="3"></td></tr></tfoot>
+        <tfoot>
+            <tr ng-show="!loading"><td colspan="3"></td></tr>
+        </tfoot>
         <tbody>
-            <tr ng-repeat="quiz in quizzes.quizzes">
+            <tr ng-repeat="quiz in quizzes">
                 <td><a ui-sref="quizzes.quiz.form({ id: quiz.id })">{{quiz.id}}</a></td>
                 <td><a ui-sref="quizzes.quiz.form({ id: quiz.id })" title="{{quiz.title.text}}">{{quiz.title.text}}</a></td>
                 <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
             </tr>
-            <tr ng-show="quizzes.total_count == 0">
+            <tr ng-show="!loading && quizzes.length == 0">
                 <td colspan="3">No quizzes found.</td>
+            </tr>
+            <tr ng-show="loading">
+                <td colspan="3"><ws-spinner></ws-spinner></td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<pagination items-per-page="pagination.itemsPerPage" total-items="quizzes.total_count || pagination.currentPage * pagination.itemsPerPage" page="pagination.currentPage" on-select-page="changePage(page)" max-size="10" boundary-links="true" rotate="false"></pagination>
+<pagination items-per-page="pagination.itemsPerPage" total-items="totalCount || pagination.currentPage * pagination.itemsPerPage" page="pagination.currentPage" on-select-page="changePage(page)" max-size="10" boundary-links="true" rotate="false"></pagination>

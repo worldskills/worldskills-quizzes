@@ -16,10 +16,14 @@
             $location.search('page', $scope.pagination.currentPage);
         }
         $scope.load = function (page) {
+            $scope.loading = true;
+            $scope.quizzes = [];
             var filters = angular.copy($scope.filters);
             filters.offset = $scope.pagination.itemsPerPage * (page - 1); 
             Quiz.query(filters, function (data) {
-                $scope.quizzes = data;
+                $scope.loading = false;
+                $scope.quizzes = data.quizzes;
+                $scope.totalCount = data.total_count;
                 $scope.pagination.currentPage = page;
             });
         };

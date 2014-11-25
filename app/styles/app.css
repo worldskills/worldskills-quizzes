@@ -3,6 +3,10 @@
     margin: 20px 0 30px 0;
 }
 
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
 .ng-cloak, .x-ng-cloak,
 .ng-hide {
