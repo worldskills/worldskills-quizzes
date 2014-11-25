@@ -139,18 +139,22 @@
     angular.module('quizzesApp').controller('QuizAttemptCtrl', function($scope, $stateParams, $window, Quiz, QuizAttempt, Attempt, AttemptQuestionAnswer) {
         $scope.id = $stateParams.id;
         $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        $scope.loading = true;
         $scope.quiz = Quiz.get({id: $scope.id}, function () {
         }, function (response) {
+            $scope.loading = false;
             $scope.quizError = response;
         });
         $scope.questions = {};
         $scope.attempt = QuizAttempt.save({id: $scope.id}, function () {
+            $scope.loading = false;
             $scope.attempt.questions.forEach(function (question) {
                 if (question.answer !== null) {
                     $scope.questions[question.id] = question.answer.id;
                 }
             });
         }, function (response) {
+            $scope.loading = false;
             $scope.attemptError = response;
         });
         $scope.selectAnswer = function () {

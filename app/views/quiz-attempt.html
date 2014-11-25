@@ -3,9 +3,11 @@
     <div class="col-sm-offset-2 col-sm-8">
 
         <div class="page-header">
-            <h1 ng-show="quiz.title">{{quiz.title.text}}</h1>
+            <h1 ng-show="quizError.status != 404">{{quiz.title.text || " "}}</h1>
             <h1 ng-show="quizError.status == 404">Quiz not found</h1>
         </div>
+
+        <ws-spinner ng-show="loading"></ws-spinner>
 
         <div ng-show="attempt.state === 'finished' && attempt.passed === false" class="alert alert-danger" role="alert">
             Your attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct. <a href="#" class="alert-link" ng-click="retry()">Please take the quiz again</a>.
