@@ -212,6 +212,9 @@ module.exports = function (grunt) {
           src: [
             '**'
           ]
+        }, {
+          src: '<%= yeoman.app %>/xdomain/xdomain.js.' + env,
+          dest: '<%= yeoman.dist %>/xdomain/xdomain.js'
         }]
       },
       styles: {

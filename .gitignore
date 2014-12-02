@@ -7,4 +7,5 @@
 /.tmp
 /app/bower_components/
 /app/scripts/config.js
+/app/xdomain/xdomain.js
 /coverage/
