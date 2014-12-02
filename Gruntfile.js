@@ -213,6 +213,13 @@ module.exports = function (grunt) {
             '**'
           ]
         }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>/bower_components/xdomain',
+          dest: '<%= yeoman.dist %>/bower_components/xdomain',
+          src: [
+            '**'
+          ]
+        }, {
           src: '<%= yeoman.app %>/xdomain/xdomain.js.' + env,
           dest: '<%= yeoman.dist %>/xdomain/xdomain.js'
         }]
