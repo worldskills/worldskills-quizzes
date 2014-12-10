@@ -17,6 +17,12 @@
     vertical-align: top;
 }
 
+.browserupgrade {
+    background: #FAD954;
+    padding: 0.5em 1em;
+    text-align: center;
+}
+
 footer {
     padding-bottom: 70px;
 }
