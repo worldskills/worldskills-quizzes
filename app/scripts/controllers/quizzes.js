@@ -146,9 +146,9 @@
             $scope.quizError = response;
         });
         $scope.questions = {};
-        $scope.attempt = QuizAttempt.save({id: $scope.id}, function () {
+        $scope.attempt = QuizAttempt.save({id: $scope.id}, function (attempt) {
             $scope.loading = false;
-            $scope.attempt.questions.forEach(function (question) {
+            attempt.questions.forEach(function (question) {
                 if (question.answer !== null) {
                     $scope.questions[question.id] = question.answer.id;
                 }
