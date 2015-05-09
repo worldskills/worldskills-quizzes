@@ -40,10 +40,23 @@
         $scope.clear();
     });
 
-    angular.module('quizzesApp').controller('QuizCtrl', function($scope, $stateParams, $state, alert, Quiz) {
+    angular.module('quizzesApp').controller('QuizCtrl', function($scope, $stateParams, $state, $q, $http, alert, Quiz) {
         $scope.id = $stateParams.id;
+        $scope.translations = [];
+        $scope.translationsLoading = true;
         $scope.quiz = Quiz.get({id: $scope.id}, function (quiz) {
             $scope.title = quiz.title.text;
+            var translationPromises = [];
+            angular.forEach($scope.quiz.links, function (link) {
+                if (link.rel == 'i18n') {
+                    translationPromises.push($http({method: 'GET', url: link.href}).success(function(data, status, headers, config) {
+                        $scope.translations.push(new Quiz(data));
+                    }));
+                }
+            });
+            $q.all(translationPromises).then(function() {
+                $scope.translationsLoading = false;
+            });
         });
         $scope.deleteQuiz = function() {
             if (alert.confirm('Deleting the Quiz will also delete all questions and attempts. Click OK to proceed.')) {
@@ -124,6 +137,42 @@
         });
         $scope.txt = function (html) {
             return String(html).replace(/<[^>]+>/gm, '');
+        };
+    });
+
+    angular.module('quizzesApp').controller('QuizTranslationsCtrl', function() {
+    });
+
+    angular.module('quizzesApp').controller('TranslationCtrl', function($scope, $stateParams, Quiz, $http, $q, $state, $translate, alert) {
+        $scope.quizId = $stateParams.quizId;
+        $scope.locale = $stateParams.locale;
+        $scope.quiz = Quiz.get({id: $scope.quizId}, function (quiz) {
+            $translate($scope.locale).then(function (language) {
+                $scope.title = language + ' Tanslation ' + $scope.quiz.title.text;
+           });
+        });
+        $scope.translation = Quiz.get({id: $scope.quizId, l: $scope.locale});
+    });
+
+    angular.module('quizzesApp').controller('TranslationCreateCtrl', function($scope, $stateParams, Quiz, $http) {
+        $scope.quizId = $stateParams.quizId;
+        $scope.quiz = Quiz.get({id: $scope.quizId}, function (quiz) {
+            $scope.translation = angular.copy($scope.quiz);
+            $scope.translation.title.lang_code = '';
+            $scope.translation.title.text = '';
+        });
+    });
+
+    angular.module('quizzesApp').controller('TranslationFormCtrl', function($scope, $stateParams, Quiz, $http, $state, alert) {
+        $scope.save = function() {
+            $scope.submitted = true;
+            if ($scope.form.$valid) {
+                $scope.loading = true;
+                $scope.translation.$update({l: $scope.translation.title.lang_code}, function () {
+                    alert.success('The translation has been updated successfully.');
+                    $state.go('quizzes.quiz.translations', {id: $scope.quiz.id});
+                });
+            }
         };
     });
 

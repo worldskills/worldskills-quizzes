@@ -1,0 +1,13 @@
+<ol class="breadcrumb">
+    <li><a ui-sref="quizzes.list">Quizzes</a></li>
+    <li><a ui-sref="quizzes.quiz.form({id: quiz.id})">{{quiz.title.text}}</a></li>
+    <li><a ui-sref="quizzes.quiz.translations({id: quiz.id})">Translations</a></li>
+    <li class="active">{{locale|translate}}</li>
+</ol>
+
+<h1>{{title || " "}}</h1>
+
+<hr/>
+
+<div id="content" ui-view>
+</div>

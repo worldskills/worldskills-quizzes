@@ -68,6 +68,13 @@
             data: {
                 requireLoggedIn: true
             }
+        }).state('quizzes.quiz.translations', {
+            url: '/translations',
+            templateUrl: 'views/quiz-translations.html',
+            controller: 'QuizTranslationsCtrl',
+            data: {
+                requireLoggedIn: true
+            }
         }).state('quizzes.quiz.attempts', {
             url: '/attempts',
             templateUrl: 'views/quiz-attempts.html',
@@ -96,6 +103,30 @@
             url: '',
             templateUrl: 'views/question-form.html',
             controller: 'QuestionFormCtrl',
+            data: {
+                requireLoggedIn: true
+            }
+        }).state('quizzes.translation_create', {
+            url: '/{quizId}/translations/create',
+            templateUrl: 'views/translation-create.html',
+            controller: 'TranslationCreateCtrl',
+            abstract: true
+        }).state('quizzes.translation_create.form', {
+            url: '',
+            templateUrl: 'views/translation-form.html',
+            controller: 'TranslationFormCtrl',
+            data: {
+                requireLoggedIn: true
+            }
+        }).state('quizzes.translation', {
+            url: '/{quizId}/translations/{locale}',
+            templateUrl: 'views/translation.html',
+            controller: 'TranslationCtrl',
+            abstract: true
+        }).state('quizzes.translation.form', {
+            url: '',
+            templateUrl: 'views/translation-form.html',
+            controller: 'TranslationFormCtrl',
             data: {
                 requireLoggedIn: true
             }
