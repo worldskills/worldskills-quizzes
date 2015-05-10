@@ -129,7 +129,7 @@
     });
 
     angular.module('quizzesApp').controller('QuizQuestionsCtrl', function($scope, $stateParams, $http, $translate, $state, WorldSkills) {
-        $scope.quiz.$promise.then(function(data) {
+        $scope.quiz.$promise.then(function (data) {
             var url = WorldSkills.getLink(data.links, 'questions');
             $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
                 $scope.questions = data.questions;
@@ -143,32 +143,76 @@
     angular.module('quizzesApp').controller('QuizTranslationsCtrl', function() {
     });
 
-    angular.module('quizzesApp').controller('TranslationCtrl', function($scope, $stateParams, Quiz, $http, $q, $state, $translate, alert) {
+    angular.module('quizzesApp').controller('TranslationCtrl', function($scope, $stateParams, Quiz, Question, Answer, WorldSkills, $http, $q, $state, $translate, alert) {
         $scope.quizId = $stateParams.quizId;
         $scope.locale = $stateParams.locale;
-        $scope.quiz = Quiz.get({id: $scope.quizId}, function (quiz) {
+        $scope.questionsLoading = true;
+        $scope.quiz = Quiz.get({id: $scope.quizId}, function () {
             $translate($scope.locale).then(function (language) {
                 $scope.title = language + ' Tanslation ' + $scope.quiz.title.text;
-           });
+            });
         });
-        $scope.translation = Quiz.get({id: $scope.quizId, l: $scope.locale});
+        $scope.translation = Quiz.get({id: $scope.quizId, l: $scope.locale}, function () {
+            var url = WorldSkills.getLink($scope.translation.links, 'questions');
+            var promises = [];
+            var request = $http({method: 'GET', url: url});
+            promises.push(request);
+            request.success(function(data, status, headers, config) {
+                $scope.questions = [];
+                data.questions.forEach(function (question) {
+                    question = Question.get({id: question.id, l: $scope.locale});
+                    $scope.questions.push(question);
+                });
+            });
+            $q.all(promises).then(function() {
+                $scope.questionsLoading = false;
+            });
+        });
     });
 
-    angular.module('quizzesApp').controller('TranslationCreateCtrl', function($scope, $stateParams, Quiz, $http) {
+    angular.module('quizzesApp').controller('TranslationCreateCtrl', function($scope, $stateParams, Quiz, Question, WorldSkills, $http, $q) {
         $scope.quizId = $stateParams.quizId;
+        $scope.questionsLoading = true;
         $scope.quiz = Quiz.get({id: $scope.quizId}, function (quiz) {
             $scope.translation = angular.copy($scope.quiz);
             $scope.translation.title.lang_code = '';
             $scope.translation.title.text = '';
+            var url = WorldSkills.getLink($scope.quiz.links, 'questions');
+            var promises = [];
+            var request = $http({method: 'GET', url: url});
+            promises.push(request);
+            request.success(function(data, status, headers, config) {
+                $scope.questions = [];
+                data.questions.forEach(function (question) {
+                    question = Question.get({id: question.id});
+                    $scope.questions.push(question);
+                });
+            });
+            $q.all(promises).then(function() {
+                $scope.questionsLoading = false;
+            });
         });
     });
 
-    angular.module('quizzesApp').controller('TranslationFormCtrl', function($scope, $stateParams, Quiz, $http, $state, alert) {
+    angular.module('quizzesApp').controller('TranslationFormCtrl', function($scope, $stateParams, Quiz, Answer, $http, $state, $q, alert) {
+        $scope.loading = false;
         $scope.save = function() {
+            var promises = [];
             $scope.submitted = true;
             if ($scope.form.$valid) {
                 $scope.loading = true;
-                $scope.translation.$update({l: $scope.translation.title.lang_code}, function () {
+                var langCode = $scope.translation.title.lang_code;
+                promises.push($scope.translation.$update({l: langCode}, function () {
+                    $scope.questions.forEach(function (question) {
+                        question.text.lang_code = langCode;
+                        promises.push(question.$update({l: langCode}));
+                        question.answers.forEach(function (answer) {
+                            answer.text.lang_code = langCode;
+                            promises.push(Answer.update({l: langCode}, answer));
+                        });
+                    });
+                }));
+                $q.all(promises).then(function() {
                     alert.success('The translation has been updated successfully.');
                     $state.go('quizzes.quiz.translations', {id: $scope.quiz.id});
                 });
@@ -177,7 +221,7 @@
     });
 
     angular.module('quizzesApp').controller('QuizAttemptsCtrl', function($scope, $stateParams, $http, $translate, $state, WorldSkills) {
-        $scope.quiz.$promise.then(function(data) {
+        $scope.quiz.$promise.then(function (data) {
             var url = WorldSkills.getLink(data.links, 'attempts');
             $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
                 $scope.attempts = data.attempts;
