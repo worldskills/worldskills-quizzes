@@ -231,17 +231,19 @@
 
     angular.module('quizzesApp').controller('QuizAttemptCtrl', function($scope, $stateParams, $window, $q, Quiz, QuizAttempt, Attempt, AttemptQuestionAnswer) {
         var promises = [];
+        var language = $window.navigator.language || $window.navigator.userLanguage;
+        language = language.substring(0, 2);
         $scope.id = $stateParams.id;
         $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         $scope.loading = true;
         $scope.finishLoading = false;
-        $scope.quiz = Quiz.get({id: $scope.id}, function () {
+        $scope.quiz = Quiz.get({id: $scope.id, l: language}, function () {
         }, function (response) {
             $scope.loading = false;
             $scope.quizError = response;
         });
         $scope.questions = {};
-        $scope.attempt = QuizAttempt.save({id: $scope.id}, function (attempt) {
+        $scope.attempt = QuizAttempt.save({id: $scope.id, l: language}, {}, function (attempt) {
             $scope.loading = false;
             attempt.questions.forEach(function (question) {
                 if (question.answer !== null) {
@@ -255,12 +257,12 @@
         $scope.selectAnswer = function () {
             var questionId = this.question.id;
             var answerId = this.answer.id;
-            promises.push(AttemptQuestionAnswer.update({id: $scope.attempt.id, question: questionId, answer: answerId}).$promise);
+            promises.push(AttemptQuestionAnswer.update({id: $scope.attempt.id, question: questionId, answer: answerId, l: language}, {}).$promise);
         };
         $scope.finish = function () {
             $scope.finishLoading = true;
             $q.all(promises).then(function() {
-                Attempt.finish({id: $scope.attempt.id}, function (attempt) {
+                Attempt.finish({id: $scope.attempt.id, l: language}, {}, function (attempt) {
                     $scope.attempt = attempt;
                     $scope.finishLoading = false;
                     $('body,html').animate({scrollTop: 0});
