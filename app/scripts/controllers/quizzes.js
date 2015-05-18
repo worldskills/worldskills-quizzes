@@ -229,7 +229,8 @@
         });
     });
 
-    angular.module('quizzesApp').controller('QuizAttemptCtrl', function($scope, $stateParams, $window, Quiz, QuizAttempt, Attempt, AttemptQuestionAnswer) {
+    angular.module('quizzesApp').controller('QuizAttemptCtrl', function($scope, $stateParams, $window, $q, Quiz, QuizAttempt, Attempt, AttemptQuestionAnswer) {
+        var promises = [];
         $scope.id = $stateParams.id;
         $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         $scope.loading = true;
@@ -253,12 +254,15 @@
         $scope.selectAnswer = function () {
             var questionId = this.question.id;
             var answerId = this.answer.id;
-            AttemptQuestionAnswer.update({id: $scope.attempt.id, question: questionId, answer: answerId});
+            promises.push(AttemptQuestionAnswer.update({id: $scope.attempt.id, question: questionId, answer: answerId}).$promise);
         };
         $scope.finish = function () {
-            Attempt.finish({id: $scope.attempt.id}, function (attempt) {
-                $scope.attempt = attempt;
-                $('body,html').animate({scrollTop: 0});
+            $scope.finishLoading = true;
+            $q.all(promises).then(function() {
+                Attempt.finish({id: $scope.attempt.id}, function (attempt) {
+                    $scope.attempt = attempt;
+                    $('body,html').animate({scrollTop: 0});
+                });
             });
         };
         $scope.retry = function () {
