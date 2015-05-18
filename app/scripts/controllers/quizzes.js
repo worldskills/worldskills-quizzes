@@ -234,6 +234,7 @@
         $scope.id = $stateParams.id;
         $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         $scope.loading = true;
+        $scope.finishLoading = false;
         $scope.quiz = Quiz.get({id: $scope.id}, function () {
         }, function (response) {
             $scope.loading = false;
@@ -261,6 +262,7 @@
             $q.all(promises).then(function() {
                 Attempt.finish({id: $scope.attempt.id}, function (attempt) {
                     $scope.attempt = attempt;
+                    $scope.finishLoading = false;
                     $('body,html').animate({scrollTop: 0});
                 });
             });

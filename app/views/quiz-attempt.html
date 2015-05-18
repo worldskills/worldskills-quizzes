@@ -52,12 +52,11 @@
             <div class="col-sm-6">
                 <button type="submit" class="btn btn-primary" ng-show="attempt.state === 'running'" ng-click="finish()">
                     Submit and finish Quiz
-                    <ws-text-spinner ng-show="loading" class="ng-hide"></ws-text-spinner>
+                    <ws-text-spinner ng-show="finishLoading" class="ng-hide"></ws-text-spinner>
                 </button>
     
                 <button type="button" class="btn btn-primary" ng-show="attempt.state === 'finished'" ng-click="retry()">
                     Take Quiz again
-                    <ws-text-spinner ng-show="loading" class="ng-hide"></ws-text-spinner>
                 </button>
             </div>
     
