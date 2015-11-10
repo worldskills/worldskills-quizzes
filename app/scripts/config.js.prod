@@ -9,5 +9,7 @@
     quizzesApp.constant('WORLDSKILLS_CLIENT_ID', '5ff7f4d4f750');
     quizzesApp.constant('WORLDSKILLS_AUTHORIZE_URL', 'https://auth.worldskills.org/oauth/authorize');
     quizzesApp.constant('WORLDSKILLS_COMPETITION_ID', 10);
+    quizzesApp.constant('LOAD_CHILD_ENTITY_ROLES', true);
+    quizzesApp.constant('FILTER_AUTH_ROLES', [1300]); // Quizzes
 
 })();
