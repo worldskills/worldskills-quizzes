@@ -1,7 +1,6 @@
 /.buildpath
 /.project
 /.settings/
-
 /node_modules/
 /dist
 /.tmp
