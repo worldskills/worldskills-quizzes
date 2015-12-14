@@ -1,5 +1,6 @@
 # WorldSkills Quizzes
 
+
 ## Installation
 
 ```
@@ -10,6 +11,7 @@ npm install
 ./node_modules/bower/bin/bower install
 cp app/scripts/config.js.dev app/scripts/config.js
 ```
+
 
 ## Development
 
