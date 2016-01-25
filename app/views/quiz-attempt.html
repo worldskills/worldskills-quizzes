@@ -3,8 +3,8 @@
     <div class="col-sm-offset-2 col-sm-8">
 
         <div class="page-header">
-            <h1 ng-show="quizError.status != 404">{{quiz.title.text || " "}}</h1>
-            <h1 ng-show="quizError.status == 404">Quiz not found</h1>
+            <h1 ng-show="!quizError">{{quiz.title.text || " "}}</h1>
+            <h1 ng-show="quizError">{{ quizError.status == 404 ? "Quiz not found" : quizError.status + " " + quizError.statusText }}</h1>
         </div>
 
         <ws-spinner ng-show="loading"></ws-spinner>
@@ -24,7 +24,7 @@
             <br/>
         </div>
 
-        <div ng-show="quizError.status == 404" class="alert alert-danger" role="alert">The requested Quiz could not be found.</div>
+        <div ng-show="quizError" class="alert alert-danger" role="alert">{{ quizError.status == 404 ? "The requested Quiz could not be found." : "The requested Quiz is unavailable." }}</div>
         <div ng-show="!quizError && attemptError.status == 401" class="alert alert-danger" role="alert">You do not have the required permissions to attempt this Quiz.</div>
 
         <div class="panel" ng-class="{'panel-default': question.correct === null, 'panel-danger': question.correct === false, 'panel-success': question.correct === true}" ng-repeat="question in attempt.questions">
