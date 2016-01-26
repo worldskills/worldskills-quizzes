@@ -63,7 +63,7 @@ CKEDITOR.plugins.add( 'worldskillsimages', {
                     image.then(function (image) {
 
                         var img = editor.document.createElement('img');
-                        img.setAttribute( 'src', WorldSkills.getLink(image.links, 'alternate'));
+                        img.setAttribute( 'src', image.thumbnail);
                         img.setAttribute( 'alt', '');
 
                         editor.insertElement(img);
