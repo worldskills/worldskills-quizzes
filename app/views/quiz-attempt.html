@@ -26,6 +26,7 @@
 
         <div ng-show="quizError" class="alert alert-danger" role="alert">{{ quizError.status == 404 ? "The requested Quiz could not be found." : "The requested Quiz is unavailable." }}</div>
         <div ng-show="!quizError && attemptError.status == 401" class="alert alert-danger" role="alert">You do not have the required permissions to attempt this Quiz.</div>
+        <div ng-show="attemptError.status == 400 && attemptError.data.code == '1300-403'" class="alert alert-warning" role="alert">The Quiz has been closed and is no longer active.</div>
 
         <div class="panel" ng-class="{'panel-default': question.correct === null, 'panel-danger': question.correct === false, 'panel-success': question.correct === true}" ng-repeat="question in attempt.questions">
             <div class="panel-heading">
@@ -61,7 +62,7 @@
             </div>
     
             <div class="col-sm-6">
-                <a class="btn btn-link pull-right" ng-show="quiz.url_learning && (attempt.state === 'running' || attempt.passed === false || attemptError.status == 401)" href="{{quiz.url_learning}}">« Return to learning resources</a>
+                <a class="btn btn-link pull-right" ng-show="quiz.url_learning && (attempt.state === 'running' || attempt.passed === false || attemptError.status == 400 || attemptError.status == 401)" href="{{quiz.url_learning}}">« Return to learning resources</a>
     
                 <a class="btn btn-success pull-right" ng-show="attempt.state === 'finished' && attempt.passed === true && quiz.url_success" href="{{quiz.url_success}}">Continue »</a>
             </div>
