@@ -193,13 +193,6 @@ module.exports = function (grunt) {
           ]
         }, {
           expand: true,
-          cwd: '<%= yeoman.app %>/bower_components/select2',
-          dest: '<%= yeoman.dist %>/styles',
-          src: [
-            '*.png'
-          ]
-        }, {
-          expand: true,
           cwd: '<%= yeoman.app %>/bower_components/worldskills-bootstrap/fonts',
           dest: '<%= yeoman.dist %>/fonts',
           src: [

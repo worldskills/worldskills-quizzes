@@ -2,7 +2,7 @@
     'use strict';
 
     var quizzesApp = angular.module('quizzesApp', [
-        'ngResource', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'ui.select2', 'pascalprecht.translate', 'angularFileUpload', 'worldskills.utils'
+        'ngResource', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'pascalprecht.translate', 'angularFileUpload', 'worldskills.utils'
     ]);
 
     quizzesApp.config(function($stateProvider, $urlRouterProvider) {
