@@ -74,7 +74,7 @@
         $scope.quiz.title = {text: '', lang_code: 'en'};
     });
 
-    angular.module('quizzesApp').controller('QuizFormCtrl', function($scope, $stateParams, $state, $http, alert, Quiz, WORLDSKILLS_API_AUTH, WORLDSKILLS_API_EVENTS, WORLDSKILLS_COMPETITION_ID) {
+    angular.module('quizzesApp').controller('QuizFormCtrl', function($scope, $stateParams, $state, $http, alert, Quiz, WORLDSKILLS_API_AUTH, WORLDSKILLS_API_EVENTS) {
         var ROLE_EDIT_QUIZZES = 'EditQuizzes';
         var ROLE_APP_QUIZZES = '1300';
         $http({
@@ -90,14 +90,39 @@
         });
         $http({
             method: 'GET',
-            url: WORLDSKILLS_API_EVENTS + '/' + WORLDSKILLS_COMPETITION_ID + '/skills',
+            url: WORLDSKILLS_API_EVENTS + '/',
             params: {
                 limit: 100,
                 l: 'en',
-                sort: 'name_asc'
+                sort: 'start_date_desc',
+                type: 'competition'
             }
         }).success(function(data, status, headers, config) {
-            $scope.skills = data.skills;
+            $scope.events = data.events;
+        });
+        $scope.changeEvent = function () {
+            $scope.loadSkills();
+            $scope.quiz.skill = null;
+        };
+        $scope.loadSkills = function () {
+            if (typeof $scope.quiz.event != 'undefined' && $scope.quiz.event) {
+                $http({
+                    method: 'GET',
+                    url: WORLDSKILLS_API_EVENTS + '/' + $scope.quiz.event.id + '/skills',
+                    params: {
+                        limit: 100,
+                        l: 'en',
+                        sort: 'name_asc'
+                    }
+                }).success(function(data, status, headers, config) {
+                    $scope.skills = data.skills;
+                });
+            } else {
+                $scope.skills = [];
+            }
+        };
+        $scope.quiz.$promise.then(function (data) {
+            $scope.loadSkills();
         });
         $scope.save = function() {
             $scope.submitted = true;

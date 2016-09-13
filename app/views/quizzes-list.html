@@ -17,29 +17,32 @@
         <colgroup>
             <col width="10%" />
             <col width="50%" />
-            <col width="40%" />
+            <col width="20%" />
+            <col width="20%" />
         </colgroup>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Event</th>
                 <th>Created</th>
             </tr>
         </thead>
         <tfoot>
-            <tr ng-show="!loading"><td colspan="3"></td></tr>
+            <tr ng-show="!loading"><td colspan="4"></td></tr>
         </tfoot>
         <tbody>
             <tr ng-repeat="quiz in quizzes">
                 <td><a ui-sref="quizzes.quiz.form({ id: quiz.id })">{{quiz.id}}</a></td>
                 <td><a ui-sref="quizzes.quiz.form({ id: quiz.id })" title="{{quiz.title.text}}">{{quiz.title.text}}</a></td>
+                <td>{{quiz.event.name}}</td>
                 <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
             </tr>
             <tr ng-show="!loading && quizzes.length == 0">
-                <td colspan="3">No quizzes found.</td>
+                <td colspan="4">No quizzes found.</td>
             </tr>
             <tr ng-show="loading">
-                <td colspan="3"><ws-spinner></ws-spinner></td>
+                <td colspan="4"><ws-spinner></ws-spinner></td>
             </tr>
         </tbody>
     </table>

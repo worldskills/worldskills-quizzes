@@ -20,6 +20,14 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="event" class="col-sm-3 control-label">Event</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="event" name="event" ng-model="quiz.event" ng-options="event.name for event in events track by event.id" ng-change="changeEvent()">
+                <option></option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="skill" class="col-sm-3 control-label">Skill</label>
         <div class="col-sm-4">
             <select class="form-control" id="skill" name="skill" ng-model="quiz.skill" ng-options="skill.name.text for skill in skills track by skill.id">
