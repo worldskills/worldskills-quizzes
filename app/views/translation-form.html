@@ -2,7 +2,8 @@
     <div class="form-group" ng-show="!locale" ng-class="{'has-error': submitted && form.locale.$invalid}">
         <label for="locale" class="col-sm-3 control-label">Language <span class="required">*</span></label>
         <div class="col-sm-4">
-            <select ui-select2 class="form-control" id="locale" name="locale" required ng-model="translation.title.lang_code">
+            <select class="form-control" id="locale" name="locale" required ng-model="translation.title.lang_code">
+                <option></option>
                 <option value="de">{{'de'|translate}}</option>
                 <option value="fr">{{'fr'|translate}}</option>
                 <option value="pt_BR">{{'pt_BR'|translate}}</option>
