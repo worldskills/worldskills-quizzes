@@ -105,7 +105,7 @@
             $scope.quiz.skill = null;
         };
         $scope.loadSkills = function () {
-            if (typeof $scope.quiz.event != 'undefined' && $scope.quiz.event) {
+            if (typeof $scope.quiz.event !== 'undefined' && $scope.quiz.event) {
                 $http({
                     method: 'GET',
                     url: WORLDSKILLS_API_EVENTS + '/' + $scope.quiz.event.id + '/skills',
@@ -121,9 +121,13 @@
                 $scope.skills = [];
             }
         };
-        $scope.quiz.$promise.then(function (data) {
+        if (typeof $scope.quiz.$promise !== 'undefined') {
+            $scope.quiz.$promise.then(function (data) {
+                $scope.loadSkills();
+            });
+        } else {
             $scope.loadSkills();
-        });
+        }
         $scope.save = function() {
             $scope.submitted = true;
             if ($scope.form.$valid) {
