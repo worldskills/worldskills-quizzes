@@ -157,7 +157,7 @@
         };
     });
 
-    angular.module('quizzesApp').controller('QuizQuestionsCtrl', function($scope, $stateParams, $http, $translate, $state, WorldSkills) {
+    angular.module('quizzesApp').controller('QuizQuestionsCtrl', function($scope, $stateParams, $http, $translate, $state, WorldSkills, Question) {
         $scope.quiz.$promise.then(function (data) {
             var url = WorldSkills.getLink(data.links, 'questions');
             $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
@@ -166,6 +166,28 @@
         });
         $scope.txt = function (html) {
             return String(html).replace(/<[^>]+>/gm, '');
+        };
+        $scope.moveQuestionUp = function (question) {
+            var index = $scope.questions.indexOf(question);
+            var prevQuestion = $scope.questions[index - 1];
+            var prevSort = prevQuestion.sort;
+            $scope.questions[index] = prevQuestion;
+            $scope.questions[index - 1] = question;
+            prevQuestion.sort = question.sort;
+            question.sort = prevSort;
+            Question.update(question);
+            Question.update(prevQuestion);
+        };
+        $scope.moveQuestionDown = function (question) {
+            var index = $scope.questions.indexOf(question);
+            var nextQuestion = $scope.questions[index + 1];
+            var nextSort = nextQuestion.sort;
+            $scope.questions[index] = nextQuestion;
+            $scope.questions[index + 1] = question;
+            nextQuestion.sort = question.sort;
+            question.sort = nextSort;
+            Question.update(question);
+            Question.update(nextQuestion);
         };
     });
 
