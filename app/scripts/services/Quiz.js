@@ -14,4 +14,11 @@
         });
     });
 
+    angular.module('quizzesApp').service('QuizTranslation', function($resource, WORLDSKILLS_API_QUIZZES) {
+        return $resource(WORLDSKILLS_API_QUIZZES + '/:id/translations/:locale', {
+            id: '@id',
+            locale: '@locale'
+        });
+    });
+
 })();

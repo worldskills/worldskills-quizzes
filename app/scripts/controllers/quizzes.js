@@ -194,7 +194,7 @@
     angular.module('quizzesApp').controller('QuizTranslationsCtrl', function() {
     });
 
-    angular.module('quizzesApp').controller('TranslationCtrl', function($scope, $stateParams, Quiz, Question, Answer, WorldSkills, $http, $q, $state, $translate, alert) {
+    angular.module('quizzesApp').controller('TranslationCtrl', function($scope, $stateParams, Quiz, QuizTranslation, Question, Answer, WorldSkills, $http, $q, $state, $translate, alert) {
         $scope.quizId = $stateParams.quizId;
         $scope.locale = $stateParams.locale;
         $scope.questionsLoading = true;
@@ -219,6 +219,15 @@
                 $scope.questionsLoading = false;
             });
         });
+        $scope.deleteTranslation = function() {
+            if (alert.confirm('Deleting the translation will delete all translations of the questions and answers. Click OK to proceed.')) {
+                $scope.deleteLoading = true;
+                QuizTranslation.remove({id: $scope.quiz.id, locale: $scope.locale}, function () {
+                    alert.success('The translation has been deleted successfully.');
+                    $state.go('quizzes.quiz.translations', {id: $scope.quiz.id});
+                });
+            }
+        };
     });
 
     angular.module('quizzesApp').controller('TranslationCreateCtrl', function($scope, $stateParams, Quiz, Question, WorldSkills, $http, $q) {
