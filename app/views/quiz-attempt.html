@@ -10,7 +10,7 @@
         <ws-spinner ng-show="loading"></ws-spinner>
 
         <div ng-show="attempt.state === 'finished' && attempt.passed === false" class="alert alert-danger" role="alert">
-            Your attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct. <a href="#" class="alert-link" ng-click="retry()">Please take the quiz again</a>.
+            Your attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct. <a href="" class="alert-link" ng-click="retry()">Please take the quiz again</a>.
         </div>
         <div ng-show="attempt.state === 'finished' && attempt.passed === true" class="alert alert-success" role="alert">
             You have passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct<span ng-show="quiz.url_success">, <a href="{{quiz.url_success}}" class="alert-link">please continue</a></span>.
