@@ -41,7 +41,7 @@
                             <span ng-class="{'text-danger': questions[question.id] === answer.id && question.correct === false, 'text-success': (questions[question.id] === answer.id && question.correct === true) || (answer.correct === true && question.correct === false)}">
                                 {{alphabet[answer.sort-1]}}: <span ng-bind-html="answer.text.text"></span>
                             </span>
-                            <span class="label label-danger" ng-show="questions[question.id] === answer.id && question.correct === false">Inorrect</span>
+                            <span class="label label-danger" ng-show="questions[question.id] === answer.id && question.correct === false">Incorrect</span>
                             <span class="label label-success" ng-show="(questions[question.id] === answer.id && question.correct === true) || (answer.correct === true && question.correct === false)">Correct</span>
                         </label>
                     </div>
@@ -55,15 +55,15 @@
                     Submit and finish Quiz
                     <ws-text-spinner ng-show="finishLoading" class="ng-hide"></ws-text-spinner>
                 </button>
-    
+
                 <button type="button" class="btn btn-primary" ng-show="attempt.state === 'finished'" ng-click="retry()">
                     Take Quiz again
                 </button>
             </div>
-    
+
             <div class="col-sm-6">
                 <a class="btn btn-link pull-right" ng-show="quiz.url_learning && (attempt.state === 'running' || attempt.passed === false || attemptError.status == 400 || attemptError.status == 401)" href="{{quiz.url_learning}}">« Return to learning resources</a>
-    
+
                 <a class="btn btn-success pull-right" ng-show="attempt.state === 'finished' && attempt.passed === true && quiz.url_success" href="{{quiz.url_success}}">Continue »</a>
             </div>
         </div>
