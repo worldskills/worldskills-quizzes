@@ -1,5 +1,7 @@
 # WorldSkills Quizzes
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/worldskills/worldskills-quizzes.svg)](https://greenkeeper.io/)
+
 ## Installation
 
 ```
