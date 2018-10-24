@@ -15,8 +15,9 @@
 <div class="table-responsive">
     <table class="table table-striped">
         <colgroup>
-            <col width="10%" />
+            <col width="5%" />
             <col width="50%" />
+            <col width="5%" />
             <col width="20%" />
             <col width="20%" />
         </colgroup>
@@ -24,17 +25,22 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Active</th>
                 <th>Event</th>
                 <th>Created</th>
             </tr>
         </thead>
         <tfoot>
-            <tr ng-show="!loading"><td colspan="4"></td></tr>
+            <tr ng-show="!loading"><td colspan="5"></td></tr>
         </tfoot>
         <tbody>
             <tr ng-repeat="quiz in quizzes">
                 <td><a ui-sref="quizzes.quiz.form({ id: quiz.id })">{{quiz.id}}</a></td>
                 <td><a ui-sref="quizzes.quiz.form({ id: quiz.id })" title="{{quiz.title.text}}">{{quiz.title.text}}</a></td>
+                <td>
+                  <span ng-show="quiz.active" class="glyphicon glyphicon-ok text-success"></span>
+                  <span ng-show="!quiz.active" class="glyphicon glyphicon-remove text-danger"></span>
+                </td>
                 <td>{{quiz.event.name}}</td>
                 <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
             </tr>
