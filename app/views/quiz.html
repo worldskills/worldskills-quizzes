@@ -10,6 +10,7 @@
 </div>
 
 <p class="pull-right">
+    <a ng-show="quiz.id" class="btn btn-default" ui-sref="quiz({id: quiz.id})" target="_blank">Preview Quiz</a>
     <button ng-click="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">Delete Quiz<ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner></button>
 </p>
 
