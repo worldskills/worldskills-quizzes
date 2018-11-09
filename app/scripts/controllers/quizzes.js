@@ -191,6 +191,22 @@
         };
     });
 
+    angular.module('quizzesApp').controller('QuizPreviewCtrl', function ($scope, $http, WorldSkills) {
+        $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        $scope.quiz.$promise.then(function (data) {
+            var url = WorldSkills.getLink(data.links, 'questions');
+            $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
+                $scope.questions = data.questions;
+                $scope.questions.forEach(function (question) {
+                    var url = WorldSkills.getLink(question.links, 'answers');
+                    $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
+                        question.answers = data.answers;
+                    });
+                });
+            });
+        });
+    });
+
     angular.module('quizzesApp').controller('QuizTranslationsCtrl', function() {
     });
 

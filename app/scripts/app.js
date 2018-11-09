@@ -68,6 +68,13 @@
             data: {
                 requireLoggedIn: true
             }
+        }).state('quizzes.quiz.preview', {
+            url: '/preview',
+            templateUrl: 'views/quiz-preview.html',
+            controller: 'QuizPreviewCtrl',
+            data: {
+                requireLoggedIn: true
+            }
         }).state('quizzes.quiz.translations', {
             url: '/translations',
             templateUrl: 'views/quiz-translations.html',
@@ -105,7 +112,7 @@
             controller: 'QuestionFormCtrl',
             data: {
                 requireLoggedIn: true
-            }
+            } 
         }).state('quizzes.translation_create', {
             url: '/{quizId}/translations/create',
             templateUrl: 'views/translation-create.html',
