@@ -141,6 +141,18 @@ module.exports = function (grunt) {
       }
     },
 
+    ngtemplates: {
+        dist: {
+            cwd: '<%= yeoman.app %>',
+            src: 'views/*.html',
+            dest: '.tmp/template.js'
+        },
+        options: {
+            module: 'quizzesApp',
+            usemin: 'scripts/app.js',
+        }
+    },
+
     // Allow the use of non-minsafe AngularJS files. Automatically makes it
     // minsafe compatible so Uglify does not destroy the ng references
     ngmin: {
@@ -244,6 +256,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'imagemin',
     'htmlmin',
+    'ngtemplates',
     'concat',
     'ngmin',
     'copy:dist',
