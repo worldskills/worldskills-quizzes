@@ -2,12 +2,12 @@
     'use strict';
 
     var quizzesApp = angular.module('quizzesApp'); 
-    quizzesApp.constant('WORLDSKILLS_API_QUIZZES', 'https://staging-api.worldskills.org/quizzes');
-    quizzesApp.constant('WORLDSKILLS_API_IMAGES', 'https://staging-api.worldskills.org/images');
-    quizzesApp.constant('WORLDSKILLS_API_EVENTS', 'https://staging-api.worldskills.org/events');
-    quizzesApp.constant('WORLDSKILLS_API_AUTH', 'https://staging-api.worldskills.org/auth');
+    quizzesApp.constant('WORLDSKILLS_API_QUIZZES', 'https://api.worldskills.show/quizzes');
+    quizzesApp.constant('WORLDSKILLS_API_IMAGES', 'https://api.worldskills.show/images');
+    quizzesApp.constant('WORLDSKILLS_API_EVENTS', 'https://api.worldskills.show/events');
+    quizzesApp.constant('WORLDSKILLS_API_AUTH', 'https://api.worldskills.show/auth');
     quizzesApp.constant('WORLDSKILLS_CLIENT_ID', 'e7a23a88163b');
-    quizzesApp.constant('WORLDSKILLS_AUTHORIZE_URL', 'https://staging-auth.worldskills.org/oauth/authorize');
+    quizzesApp.constant('WORLDSKILLS_AUTHORIZE_URL', 'https://auth.worldskills.show/oauth/authorize');
     quizzesApp.constant('LOAD_CHILD_ENTITY_ROLES', true);
     quizzesApp.constant('FILTER_AUTH_ROLES', [1300]); // Quizzes
 
