@@ -5,6 +5,7 @@
         $scope.id = $stateParams.id;
         $scope.answers = [];
         $scope.question = Question.get({id: $scope.id}, function (question) {
+            $scope.active = question.active;
             var url = WorldSkills.getLink(question.links, 'answers');
             $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
                 data.answers.forEach(function (answer) {
@@ -20,6 +21,24 @@
                     $state.go('quizzes.quiz.questions', {id: $scope.question.quiz.id});
                 });
             }
+        };
+        $scope.deactivateQuestion = function() {
+            $scope.deactivateLoading = true;
+            $scope.question.active = false;
+            $scope.question.$update(function (question) {
+                $scope.active = question.active;
+                alert.success('The Question has been deactivated successfully.');
+                $scope.deactivateLoading = false;
+            });
+        };
+        $scope.activateQuestion = function() {
+            $scope.activateLoading = true;
+            $scope.question.active = true;
+            $scope.question.$update(function (question) {
+                $scope.active = question.active;
+                alert.success('The Question has been activated successfully.');
+                $scope.activateLoading = false;
+            });
         };
     });
 

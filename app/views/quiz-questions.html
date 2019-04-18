@@ -20,7 +20,7 @@
         <tbody>
             <tr ng-repeat="question in questions">
                 <td>{{$index+1}}</td>
-                <td><a ui-sref="quizzes.question.form({id: question.id})" ng-bind-html="txt(question.text.text)"></a></td>
+                <td><a ui-sref="quizzes.question.form({id: question.id})" ng-bind-html="txt(question.text.text)" ng-class="{'text-muted': !question.active}"></a></td>
                 <td>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-primary btn-xs" ng-click="moveQuestionUp(question)" ng-disabled="$first"><span class="glyphicon glyphicon-triangle-top"></span></button>
