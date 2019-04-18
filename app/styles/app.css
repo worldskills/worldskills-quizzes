@@ -15,6 +15,7 @@
 
 .panel img {
     vertical-align: top;
+    max-width: 100%;
 }
 
 .browserupgrade {
