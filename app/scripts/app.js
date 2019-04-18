@@ -89,6 +89,13 @@
             data: {
                 requireLoggedIn: true
             }
+        }).state('quizzes.attempt', {
+            url: '/attempts/{attemptId}',
+            templateUrl: 'views/attempt.html',
+            controller: 'AttemptCtrl',
+            data: {
+                requireLoggedIn: true
+            }
         }).state('quizzes.question_create', {
             url: '/{quizId}/questions/create',
             templateUrl: 'views/question-create.html',

@@ -305,6 +305,26 @@
         });
     });
 
+    angular.module('quizzesApp').controller('AttemptCtrl', function($scope, $stateParams, $window, $q, Quiz, QuizAttempt, Attempt, AttemptQuestionAnswer) {
+        var promises = [];
+        var language = $window.navigator.language || $window.navigator.userLanguage;
+        language = language.substring(0, 2);
+        $scope.attemptId = $stateParams.attemptId;
+        $scope.alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        $scope.loading = true;
+        $scope.questions = {};
+        $scope.attempt = Attempt.get({id: $scope.attemptId, l: language}, function (attempt) {
+            $scope.loading = false;
+            attempt.questions.forEach(function (question) {
+                if (question.answer !== null) {
+                    $scope.questions[question.id] = question.answer.id;
+                }
+            });
+        }, function (response) {
+            $scope.loading = false;
+        });
+    });
+
     angular.module('quizzesApp').controller('QuizAttemptCtrl', function($scope, $stateParams, $window, $q, Quiz, QuizAttempt, Attempt, AttemptQuestionAnswer) {
         var promises = [];
         var language = $window.navigator.language || $window.navigator.userLanguage;

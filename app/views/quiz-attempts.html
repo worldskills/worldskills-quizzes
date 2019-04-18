@@ -17,7 +17,7 @@
         <tfoot><tr><td colspan="4"></td></tr></tfoot>
         <tbody>
             <tr ng-repeat="attempt in attempts">
-                <td>{{attempt.id}}</td>
+                <td><a ui-sref="quizzes.attempt({ attemptId: attempt.id })">{{attempt.id}}</a></td>
                 <td>{{attempt.user.firstName}} {{attempt.user.lastName}}</td>
                 <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
                 <td><span ng-show="attempt.score !== null">{{attempt.score}}</span></td>
