@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <div class="radio" ng-repeat="answer in question.answers">
                         <label>
-                            <input type="radio">
+                            <input type="radio" name="question{{question.id}}">
                             <span>
                                 {{alphabet[answer.sort-1]}}: <span ng-bind-html="answer.text.text"></span>
                             </span>
