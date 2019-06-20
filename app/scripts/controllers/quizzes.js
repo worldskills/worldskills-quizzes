@@ -299,7 +299,7 @@
     angular.module('quizzesApp').controller('QuizAttemptsCtrl', function($scope, $stateParams, $http, $translate, $state, WorldSkills) {
         $scope.quiz.$promise.then(function (data) {
             var url = WorldSkills.getLink(data.links, 'attempts');
-            $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
+            $http({method: 'GET', url: url, params: {limit: 1000}}).success(function(data, status, headers, config) {
                 $scope.attempts = data.attempts;
             });
         });
