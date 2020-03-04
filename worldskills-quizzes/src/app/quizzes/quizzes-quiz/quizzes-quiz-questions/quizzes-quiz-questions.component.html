@@ -1,0 +1,36 @@
+<p ng-show="!quiz.has_attempts">
+  <a ui-sref="quizzes.question_create.form({quizId: quiz.id})" class="btn btn-success">Add Question</a>
+</p>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <colgroup>
+      <col width="5%" />
+      <col width="90%" />
+      <col width="10%" />
+    </colgroup>
+    <thead>
+    <tr>
+      <th>Nr.</th>
+      <th>Question</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tfoot><tr><td colspan="3"></td></tr></tfoot>
+    <tbody>
+    <tr ng-repeat="question in questions">
+      <td>{{$index+1}}</td>
+      <td><a ui-sref="quizzes.question.form({id: question.id})" ng-bind-html="txt(question.text.text)" ng-class="{'text-muted': !question.active}"></a></td>
+      <td>
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-primary btn-xs" ng-click="moveQuestionUp(question)" ng-disabled="$first"><span class="glyphicon glyphicon-triangle-top"></span></button>
+          <button type="button" class="btn btn-primary btn-xs" ng-click="moveQuestionDown(question)" ng-disabled="$last"><span class="glyphicon glyphicon-triangle-bottom"></span></button>
+        </div>
+      </td>
+    </tr>
+    <tr ng-show="questions.length === 0">
+      <td colspan="3">No Questions found.</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

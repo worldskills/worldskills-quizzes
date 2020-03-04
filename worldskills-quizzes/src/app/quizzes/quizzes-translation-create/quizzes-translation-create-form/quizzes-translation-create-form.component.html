@@ -1,0 +1,54 @@
+<form class="form-horizontal" name="form" novalidate focus-error ng-submit="save()" ng-show="!questionsLoading">
+  <div class="form-group" ng-show="!locale" ng-class="{'has-error': submitted && form.locale.$invalid}">
+    <label for="locale" class="col-sm-3 control-label">Language <span class="required">*</span></label>
+    <div class="col-sm-4">
+      <select class="form-control" id="locale" name="locale" required ng-model="translation.title.lang_code">
+        <option></option>
+        <option value="de">{{'de'|translate}}</option>
+        <option value="fr">{{'fr'|translate}}</option>
+        <option value="pt_BR">{{'pt_BR'|translate}}</option>
+      </select>
+    </div>
+    <div class="col-sm-5">
+      <span class="help-block" ng-show="submitted && form.locale.$error.required">Please select a language!</span>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': submitted && form.title.$invalid}">
+    <label for="title" class="col-sm-3 control-label">Title <span class="required">*</span></label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="title" name="title" required ng-model="translation.title.text">
+    </div>
+    <div class="col-sm-5">
+      <span class="help-block" ng-show="submitted && form.title.$error.required">Please enter a title!</span>
+    </div>
+  </div>
+  <div ng-repeat="question in questions">
+    <hr/>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Question {{question.sort}} <span class="required">*</span></label>
+      <div class="col-sm-8 col-lg-5">
+        <textarea class="form-control" rows="2" ng-model="question.text.text" ck-editor></textarea>
+      </div>
+    </div>
+    <div class="form-group" ng-repeat="answer in question.answers">
+      <div class="col-sm-3 control-label">
+        <span class="glyphicon glyphicon-ok text-success" title="Answer is correct" ng-show="answer.correct"></span>
+        <span class="glyphicon glyphicon-remove text-danger" title="Answer is not correct" ng-show="!answer.correct"></span>
+        Answer {{answer.sort}} <span class="required">*</span>
+      </div>
+      <div class="col-sm-8 col-lg-5">
+        <textarea class="form-control" rows="2" ng-model="answer.text.text" ck-editor></textarea>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <button type="submit" class="btn btn-success">Save Translation<ws-text-spinner ng-show="loading" class="ng-hide"></ws-text-spinner></button>
+      <a ui-sref="quizzes.quiz.translations({id: quiz.id})" class="btn btn-default">Cancel</a>
+    </div>
+  </div>
+</form>
+<div ng-show="questionsLoading">
+  <ws-spinner></ws-spinner>
+</div>

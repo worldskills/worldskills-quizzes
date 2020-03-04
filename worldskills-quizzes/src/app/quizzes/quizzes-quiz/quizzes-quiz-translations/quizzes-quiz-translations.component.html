@@ -1,0 +1,33 @@
+<p>
+  <a ui-sref="quizzes.translation_create.form({quizId: quiz.id})" class="btn btn-success">Add Translation</a>
+</p>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <colgroup>
+      <col width="50%" />
+      <col width="50%" />
+    </colgroup>
+    <thead>
+    <tr>
+      <th>Language</th>
+      <th>Translated Title</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr ng-show="!translationsLoading"><td colspan="2"></td></tr>
+    </tfoot>
+    <tbody>
+    <tr ng-repeat="translation in translations">
+      <td><a ui-sref="quizzes.translation.form({quizId: quiz.id, locale: translation.title.lang_code})">{{translation.title.lang_code|translate}}</a></td>
+      <td><a ui-sref="quizzes.translation.form({quizId: quiz.id, locale: translation.title.lang_code})">{{translation.title.text}}</a></td>
+    </tr>
+    <tr ng-show="!translationsLoading && translations.length == 0">
+      <td colspan="2">No translations found.</td>
+    </tr>
+    <tr ng-show="translationsLoading">
+      <td colspan="2"><ws-spinner></ws-spinner></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

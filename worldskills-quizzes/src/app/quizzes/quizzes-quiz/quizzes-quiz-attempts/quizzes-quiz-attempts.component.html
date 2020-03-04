@@ -1,0 +1,30 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <colgroup>
+      <col width="10%" />
+      <col width="60%" />
+      <col width="20%" />
+      <col width="10%" />
+    </colgroup>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>User</th>
+      <th>Started</th>
+      <th>Score</th>
+    </tr>
+    </thead>
+    <tfoot><tr><td colspan="4"></td></tr></tfoot>
+    <tbody>
+    <tr ng-repeat="attempt in attempts">
+      <td><a ui-sref="quizzes.attempt({ attemptId: attempt.id })">{{attempt.id}}</a></td>
+      <td>{{attempt.user.firstName}} {{attempt.user.lastName}}</td>
+      <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
+      <td><span ng-show="attempt.score !== null">{{attempt.score}}</span></td>
+    </tr>
+    <tr ng-show="attempts.length === 0">
+      <td colspan="4">No attempts found.</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
