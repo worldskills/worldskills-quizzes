@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AppHomepageComponent} from './app-homepage/app-homepage.component';
 import {AdminAuthGuard} from '../security/admin-auth.guard';
-// import {QuizzesComponent} from './quizzes/quizzes.component';
-// import {QuizzesCreateComponent} from './quizzes/quizzes-create/quizzes-create.component';
+import {QuizzesComponent} from './quizzes/quizzes.component';
+import {LandingComponent} from './landing/landing.component';
 // import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 // import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 // import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
@@ -20,8 +20,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: AppHomepageComponent,
-    // canActivate: [AdminAuthGuard]
+    component: LandingComponent,
   },
   {
     path: 'home',
@@ -29,16 +28,17 @@ const routes: Routes = [
     component: AppHomepageComponent,
     canActivate: [AdminAuthGuard]
   },
-  // {
-  //   path: 'quizzes',
-  //   component: QuizzesComponent,
-  //   children: [
-  //     {
-  //       path: 'create',
-  //       component: QuizzesCreateComponent
-  //     }
-  //   ]
-  // },
+  {
+    path: 'quizzes',
+    component: QuizzesComponent,
+    canActivate: [AdminAuthGuard]
+    // children: [
+    //   {
+    //     path: 'create',
+    //     component: QuizzesCreateComponent
+    //   }
+    // ]
+  }
   // {
   //   path: ':id',
   //   component: QuizzesQuizComponent,

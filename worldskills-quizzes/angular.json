@@ -25,6 +25,7 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/fonts.css",
               "node_modules/@worldskills/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": []
@@ -90,6 +91,7 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/fonts.css",
               "node_modules/@worldskills/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": []

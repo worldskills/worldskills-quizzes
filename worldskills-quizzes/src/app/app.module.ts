@@ -6,8 +6,11 @@ import {AppComponent} from './app.component';
 import {AuthConfig, OAuthModule} from 'angular-oauth2-oidc';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {WorldskillsAngularLibModule, WsHttpInterceptor} from '@worldskills/worldskills-angular-lib';
-import { AppHomepageComponent } from './app-homepage/app-homepage.component';
-// import { QuizzesComponent } from './quizzes/quizzes.component';
+import {AppHomepageComponent} from './app-homepage/app-homepage.component';
+import {QuizzesComponent} from './quizzes/quizzes.component';
+import {LandingComponent} from './landing/landing.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // import { QuizzesListComponent } from './quizzes/quizzes-list/quizzes-list.component';
 // import { QuizzesCreateComponent } from './quizzes/quizzes-create/quizzes-create.component';
 // import { QuizzesQuizComponent } from './quizzes/quizzes-quiz/quizzes-quiz.component';
@@ -66,7 +69,8 @@ const httpConfig = {
   declarations: [
     AppComponent,
     AppHomepageComponent,
-    // QuizzesComponent,
+    QuizzesComponent,
+    LandingComponent,
     // QuizzesListComponent,
     // QuizzesCreateComponent,
     // QuizzesQuizComponent,
@@ -90,7 +94,9 @@ const httpConfig = {
     BrowserModule,
     AppRoutingModule,
     OAuthModule.forRoot(),
-    WorldskillsAngularLibModule.forConfig(serviceConfig, oAuthConfig, httpConfig)
+    WorldskillsAngularLibModule.forConfig(serviceConfig, oAuthConfig, httpConfig),
+    NgbModule,
+    FontAwesomeModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: WsHttpInterceptor, multi: true}

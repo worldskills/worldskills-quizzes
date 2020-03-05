@@ -1,1 +1,110 @@
-<router-outlet></router-outlet>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Quizzes</li>
+  </ol>
+</nav>
+
+<p class="float-right">
+  <button class="btn btn-primary">Add Quiz</button>
+</p>
+
+<h2>Quizzes</h2>
+
+<div class="row mt-2">
+  <div class="col-md-12">
+    <div class="table-responsive-md">
+      <table class="table table-striped border-top">
+        <colgroup>
+          <col width="5%">
+          <col width="50%">
+          <col width="5%">
+          <col width="20%">
+          <col width="20%">
+        </colgroup>
+        <thead>
+        <tr>
+          <th class="border-top-0">ID</th>
+          <th class="border-top-0">Name</th>
+          <th class="border-top-0">Active</th>
+          <th class="border-top-0">Event</th>
+          <th class="border-top-0">Created</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <!--        <tr ng-show="!loading"><td colspan="5"></td></tr>-->
+        <tr>
+          <td colspan="5"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <ng-template [ngIf]="list && list.quizzes">
+          <tr *ngFor="let quiz of list.quizzes">
+            <td><a routerLink="/quizzes/{{quiz.id}}">{{quiz.id}}</a></td>
+            <td><a routerLink="/quizzes/{{quiz.id}}"
+                   title="{{quiz.title.text}}">{{quiz.title.text}}</a></td>
+            <td>
+              <fa-icon *ngIf="quiz.active" [icon]="faCheck" class="text-success"></fa-icon>
+              <fa-icon *ngIf="!quiz.active" [icon]="faTimes" class="text-danger"></fa-icon>
+            </td>
+            <td>{{quiz.event.name}}</td>
+            <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
+          </tr>
+        </ng-template>
+        <!--        <tr ng-show="!loading && quizzes.length == 0">-->
+        <!--          <td colspan="4">No quizzes found.</td>-->
+        <!--        </tr>-->
+        <!--        <tr ng-show="loading">-->
+        <!--          <td colspan="4"><ws-spinner></ws-spinner></td>-->
+        <!--        </tr>-->
+        </tbody>
+        <!--        <tfoot>-->
+        <!--        <tr>-->
+        <!--          <td colspan="5"></td>-->
+        <!--        </tr>-->
+        <!--        </tfoot>-->
+        <!--        <tbody>-->
+
+        <!--        &lt;!&ndash;        <tr *ngFor="let item of items.items">&ndash;&gt;-->
+        <!--        &lt;!&ndash;          <td>{{item.start_date|date:'dd.MM.yyyy'}}</td>&ndash;&gt;-->
+        <!--        &lt;!&ndash;          <td><a routerLink="/items/{{item.id}}">{{item.name.text}}</a></td>&ndash;&gt;-->
+        <!--        &lt;!&ndash;          <td>{{item.country?.name.text}}</td>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        </tr>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        <tr *ngIf="loading">&ndash;&gt;-->
+        <!--        &lt;!&ndash;          <td colspan="3" class="text-muted">Loading...</td>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        </tr>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        <tr *ngIf="!loading && items.items.length == 0">&ndash;&gt;-->
+        <!--        &lt;!&ndash;          <td colspan="3" class="text-muted">No dates found.</td>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        </tr>&ndash;&gt;-->
+        <!--        </tbody>-->
+      </table>
+    </div>
+    <ngb-pagination [collectionSize]="list.total_count" [(page)]="listPage.page"
+                    [pageSize]="listPage.pageSize" [maxSize]="10" [boundaryLinks]="true"
+                    (pageChange)="fetch()"></ngb-pagination>
+    <!--    <ngb-pagination [collectionSize]="items.total_count" [(page)]="page" [pageSize]="pageSize" [maxSize]="10" [boundaryLinks]="true" (pageChange)="loadItems()"></ngb-pagination>-->
+  </div>
+  <!--  <div class="col-md-3">-->
+  <!--    <form name="form" novalidate (ngSubmit)="onSubmit()">-->
+  <!--    <div class="card">-->
+  <!--      <h2 class="card-header h5 mt-0 mb-0">Search dates</h2>-->
+  <!--      <div class="card-body">-->
+  <!--        <div class="form-group">-->
+  <!--            <label for="filterName">Name</label>-->
+  <!--            <input type="text" class="form-control" id="filterName" name="filterName" [(ngModel)]="filterName">-->
+  <!--        </div>-->
+  <!--        <div class="form-group">-->
+  <!--            <label for="filterCountry">Country</label>-->
+  <!--            <select class="form-control" id="filterCountry" name="filterCountry" [(ngModel)]="filterCountry">-->
+  <!--              <option [ngValue]="null"></option>-->
+  <!--              <option *ngFor="let country of countries" [ngValue]="country.id">-->
+  <!--                {{ country.name.text }}-->
+  <!--              </option>-->
+  <!--            </select>-->
+  <!--        </div>-->
+  <!--        <button type="submit" class="btn btn-primary px-4">Search</button>-->
+  <!--          <button type="button" class="btn btn-link px-4" (click)="clear()">Clear</button>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    </form>-->
+  <!--  </div>-->
+</div>
