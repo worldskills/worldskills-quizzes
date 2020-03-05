@@ -7,25 +7,25 @@ import {AuthConfig, OAuthModule} from 'angular-oauth2-oidc';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {WorldskillsAngularLibModule, WsHttpInterceptor} from '@worldskills/worldskills-angular-lib';
 import { AppHomepageComponent } from './app-homepage/app-homepage.component';
-import { QuizzesComponent } from './quizzes/quizzes.component';
-import { QuizzesListComponent } from './quizzes/quizzes-list/quizzes-list.component';
-import { QuizzesCreateComponent } from './quizzes/quizzes-create/quizzes-create.component';
-import { QuizzesQuizComponent } from './quizzes/quizzes-quiz/quizzes-quiz.component';
-import { QuizzesQuizFormComponent } from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
-import { QuizzesQuizQuestionsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
-import { QuizzesQuizPreviewComponent } from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
-import { QuizzesQuizTranslationsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
-import { QuizzesQuizAttemptsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
-import { QuizzesAttemptComponent } from './quizzes/quizzes-attempt/quizzes-attempt.component';
-import { QuizzesQuestionCreateComponent } from './quizzes/quizzes-question-create/quizzes-question-create.component';
-import { QuizzesQuestionCreateFormComponent } from './quizzes/quizzes-question-create/quizzes-question-create-form/quizzes-question-create-form.component';
-import { QuizzesQuestionComponent } from './quizzes/quizzes-question/quizzes-question.component';
-import { QuizzesQuestionFormComponent } from './quizzes/quizzes-question/quizzes-question-form/quizzes-question-form.component';
-import { QuizzesTranslationCreateComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
-import { QuizzesTranslationCreateFormComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create-form/quizzes-translation-create-form.component';
-import { QuizzesTranslationComponent } from './quizzes/quizzes-translation/quizzes-translation.component';
-import { QuizzesTranslationFormComponent } from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
-import { QuizComponent } from './quiz/quiz.component';
+// import { QuizzesComponent } from './quizzes/quizzes.component';
+// import { QuizzesListComponent } from './quizzes/quizzes-list/quizzes-list.component';
+// import { QuizzesCreateComponent } from './quizzes/quizzes-create/quizzes-create.component';
+// import { QuizzesQuizComponent } from './quizzes/quizzes-quiz/quizzes-quiz.component';
+// import { QuizzesQuizFormComponent } from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
+// import { QuizzesQuizQuestionsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
+// import { QuizzesQuizPreviewComponent } from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
+// import { QuizzesQuizTranslationsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
+// import { QuizzesQuizAttemptsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
+// import { QuizzesAttemptComponent } from './quizzes/quizzes-attempt/quizzes-attempt.component';
+// import { QuizzesQuestionCreateComponent } from './quizzes/quizzes-question-create/quizzes-question-create.component';
+// import { QuizzesQuestionCreateFormComponent } from './quizzes/quizzes-question-create/quizzes-question-create-form/quizzes-question-create-form.component';
+// import { QuizzesQuestionComponent } from './quizzes/quizzes-question/quizzes-question.component';
+// import { QuizzesQuestionFormComponent } from './quizzes/quizzes-question/quizzes-question-form/quizzes-question-form.component';
+// import { QuizzesTranslationCreateComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
+// import { QuizzesTranslationCreateFormComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create-form/quizzes-translation-create-form.component';
+// import { QuizzesTranslationComponent } from './quizzes/quizzes-translation/quizzes-translation.component';
+// import { QuizzesTranslationFormComponent } from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
+// import { QuizComponent } from './quiz/quiz.component';
 
 const serviceConfig = {
   appCode: 1300,
@@ -66,25 +66,25 @@ const httpConfig = {
   declarations: [
     AppComponent,
     AppHomepageComponent,
-    QuizzesComponent,
-    QuizzesListComponent,
-    QuizzesCreateComponent,
-    QuizzesQuizComponent,
-    QuizzesQuizFormComponent,
-    QuizzesQuizQuestionsComponent,
-    QuizzesQuizPreviewComponent,
-    QuizzesQuizTranslationsComponent,
-    QuizzesQuizAttemptsComponent,
-    QuizzesAttemptComponent,
-    QuizzesQuestionCreateComponent,
-    QuizzesQuestionCreateFormComponent,
-    QuizzesQuestionComponent,
-    QuizzesQuestionFormComponent,
-    QuizzesTranslationCreateComponent,
-    QuizzesTranslationCreateFormComponent,
-    QuizzesTranslationComponent,
-    QuizzesTranslationFormComponent,
-    QuizComponent
+    // QuizzesComponent,
+    // QuizzesListComponent,
+    // QuizzesCreateComponent,
+    // QuizzesQuizComponent,
+    // QuizzesQuizFormComponent,
+    // QuizzesQuizQuestionsComponent,
+    // QuizzesQuizPreviewComponent,
+    // QuizzesQuizTranslationsComponent,
+    // QuizzesQuizAttemptsComponent,
+    // QuizzesAttemptComponent,
+    // QuizzesQuestionCreateComponent,
+    // QuizzesQuestionCreateFormComponent,
+    // QuizzesQuestionComponent,
+    // QuizzesQuestionFormComponent,
+    // QuizzesTranslationCreateComponent,
+    // QuizzesTranslationCreateFormComponent,
+    // QuizzesTranslationComponent,
+    // QuizzesTranslationFormComponent,
+    // QuizComponent
   ],
   imports: [
     BrowserModule,
