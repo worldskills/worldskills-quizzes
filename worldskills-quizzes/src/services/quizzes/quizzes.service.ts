@@ -1,14 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
-import {QuizList} from '../../types/quiz';
+import {Quiz, QuizList} from '../../types/quiz';
+import {FetchParams} from '../../types/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizzesService {
 
-  private list = new BehaviorSubject<QuizList>(null);
+  private loading = false;
+  public list = new BehaviorSubject<QuizList>(null);
+  public instance = new BehaviorSubject<Quiz>(null);
 
   constructor(private http: HttpClient) {
   }
@@ -33,15 +36,29 @@ export class QuizzesService {
 //
 //   })();
 
-
-  fetch() {
+  fetchList(fetchParams: FetchParams = {offset: 0, limit: 15}) {
     const params = new HttpParams();
-    params.set('offset', '0');
-    params.set('limit', '15');
+    params.set('offset', fetchParams.offset + '');
+    params.set('limit', fetchParams.limit + '');
     console.log('fetching');
+    this.loading = true;
     this.http.get<QuizList>('https://api.worldskills.show/quizzes', {params})
-    .subscribe(value => this.list.next(value));
+    .subscribe(value => {
+      this.loading = false;
+      this.list.next(value);
+    });
     return this.list;
+  }
+
+  fetchInstance(id: number) {
+    console.log('fetching');
+    this.loading = true;
+    this.http.get<Quiz>(`https://api.worldskills.show/quizzes/${id}`)
+    .subscribe(value => {
+      this.loading = false;
+      this.instance.next(value);
+    });
+    return this.instance;
   }
 
 }

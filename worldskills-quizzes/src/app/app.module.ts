@@ -10,11 +10,12 @@ import {AppHomepageComponent} from './app-homepage/app-homepage.component';
 import {QuizzesComponent} from './quizzes/quizzes.component';
 import {LandingComponent} from './landing/landing.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 // import { QuizzesListComponent } from './quizzes/quizzes-list/quizzes-list.component';
 // import { QuizzesCreateComponent } from './quizzes/quizzes-create/quizzes-create.component';
-// import { QuizzesQuizComponent } from './quizzes/quizzes-quiz/quizzes-quiz.component';
-// import { QuizzesQuizFormComponent } from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
+import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
+import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
+import {FormsModule} from '@angular/forms';
 // import { QuizzesQuizQuestionsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 // import { QuizzesQuizPreviewComponent } from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
 // import { QuizzesQuizTranslationsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
@@ -73,8 +74,8 @@ const httpConfig = {
     LandingComponent,
     // QuizzesListComponent,
     // QuizzesCreateComponent,
-    // QuizzesQuizComponent,
-    // QuizzesQuizFormComponent,
+    QuizzesQuizComponent,
+    QuizzesQuizFormComponent,
     // QuizzesQuizQuestionsComponent,
     // QuizzesQuizPreviewComponent,
     // QuizzesQuizTranslationsComponent,
@@ -96,7 +97,8 @@ const httpConfig = {
     OAuthModule.forRoot(),
     WorldskillsAngularLibModule.forConfig(serviceConfig, oAuthConfig, httpConfig),
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: WsHttpInterceptor, multi: true}

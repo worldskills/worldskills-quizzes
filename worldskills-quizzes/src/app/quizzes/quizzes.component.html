@@ -78,7 +78,7 @@
         <!--        </tbody>-->
       </table>
     </div>
-    <ngb-pagination [collectionSize]="list.total_count" [(page)]="listPage.page"
+    <ngb-pagination [collectionSize]="list ? list.total_count : 0" [(page)]="listPage.page"
                     [pageSize]="listPage.pageSize" [maxSize]="10" [boundaryLinks]="true"
                     (pageChange)="fetch()"></ngb-pagination>
     <!--    <ngb-pagination [collectionSize]="items.total_count" [(page)]="page" [pageSize]="pageSize" [maxSize]="10" [boundaryLinks]="true" (pageChange)="loadItems()"></ngb-pagination>-->

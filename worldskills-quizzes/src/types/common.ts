@@ -17,3 +17,8 @@ export interface ListPage {
   page: number;
   pageSize: number;
 }
+
+export interface FetchParams {
+  offset: number;
+  limit: number;
+}

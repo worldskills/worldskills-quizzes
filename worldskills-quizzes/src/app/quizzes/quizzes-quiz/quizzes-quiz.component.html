@@ -1,27 +1,37 @@
 <ol class="breadcrumb">
   <li><a ui-sref="quizzes.list">Quizzes</a></li>
-  <li class="active">{{title || " "}}</li>
+  <li class="active">{{instance ? instance.title.text : " "}}</li>
 </ol>
 
-<alerts></alerts>
+<!--TODO fix this-->
+<!--<alerts></alerts>-->
 
-<div class="alert alert-warning" role="alert" ng-show="quiz.has_attempts">
+<div class="alert alert-warning" role="alert" *ngIf="instance && instance.has_attempts">
   <p>This Quiz already has attempts. Questions cannot be deleted or added.</p>
 </div>
 
 <p class="pull-right">
-  <button ng-click="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">Delete Quiz<ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner></button>
+  <button ng-click="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">Delete Quiz
+    <!--    TODO spinner-->
+    <!--    <ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner>-->
+  </button>
 </p>
 
-<h1>{{title || " "}}</h1>
+<h1>{{instance ? instance.title.text : " "}}</h1>
 
 <ul class="nav nav-tabs">
-  <li ui-sref-active="active"><a ui-sref="quizzes.quiz.form">Quiz</a></li>
-  <li ui-sref-active="active"><a ui-sref="quizzes.quiz.questions">Questions</a></li>
-  <li ui-sref-active="active"><a ui-sref="quizzes.quiz.preview">Preview</a></li>
-  <li ui-sref-active="active"><a ui-sref="quizzes.quiz.translations">Translations</a></li>
-  <li ui-sref-active="active"><a ui-sref="quizzes.quiz.attempts">Attempts</a></li>
+  <li routerLinkActive="active"><a routerLink="/quizzes/{{instance ? instance.id : ''}}">Quiz</a>
+  </li>
+  <li routerLinkActive="active"><a routerLink="/quizzes/{{instance ? instance.id : ''}}/questions">Questions</a>
+  </li>
+  <li routerLinkActive="active"><a routerLink="/quizzes/{{instance ? instance.id : ''}}/preview">Preview</a>
+  </li>
+  <li routerLinkActive="active"><a
+    routerLink="/quizzes/{{instance ? instance.id : ''}}/translations">Translations</a></li>
+  <li routerLinkActive="active"><a routerLink="/quizzes/{{instance ? instance.id : ''}}/attempts">Attempts</a>
+  </li>
 </ul>
 
-<div id="content" ui-view>
+<div id="content">
+  <router-outlet></router-outlet>
 </div>

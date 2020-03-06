@@ -25,7 +25,7 @@ export class QuizzesComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.quizzesService.fetch().subscribe(list => (this.list = list));
+    this.quizzesService.fetchList().subscribe(list => (this.list = list));
   }
 
   fetch() {

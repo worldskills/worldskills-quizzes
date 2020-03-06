@@ -1,4 +1,5 @@
 import {Link, List} from './common';
+import {Entity} from './entity';
 
 export interface Quiz {
   id: number;
@@ -14,14 +15,7 @@ export interface Quiz {
   reveal_correct_answers: boolean;
   url_learning: string;
   url_success: string;
-  ws_entity: {
-    id: number,
-    name: {
-      lang_code: string,
-      text: string
-    },
-    links: Array<Link>
-  };
+  ws_entity: Entity;
   has_attempts: true;
   event: {
     id: number,
