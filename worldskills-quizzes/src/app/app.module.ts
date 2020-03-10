@@ -15,16 +15,16 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 // import { QuizzesCreateComponent } from './quizzes/quizzes-create/quizzes-create.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
-import {FormsModule} from '@angular/forms';
-// import { QuizzesQuizQuestionsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 // import { QuizzesQuizPreviewComponent } from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
 // import { QuizzesQuizTranslationsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
 // import { QuizzesQuizAttemptsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 // import { QuizzesAttemptComponent } from './quizzes/quizzes-attempt/quizzes-attempt.component';
 // import { QuizzesQuestionCreateComponent } from './quizzes/quizzes-question-create/quizzes-question-create.component';
 // import { QuizzesQuestionCreateFormComponent } from './quizzes/quizzes-question-create/quizzes-question-create-form/quizzes-question-create-form.component';
-// import { QuizzesQuestionComponent } from './quizzes/quizzes-question/quizzes-question.component';
-// import { QuizzesQuestionFormComponent } from './quizzes/quizzes-question/quizzes-question-form/quizzes-question-form.component';
+import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-question.component';
+import {QuizzesQuestionFormComponent} from './quizzes/quizzes-question/quizzes-question-form/quizzes-question-form.component';
 // import { QuizzesTranslationCreateComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 // import { QuizzesTranslationCreateFormComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create-form/quizzes-translation-create-form.component';
 // import { QuizzesTranslationComponent } from './quizzes/quizzes-translation/quizzes-translation.component';
@@ -76,15 +76,15 @@ const httpConfig = {
     // QuizzesCreateComponent,
     QuizzesQuizComponent,
     QuizzesQuizFormComponent,
-    // QuizzesQuizQuestionsComponent,
+    QuizzesQuizQuestionsComponent,
     // QuizzesQuizPreviewComponent,
     // QuizzesQuizTranslationsComponent,
     // QuizzesQuizAttemptsComponent,
     // QuizzesAttemptComponent,
     // QuizzesQuestionCreateComponent,
     // QuizzesQuestionCreateFormComponent,
-    // QuizzesQuestionComponent,
-    // QuizzesQuestionFormComponent,
+    QuizzesQuestionComponent,
+    QuizzesQuestionFormComponent,
     // QuizzesTranslationCreateComponent,
     // QuizzesTranslationCreateFormComponent,
     // QuizzesTranslationComponent,
@@ -98,7 +98,8 @@ const httpConfig = {
     WorldskillsAngularLibModule.forConfig(serviceConfig, oAuthConfig, httpConfig),
     NgbModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: WsHttpInterceptor, multi: true}

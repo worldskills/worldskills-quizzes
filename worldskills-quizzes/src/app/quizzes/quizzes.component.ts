@@ -11,8 +11,8 @@ import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 })
 export class QuizzesComponent implements OnInit, OnChanges {
 
-  faCheck;
-  faTimes;
+  faCheck = faCheck;
+  faTimes = faTimes;
   list: QuizList = null;
   listPage: ListPage = {
     page: 1,
@@ -20,12 +20,11 @@ export class QuizzesComponent implements OnInit, OnChanges {
   };
 
   constructor(private quizzesService: QuizzesService) {
-    this.faCheck = faCheck;
-    this.faTimes = faTimes;
   }
 
   ngOnInit(): void {
-    this.quizzesService.fetchList().subscribe(list => (this.list = list));
+    this.quizzesService.list.subscribe(list => (this.list = list));
+    this.quizzesService.fetchList();
   }
 
   fetch() {

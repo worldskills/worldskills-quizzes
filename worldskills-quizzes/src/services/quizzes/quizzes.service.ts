@@ -40,25 +40,24 @@ export class QuizzesService {
     const params = new HttpParams();
     params.set('offset', fetchParams.offset + '');
     params.set('limit', fetchParams.limit + '');
-    console.log('fetching');
     this.loading = true;
-    this.http.get<QuizList>('https://api.worldskills.show/quizzes', {params})
-    .subscribe(value => {
+
+    const subscription = this.http.get<QuizList>('https://api.worldskills.show/quizzes', {params});
+    subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);
     });
-    return this.list;
+    return subscription;
   }
 
-  fetchInstance(id: number) {
-    console.log('fetching');
+  fetchInstance(quizId: number) {
     this.loading = true;
-    this.http.get<Quiz>(`https://api.worldskills.show/quizzes/${id}`)
-    .subscribe(value => {
+    const subscription = this.http.get<Quiz>(`https://api.worldskills.show/quizzes/${quizId}`);
+    subscription.subscribe(value => {
       this.loading = false;
       this.instance.next(value);
     });
-    return this.instance;
+    return subscription;
   }
 
 }

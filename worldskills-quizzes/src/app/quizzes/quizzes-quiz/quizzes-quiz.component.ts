@@ -33,9 +33,8 @@ export class QuizzesQuizComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.params.subscribe(value => {
-      const {id} = value;
-      this.quizzesService.fetchInstance(id).subscribe(instance => {
-        console.log(instance);
+      const {quizId} = value;
+      this.quizzesService.instance.subscribe(instance => {
         if (instance) {
           forkJoin({
             events: this.eventsService.fetchList(),
@@ -49,6 +48,7 @@ export class QuizzesQuizComponent implements OnInit {
           });
         }
       });
+      this.quizzesService.fetchInstance(quizId);
     });
   }
 

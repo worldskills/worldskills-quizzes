@@ -1,13 +1,14 @@
-<p ng-show="!quiz.has_attempts">
-  <a ui-sref="quizzes.question_create.form({quizId: quiz.id})" class="btn btn-success">Add Question</a>
+<p *ngIf="!instance || !instance.has_attempts">
+  <a routerLink="/quizzes/{{instance ? instance.id : ''}}/questions/create" class="btn btn-success">Add
+    Question</a>
 </p>
 
 <div class="table-responsive">
   <table class="table table-striped">
     <colgroup>
-      <col width="5%" />
-      <col width="90%" />
-      <col width="10%" />
+      <col width="5%"/>
+      <col width="90%"/>
+      <col width="10%"/>
     </colgroup>
     <thead>
     <tr>
@@ -16,21 +17,36 @@
       <th></th>
     </tr>
     </thead>
-    <tfoot><tr><td colspan="3"></td></tr></tfoot>
+    <tfoot>
+    <tr>
+      <td colspan="3"></td>
+    </tr>
+    </tfoot>
     <tbody>
-    <tr ng-repeat="question in questions">
-      <td>{{$index+1}}</td>
-      <td><a ui-sref="quizzes.question.form({id: question.id})" ng-bind-html="txt(question.text.text)" ng-class="{'text-muted': !question.active}"></a></td>
-      <td>
-        <div class="btn-group pull-right">
-          <button type="button" class="btn btn-primary btn-xs" ng-click="moveQuestionUp(question)" ng-disabled="$first"><span class="glyphicon glyphicon-triangle-top"></span></button>
-          <button type="button" class="btn btn-primary btn-xs" ng-click="moveQuestionDown(question)" ng-disabled="$last"><span class="glyphicon glyphicon-triangle-bottom"></span></button>
-        </div>
-      </td>
-    </tr>
-    <tr ng-show="questions.length === 0">
-      <td colspan="3">No Questions found.</td>
-    </tr>
+    <ng-container *ngIf="questions &&  questions.questions">
+      <tr *ngFor="let question of questions.questions; let index=index;">
+        <td>{{index + 1}}</td>
+        <td><a routerLink="/quizzes/{{instance ? instance.id : ''}}/questions/{{question.id}}"
+               [innerHTML]="txt(question.text.text)"
+               [ngClass]="{'text-muted': !question.active}"></a></td>
+        <td>
+          <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary btn-xs" (click)="moveQuestionUp(question)"
+                    [disabled]="index === 0">
+              <fa-icon [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary btn-xs"
+                    (click)="moveQuestionDown(question)"
+                    [disabled]="index === questions.questions.length - 1">
+              <fa-icon [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="questions.questions.length === 0">
+        <td colspan="3">No Questions found.</td>
+      </tr>
+    </ng-container>
     </tbody>
   </table>
 </div>

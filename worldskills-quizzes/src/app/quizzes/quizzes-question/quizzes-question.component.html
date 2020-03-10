@@ -1,25 +1,45 @@
-<ol class="breadcrumb">
-  <li><a ui-sref="quizzes.list">Quizzes</a></li>
-  <li><a ui-sref="quizzes.quiz.form({id: question.quiz.id})">{{question.quiz.title.text}}</a></li>
-  <li><a ui-sref="quizzes.quiz.questions({id: question.quiz.id})">Questions</a></li>
-  <li class="active">Question</li>
-</ol>
+<!--TODO fix this-->
+<!--<ol class="breadcrumb">-->
+<!--  <li><a routerLink="/quizzes">Quizzes</a></li>-->
+<!--  <li><a routerLink="/quizzes/{{quiz ? quiz.id : ''}}">{{quiz ? quiz.title.text : ''}}</a></li>-->
+<!--  <li><a routerLink="/quizzes/{{quiz ? quiz.id : ''}}/questions">Questions</a></li>-->
+<!--  <li class="active">Question</li>-->
+<!--</ol>-->
 
-<alerts></alerts>
+<!--TODO fix this-->
+<!--<alerts></alerts>-->
 
-<div class="alert alert-warning" role="alert" ng-show="question.quiz.has_attempts">
-  <p>The Quiz of this Question already has attempts. Answers cannot be deleted or added.</p>
-</div>
+<!--TODO fix this-->
+<!--<div class="alert alert-warning" role="alert" *ngIf="quiz ? quiz.has_attempts : false">-->
+<!--  <p>The Quiz of this Question already has attempts. Answers cannot be deleted or added.</p>-->
+<!--</div>-->
 
 <div class="page-header">
   <p class="pull-right">
-    <button ng-click="deleteQuestion()" class="btn btn-danger" ng-show="!question.quiz.has_attempts">Delete Question<ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner></button>
-    <button ng-click="deactivateQuestion()" class="btn btn-danger" ng-show="question.quiz.has_attempts && active">Deactivate Question<ws-text-spinner ng-show="deactivateLoading" class="ng-hide"></ws-text-spinner></button>
-    <button ng-click="activateQuestion()" class="btn btn-success" ng-show="question.quiz.has_attempts && !active">Activate Question<ws-text-spinner ng-show="activateLoading" class="ng-hide"></ws-text-spinner></button>
+    <button (click)="deleteQuestion()" class="btn btn-danger"
+            *ngIf="quiz ? !quiz.has_attempts : false">
+      Delete Question
+      <!--      <ws-text-spinner *ngIf="deleteLoading" class="ng-hide"></ws-text-spinner>-->
+    </button>
+    <button (click)="deactivateQuestion()" class="btn btn-danger"
+            *ngIf="(quiz ? quiz.has_attempts : false) && (question ? question.active : false)">
+      Deactivate Question
+      <!--      <ws-text-spinner *ngIf="deactivateLoading" class="ng-hide"></ws-text-spinner>-->
+    </button>
+    <button (click)="activateQuestion()" class="btn btn-success"
+            *ngIf="(quiz ? quiz.has_attempts : false) && (question ? !question.active : false)">
+      Activate Question
+      <!--      <ws-text-spinner *ngIf="activateLoading" class="ng-hide"></ws-text-spinner>-->
+    </button>
   </p>
 
-  <h1>Question <span ng-show="!active" class="badge">Inactive</span></h1>
+  <h1>Question <span *ngIf="question ? !question.active : false" class="badge">Inactive</span></h1>
 </div>
 
-<div id="content" ui-view>
-</div>
+<ng-container *ngIf="list && question && quiz">
+  <app-quizzes-question-form
+    [answers]="list"
+    [question]="question"
+    [quiz]="quiz"
+  ></app-quizzes-question-form>
+</ng-container>

@@ -21,11 +21,11 @@ export class EventsService {
     params.set('sort', 'start_date_desc');
     params.set('type', 'competition');
     this.loading = true;
-    this.http.get<EventList>(`https://api.worldskills.show/events`, {params})
-    .subscribe(value => {
+    const subscription = this.http.get<EventList>(`https://api.worldskills.show/events`, {params});
+    subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);
     });
-    return this.list;
+    return subscription;
   }
 }

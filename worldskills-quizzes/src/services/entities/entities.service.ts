@@ -20,11 +20,11 @@ export class EntitiesService {
     params.set('role', 'EditQuizzes');
     params.set('roleApp', '1300');
     this.loading = true;
-    this.http.get<EntityList>('https://api.worldskills.show/auth/ws_entities', {params})
-    .subscribe(value => {
+    const subscription = this.http.get<EntityList>('https://api.worldskills.show/auth/ws_entities', {params});
+    subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);
     });
-    return this.list;
+    return subscription;
   }
 }

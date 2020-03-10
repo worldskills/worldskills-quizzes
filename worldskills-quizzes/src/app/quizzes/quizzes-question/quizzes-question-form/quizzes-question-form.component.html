@@ -1,47 +1,63 @@
-<form class="form-horizontal" name="form" novalidate focus-error ng-submit="save()">
-  <div class="form-group" ng-class="{'has-error': submitted && form.question.$invalid}">
-    <label for="question" class="col-sm-3 control-label">Question <span class="required">*</span></label>
+<form class="form-horizontal" [formGroup]="form" novalidate (ngSubmit)="save()">
+  <div class="form-group" [ngClass]="{'has-error': form.errors}">
+    <label class="col-sm-3 control-label">Question <span class="required">*</span></label>
     <div class="col-sm-5">
-      <textarea class="form-control" id="question" name="question" rows="6" required ng-model="question.text.text" tabindex="1" ck-editor></textarea>
+      <textarea [formControl]="form.get('question')" class="form-control" rows="6" tabindex="1"
+                ck-editor></textarea>
     </div>
     <div class="col-sm-4">
-      <span class="help-block" ng-show="submitted && form.question.$error.required">Please enter a question!</span>
+      <span class="help-block" *ngIf="form.get('question').valid && form.get('question').touched">Please enter a question!</span>
     </div>
   </div>
 
-  <div ng-repeat="answer in answers">
-    <hr/>
-    <div class="form-group" ng-show="!answer.removed">
-      <label for="question" class="col-sm-3 control-label">Answer</label>
-      <div class="col-sm-5">
-        <textarea class="form-control" id="question" rows="2" ng-model="answer.text.text" tabindex="2" ck-editor></textarea>
+  <div formArrayName="answers">
+    <ng-container *ngFor="let control of controls; let index=index">
+      <hr/>
+      <div class="form-group" *ngIf="!control.get('removed').value">
+        <label class="col-sm-3 control-label">Answer</label>
+        <div class="col-sm-5">
+          <textarea class="form-control" [formControl]="control.get('answer')" rows="2" tabindex="2"
+                    ck-editor></textarea>
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="correct" ng-model="answer.correct" ng-change="changeCorrect(answer)">
-            This answer is correct
-          </label>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="correct" [formControl]="control.get('correct')"
+                     (change)="changeCorrect($event, control)">
+              This answer is correct
+            </label>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-danger btn-xs" (click)="removeAnswer(control.get('removed'))"
+                  *ngIf="quiz ? !quiz.has_attempts : false">
+            <fa-icon [icon]="faStop"></fa-icon>
+            Remove answer
+          </button>
         </div>
       </div>
-      <div class="col-sm-4">
-        <button type="button" class="btn btn-danger btn-xs" ng-click="removeAnswer(answer)" ng-show="!question.quiz.has_attempts"><span class="glyphicon glyphicon-ban-circle"></span> Remove answer</button>
+      <div class="form-group" *ngIf="control.get('removed').value">
+        <div class="col-sm-offset-8 col-sm-4">
+          <button type="button" class="btn btn-default btn-xs" (click)="restoreAnswer(control.get('removed'))"
+                  *ngIf="quiz ? !quiz.has_attempts : false">
+            <fa-icon [icon]="faRedo"></fa-icon>
+            Restore answer
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="form-group" ng-show="answer.removed">
-      <div class="col-sm-offset-8 col-sm-4">
-        <button type="button" class="btn btn-default btn-xs" ng-click="restoreAnswer(answer)" ng-show="!question.quiz.has_attempts"><span class="glyphicon glyphicon-repeat"></span> Restore answer</button>
-      </div>
-    </div>
+    </ng-container>
   </div>
 
-  <div ng-show="!question.quiz.has_attempts">
+  <div *ngIf="quiz ? !quiz.has_attempts : false">
     <hr/>
     <div class="form-group">
       <div class="col-sm-offset-3 col-sm-5">
         <p class="help-block">All answers will automatically be randomized for each attempt.</p>
       </div>
       <div class="col-sm-4">
-        <button type="button" class="btn btn-success btn-xs" ng-click="addAnswer()"><span class="glyphicon glyphicon-plus"></span> Add answer</button>
+        <button type="button" class="btn btn-success btn-xs" (click)="addAnswer()">
+          <fa-icon [icon]="faPlus"></fa-icon>
+          Add answer
+        </button>
       </div>
     </div>
   </div>
@@ -49,8 +65,12 @@
   <hr/>
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-9">
-      <button type="submit" class="btn btn-success" id="saveQuiz" tabindex="3">Save<ws-text-spinner ng-show="loading" class="ng-hide"></ws-text-spinner></button>
-      <a ui-sref="quizzes.quiz.questions({id: question.quiz.id})" class="btn btn-default">Cancel</a>
+      <button type="submit" class="btn btn-success" id="saveQuiz" tabindex="3">Save
+        <!-- TODO -->
+        <!--        <ws-text-spinner *ngIf="loading" class="ng-hide"></ws-text-spinner>-->
+      </button>
+      <a routerLink="/quizzes/{{quiz.id}}/questions"
+         class="btn btn-default">Cancel</a>
     </div>
   </div>
 </form>

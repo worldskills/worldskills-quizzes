@@ -20,11 +20,11 @@ export class SkillsService {
     params.set('l', 'en');
     params.set('sort', 'name_asc');
     this.loading = true;
-    this.http.get<SkillList>(`https://api.worldskills.show/events/${eventId}/skills`, {params})
-    .subscribe(value => {
+    const subscription = this.http.get<SkillList>(`https://api.worldskills.show/events/${eventId}/skills`, {params});
+    subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);
     });
-    return this.list;
+    return subscription;
   }
 }

@@ -6,6 +6,8 @@ import {QuizzesComponent} from './quizzes/quizzes.component';
 import {LandingComponent} from './landing/landing.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
+import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
+import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-question.component';
 // import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 // import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
 // import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
@@ -36,13 +38,23 @@ const routes: Routes = [
     canActivate: [AdminAuthGuard],
   },
   {
-    path: 'quizzes/:id',
+    path: 'quizzes/:quizId',
     component: QuizzesQuizComponent,
     canActivate: [AdminAuthGuard],
     children: [
       {
         path: '',
         component: QuizzesQuizFormComponent,
+        canActivate: [AdminAuthGuard]
+      },
+      {
+        path: 'questions',
+        component: QuizzesQuizQuestionsComponent,
+        canActivate: [AdminAuthGuard],
+      },
+      {
+        path: 'questions/:questionId',
+        component: QuizzesQuestionComponent,
         canActivate: [AdminAuthGuard]
       }
     ]
