@@ -17,7 +17,7 @@ import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.componen
 import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
-// import { QuizzesQuizPreviewComponent } from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
+import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
 // import { QuizzesQuizTranslationsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
 // import { QuizzesQuizAttemptsComponent } from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 // import { QuizzesAttemptComponent } from './quizzes/quizzes-attempt/quizzes-attempt.component';
@@ -77,7 +77,7 @@ const httpConfig = {
     QuizzesQuizComponent,
     QuizzesQuizFormComponent,
     QuizzesQuizQuestionsComponent,
-    // QuizzesQuizPreviewComponent,
+    QuizzesQuizPreviewComponent,
     // QuizzesQuizTranslationsComponent,
     // QuizzesQuizAttemptsComponent,
     // QuizzesAttemptComponent,
