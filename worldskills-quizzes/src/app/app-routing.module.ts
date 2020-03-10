@@ -9,6 +9,7 @@ import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form
 import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-question.component';
 import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
+import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
 // import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 // import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
 // import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
@@ -61,6 +62,11 @@ const routes: Routes = [
       {
         path: 'preview',
         component: QuizzesQuizPreviewComponent,
+        canActivate: [AdminAuthGuard]
+      },
+      {
+        path: 'translations',
+        component: QuizzesQuizTranslationsComponent,
         canActivate: [AdminAuthGuard]
       },
     ]

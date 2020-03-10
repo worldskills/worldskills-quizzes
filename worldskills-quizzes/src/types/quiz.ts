@@ -24,7 +24,9 @@ export interface Quiz {
   skill: any;
   created: string;
   active: boolean;
-  links: Array<Link<'questions' | 'attempts'>>;
+  links: Array<Link<QuizLinkType>>;
 }
+
+export type QuizLinkType = 'questions' | 'attempts' | 'i18n';
 
 export type QuizList = List<Quiz, 'quizzes'>;

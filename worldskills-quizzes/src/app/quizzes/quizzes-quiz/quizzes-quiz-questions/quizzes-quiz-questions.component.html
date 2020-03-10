@@ -1,5 +1,5 @@
-<p *ngIf="!instance || !instance.has_attempts">
-  <a routerLink="/quizzes/{{instance ? instance.id : ''}}/questions/create" class="btn btn-success">Add
+<p *ngIf="!quiz || !quiz.has_attempts">
+  <a routerLink="/quizzes/{{quiz ? quiz.id : ''}}/questions/create" class="btn btn-success">Add
     Question</a>
 </p>
 
@@ -26,7 +26,7 @@
     <ng-container *ngIf="questions &&  questions.questions">
       <tr *ngFor="let question of questions.questions; let index=index;">
         <td>{{index + 1}}</td>
-        <td><a routerLink="/quizzes/{{instance ? instance.id : ''}}/questions/{{question.id}}"
+        <td><a routerLink="/quizzes/{{quiz ? quiz.id : ''}}/questions/{{question.id}}"
                [innerHTML]="txt(question.text.text)"
                [ngClass]="{'text-muted': !question.active}"></a></td>
         <td>

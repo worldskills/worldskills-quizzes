@@ -16,7 +16,7 @@ export class QuizzesQuizQuestionsComponent implements OnInit {
   txt = txt;
   faArrowUp = faArrowUp;
   faArrowDown = faArrowDown;
-  instance: Quiz = null;
+  quiz: Quiz = null;
   questions: QuestionList = null;
 
   constructor(private quizzesService: QuizzesService, private questionsService: QuestionsService) {
@@ -31,10 +31,10 @@ export class QuizzesQuizQuestionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.quizzesService.instance.subscribe(instance => {
-      if (instance) {
-        this.instance = {...instance};
-        this.questionsService.fetchList(instance.id);
+    this.quizzesService.instance.subscribe(quiz => {
+      if (quiz) {
+        this.quiz = {...quiz};
+        this.questionsService.fetchList(quiz.id);
       }
     });
     this.questionsService.list.subscribe(questions => {
