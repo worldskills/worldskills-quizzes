@@ -1,12 +1,9 @@
-import {Link, List} from './common';
+import {Link, List, LocalizedText} from './common';
 import {Entity} from './entity';
 
 export interface Quiz {
   id: number;
-  title: {
-    lang_code: string,
-    text: string
-  };
+  title: LocalizedText;
   lang_code: string;
   text: string;
   random_questions: boolean;

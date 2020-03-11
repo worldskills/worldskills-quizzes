@@ -16,12 +16,12 @@ export class EntitiesService {
   constructor(private http: HttpClient) {
   }
 
-  fetchList(fetchParams: FetchParams = {limit: 100}) {
+  fetchList(fetchParams: FetchParams = {limit: 100}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     params.set('role', 'EditQuizzes');
     params.set('roleApp', '1300');
     this.loading = true;
-    const subscription = this.http.get<EntityList>('https://api.worldskills.show/auth/ws_entities', {params});
+    const subscription = this.http.get<EntityList>(url ?? 'https://api.worldskills.show/auth/ws_entities', {params});
     subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);

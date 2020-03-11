@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {QuestionList, QuestionWithAnswers} from '../../types/question';
+import {Attempt, AttemptsList} from '../../types/attempt';
 import {HttpClient} from '@angular/common/http';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams} from '../../utils/http';
@@ -8,19 +8,19 @@ import {httpParamsFromFetchParams} from '../../utils/http';
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionsService {
+export class AttemptsService {
 
   private loading = false;
-  public list = new BehaviorSubject<QuestionList>(null);
-  public instance = new BehaviorSubject<QuestionWithAnswers>(null);
+  public list = new BehaviorSubject<AttemptsList>(null);
+  public instance = new BehaviorSubject<Attempt>(null);
 
   constructor(private http: HttpClient) {
   }
 
-  fetchList(quizId: number, fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'}, url?: string) {
+  fetchList(quizId: number, fetchParams: FetchParams = {limit: 1000}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     this.loading = true;
-    const subscription = this.http.get<QuestionList>(url ?? `https://api.worldskills.show/quizzes/${quizId}/questions`, {params});
+    const subscription = this.http.get<AttemptsList>(url ?? `https://api.worldskills.show/quizzes/${quizId}/attempts`, {params});
     subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);
@@ -28,10 +28,10 @@ export class QuestionsService {
     return subscription;
   }
 
-  fetchInstance(questionId: number, fetchParams: FetchParams = {}, url?: string) {
+  fetchInstance(attemptId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     this.loading = true;
-    const subscription = this.http.get<QuestionWithAnswers>(url ?? `https://api.worldskills.show/quizzes/questions/${questionId}`, {params});
+    const subscription = this.http.get<Attempt>(url ?? `https://api.worldskills.show/quizzes/attempts/${attemptId}`, {params});
     subscription.subscribe(value => {
       this.loading = false;
       this.instance.next(value);

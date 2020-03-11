@@ -1,11 +1,8 @@
-import {List} from './common';
+import {List, LocalizedText} from './common';
 
 export interface Answer {
   id: number;
-  text: {
-    lang_code: string;
-    text: string;
-  };
+  text: LocalizedText;
   correct: boolean;
   sort: number;
 }

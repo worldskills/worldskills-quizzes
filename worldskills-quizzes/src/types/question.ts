@@ -1,5 +1,10 @@
-import {List} from './common';
+import {List, LocalizedText} from './common';
 import {Answer} from './answer';
+
+export interface AnsweredQuestionWithAnswers extends QuestionWithAnswers {
+  answer: Answer;
+  correct: boolean;
+}
 
 export interface QuestionWithAnswers extends Question {
   answers: Array<Answer>;
@@ -7,10 +12,7 @@ export interface QuestionWithAnswers extends Question {
 
 export interface Question {
   id: number;
-  text: {
-    lang_code: string;
-    text: string;
-  };
+  text: LocalizedText;
   weight: number;
   sort: number;
   active: boolean;

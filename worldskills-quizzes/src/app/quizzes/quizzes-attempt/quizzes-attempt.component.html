@@ -1,57 +1,72 @@
-<ol class="breadcrumb">
-  <li><a ui-sref="quizzes.list">Quizzes</a></li>
-  <li><a ui-sref="quizzes.quiz.form({id: attempt.quiz.id})">{{attempt.quiz.title.text}}</a></li>
-  <li><a ui-sref="quizzes.quiz.attempts({id: attempt.quiz.id})">Attempts</a></li>
-  <li class="active">Attempt</li>
-</ol>
+<!--TODO -->
+<!--<ol class="breadcrumb">-->
+<!--  <li><a ui-sref="quizzes.list">Quizzes</a></li>-->
+<!--  <li><a ui-sref="quizzes.quiz.form({id: attempt.quiz.id})">{{attempt.quiz.title.text}}</a></li>-->
+<!--  <li><a ui-sref="quizzes.quiz.attempts({id: attempt.quiz.id})">Attempts</a></li>-->
+<!--  <li class="active">Attempt</li>-->
+<!--</ol>-->
 
-<alerts></alerts>
+<!--<alerts></alerts>-->
+<ng-container *ngIf="quiz && attempt">
+<!--  <div class="alert alert-warning" role="alert" *ngIf="quiz.has_attempts">-->
+<!--    <p>The Quiz of this Question already has attempts. Answers cannot be deleted or added.</p>-->
+<!--  </div>-->
 
-<div class="alert alert-warning" role="alert" ng-show="question.quiz.has_attempts">
-  <p>The Quiz of this Question already has attempts. Answers cannot be deleted or added.</p>
-</div>
+  <div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
 
-<div class="row">
-  <div class="col-sm-offset-2 col-sm-8">
+      <div class="page-header">
+        <p class="text-muted">Started by {{attempt.user.firstName}} {{attempt.user.lastName}}
+          on {{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}
+        <p>
 
-    <div class="page-header">
-      <p class="text-muted">Started by {{attempt.user.firstName}} {{attempt.user.lastName}} on {{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}<p>
-
-      <h1>{{attempt.quiz.title.text}}</h1>
-    </div>
-
-    <ws-spinner ng-show="loading"></ws-spinner>
-
-    <div ng-show="attempt.state === 'finished' && attempt.passed === false" class="alert alert-danger" role="alert">
-      Attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct.
-    </div>
-    <div ng-show="attempt.state === 'finished' && attempt.passed === true" class="alert alert-success" role="alert">
-      Passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers correct.
-    </div>
-    <div ng-show="attempt.state === 'running'" class="alert alert-warning" role="alert">
-      Attempt not submitted yet.
-    </div>
-
-    <div class="panel" ng-class="{'panel-default': question.correct === null, 'panel-danger': question.correct === false, 'panel-success': question.correct === true}" ng-repeat="question in attempt.questions">
-      <div class="panel-heading">
-        <h3 class="panel-title">Question {{question.sort}}</h3>
+<!--        <h1>{{attempt.quiz.title.text}}</h1>-->
       </div>
-      <div class="panel-body">
-        <div class="lead" ng-bind-html="question.text.text"></div>
-        <div class="form-group">
-          <div class="radio" ng-repeat="answer in question.answers">
-            <label>
-              <input type="radio" ng-model="questions[question.id]" ng-change="selectAnswer()" ng-value="answer.id" ng-disabled="true">
-              <span ng-class="{'text-danger': questions[question.id] === answer.id && question.correct === false, 'text-success': (questions[question.id] === answer.id && question.correct === true) || (answer.correct === true && question.correct === false)}">
-                                {{alphabet[answer.sort-1]}}: <span ng-bind-html="answer.text.text"></span>
+
+      <!--    <ws-spinner *ngIf="loading"></ws-spinner>-->
+
+      <div *ngIf="attempt.state === 'finished' && attempt.passed === false"
+           class="alert alert-danger" role="alert">
+        Attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong>
+        answers correct.
+      </div>
+      <div *ngIf="attempt.state === 'finished' && attempt.passed === true"
+           class="alert alert-success" role="alert">
+        Passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers
+        correct.
+      </div>
+      <div *ngIf="attempt.state === 'running'" class="alert alert-warning" role="alert">
+        Attempt not submitted yet.
+      </div>
+
+      <ng-container *ngFor="let question of attempt.questions">
+        <div [ngClass]="{panel: true, 'panel-default': question.correct === null, 'panel-danger': question.correct === false, 'panel-success': question.correct === true}">
+          <div class="panel-heading">
+            <h3 class="panel-title">Question {{question.sort}}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="lead" [innerHTML]="question.text.text"></div>
+            <div class="form-group">
+              <div class="radio" *ngFor="let answer of question.answers">
+                <label>
+                  <input type="radio" [ngModel]="question.answer.id" (change)="selectAnswer()"
+                         [value]="answer.id" [disabled]="true">
+                  <span
+                    [ngClass]="{'text-danger': question.answer.id === answer.id && question.correct === false, 'text-success': (question.answer.id === answer.id && question.correct === true) || (answer.correct === true && question.correct === false)}">
+                                {{alphabet[answer.sort - 1]}}: <span
+                    [innerHTML]="answer.text.text"></span>
                             </span>
-              <span class="label label-danger" ng-show="questions[question.id] === answer.id && question.correct === false">Incorrect</span>
-              <span class="label label-success" ng-show="(questions[question.id] === answer.id && question.correct === true) || (answer.correct === true && question.correct === false)">Correct</span>
-            </label>
+                  <span class="label label-danger"
+                        *ngIf="question.answer.id === answer.id && question.correct === false">Incorrect</span>
+                  <span class="label label-success"
+                        *ngIf="(question.answer.id === answer.id && question.correct === true) || (answer.correct === true && question.correct === false)">Correct</span>
+                </label>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
     </div>
-
   </div>
-</div>
+
+</ng-container>

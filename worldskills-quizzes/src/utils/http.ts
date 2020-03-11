@@ -1,5 +1,5 @@
 import {HttpParams} from '@angular/common/http';
-import {FetchParams} from '../types/common';
+import {FetchParams, Link} from '../types/common';
 
 export function httpParamsFromFetchParams(fetchParams: FetchParams): HttpParams {
   let params = new HttpParams();
@@ -16,4 +16,8 @@ export function httpParamsFromFetchParams(fetchParams: FetchParams): HttpParams 
     params = params.set('sort', fetchParams.sort);
   }
   return params;
+}
+
+export function fetchLink<T extends string = null>(linkable: { links: Array<Link<T>> }, key: string): Array<Link<any>> {
+  return linkable.links.filter(link => link.rel === key);
 }

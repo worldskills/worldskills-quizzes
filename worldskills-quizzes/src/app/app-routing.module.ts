@@ -13,8 +13,8 @@ import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-p
 import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
 import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
 // import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
-// import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
-// import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
+import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
+import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
 // import {QuizComponent} from './quiz/quiz.component';
 
 const routes: Routes = [
@@ -70,6 +70,16 @@ const routes: Routes = [
         component: QuizzesTranslationComponent,
         canActivate: [AdminAuthGuard]
       },
+      {
+        path: 'attempts',
+        component: QuizzesQuizAttemptsComponent,
+        canActivate: [AdminAuthGuard]
+      },
+      {
+        path: 'attempts/:attemptId',
+        component: QuizzesAttemptComponent,
+        canActivate: [AdminAuthGuard]
+      }
     ]
   }
   // children: [

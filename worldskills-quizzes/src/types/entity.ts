@@ -1,11 +1,8 @@
-import {Link, List} from './common';
+import {Link, List, LocalizedText} from './common';
 
 export interface Entity {
   id: number;
-  name: {
-    lang_code: string;
-    text: string;
-  };
+  name: LocalizedText;
   links: Array<Link>;
 }
 

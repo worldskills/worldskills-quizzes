@@ -16,10 +16,10 @@ export class AnswersService {
   constructor(private http: HttpClient) {
   }
 
-  fetchList(questionId: number, fetchParams: FetchParams = {}) {
+  fetchList(questionId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     this.loading = true;
-    const subscription = this.http.get<AnswersList>(`https://api.worldskills.show/quizzes/questions/${questionId}/answers`, {params});
+    const subscription = this.http.get<AnswersList>(url ?? `https://api.worldskills.show/quizzes/questions/${questionId}/answers`, {params});
     subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);

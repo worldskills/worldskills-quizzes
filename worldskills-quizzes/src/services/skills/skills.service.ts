@@ -16,10 +16,10 @@ export class SkillsService {
   constructor(private http: HttpClient) {
   }
 
-  fetchList(eventId: number, fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'}) {
+  fetchList(eventId: number, fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     this.loading = true;
-    const subscription = this.http.get<SkillList>(`https://api.worldskills.show/events/${eventId}/skills`, {params});
+    const subscription = this.http.get<SkillList>(url ?? `https://api.worldskills.show/events/${eventId}/skills`, {params});
     subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);

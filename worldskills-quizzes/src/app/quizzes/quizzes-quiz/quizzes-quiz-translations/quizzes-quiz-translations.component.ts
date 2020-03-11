@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
 import {Quiz} from '../../../../types/quiz';
-import {fetchSupportedLocales} from '../../../../utils/quiz';
 import {forkJoin, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {fetchLink} from '../../../../utils/http';
 
 @Component({
   selector: 'app-quizzes-quiz-translations',
@@ -22,7 +22,7 @@ export class QuizzesQuizTranslationsComponent implements OnInit {
     this.quizzesService.instance.subscribe(quiz => {
       if (quiz) {
         this.quiz = {...quiz};
-        const supportedLocales = fetchSupportedLocales(quiz);
+        const supportedLocales = fetchLink(quiz, 'i18n');
         const requests: Array<Observable<Quiz>> = supportedLocales.map(supportedLocale => this.http.get<Quiz>(supportedLocale.href));
         forkJoin(requests).subscribe(translatedQuizzes => (this.translatedQuizzes = translatedQuizzes));
       }

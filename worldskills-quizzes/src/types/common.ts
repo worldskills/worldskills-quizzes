@@ -24,3 +24,8 @@ export interface FetchParams {
   sort?: string;
   l?: string;
 }
+
+export interface LocalizedText {
+  lang_code: string;
+  text: string;
+}

@@ -29,7 +29,8 @@ export class QuizzesTranslationComponent implements OnInit {
       if (quiz) {
         this.router.params.subscribe(({locale}) => {
           this.http.get<Quiz>(
-            QuizzesService.instanceUrl(quiz.id),
+            // TODO env
+            `https://api.worldskills.show/quizzes/${quiz.id}`,
             {params: httpParamsFromFetchParams({l: locale})}
           ).subscribe(translatedQuiz => {
             this.translatedQuiz = {...translatedQuiz};

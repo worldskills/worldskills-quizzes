@@ -1,4 +1,4 @@
-import {Link, List} from './common';
+import {Link, List, LocalizedText} from './common';
 import {Entity} from './entity';
 
 export interface Event {
@@ -13,10 +13,7 @@ export interface Event {
   country: {
     id: number;
     code: string;
-    name: {
-      lang_code: string;
-      text: string;
-    }
+    name: LocalizedText;
   };
   utc_offset: number;
   url: string;

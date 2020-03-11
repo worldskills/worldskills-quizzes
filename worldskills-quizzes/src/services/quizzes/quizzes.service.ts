@@ -37,19 +37,11 @@ export class QuizzesService {
 //
 //   })();
 
-  static listUrl() {
-    return 'https://api.worldskills.show/quizzes';
-  }
-
-  static instanceUrl(quizId: number) {
-    return `https://api.worldskills.show/quizzes/${quizId}`;
-  }
-
-  fetchList(fetchParams: FetchParams = {offset: 0, limit: 15}) {
+  fetchList(fetchParams: FetchParams = {offset: 0, limit: 15}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     this.loading = true;
 
-    const subscription = this.http.get<QuizList>(QuizzesService.listUrl(), {params});
+    const subscription = this.http.get<QuizList>(url ?? 'https://api.worldskills.show/quizzes', {params});
     subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);
@@ -57,10 +49,10 @@ export class QuizzesService {
     return subscription;
   }
 
-  fetchInstance(quizId: number, fetchParams: FetchParams = {}) {
+  fetchInstance(quizId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     this.loading = true;
-    const subscription = this.http.get<Quiz>(QuizzesService.instanceUrl(quizId), {params});
+    const subscription = this.http.get<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, {params});
     subscription.subscribe(value => {
       this.loading = false;
       this.instance.next(value);

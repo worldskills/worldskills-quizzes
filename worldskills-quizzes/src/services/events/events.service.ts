@@ -16,11 +16,11 @@ export class EventsService {
   constructor(private http: HttpClient) {
   }
 
-  fetchList(fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'start_date_desc'}) {
+  fetchList(fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'start_date_desc'}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     params.set('type', 'competition');
     this.loading = true;
-    const subscription = this.http.get<EventList>(`https://api.worldskills.show/events`, {params});
+    const subscription = this.http.get<EventList>(url ?? `https://api.worldskills.show/events`, {params});
     subscription.subscribe(value => {
       this.loading = false;
       this.list.next(value);
