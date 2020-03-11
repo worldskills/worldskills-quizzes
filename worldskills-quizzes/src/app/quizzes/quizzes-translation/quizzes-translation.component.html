@@ -1,17 +1,23 @@
-<ol class="breadcrumb">
-  <li><a ui-sref="quizzes.list">Quizzes</a></li>
-  <li><a ui-sref="quizzes.quiz.form({id: quiz.id})">{{quiz.title.text}}</a></li>
-  <li><a ui-sref="quizzes.quiz.translations({id: quiz.id})">Translations</a></li>
-  <li class="active">{{locale|translate}}</li>
-</ol>
+<ng-container *ngIf="quiz && translatedQuiz">
+  <!--  TODO nav-->
+  <!--<ol class="breadcrumb">-->
+  <!--  <li><a ui-sref="quizzes.list">Quizzes</a></li>-->
+  <!--  <li><a ui-sref="quizzes.quiz.form({id: quiz.id})">{{quiz.title.text}}</a></li>-->
+  <!--  <li><a ui-sref="quizzes.quiz.translations({id: quiz.id})">Translations</a></li>-->
+  <!--  <li class="active">{{locale|translate}}</li>-->
+  <!--</ol>-->
 
-<p class="pull-right">
-  <button ng-click="deleteTranslation()" class="btn btn-danger">Delete Translation<ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner></button>
-</p>
+  <p class="pull-right">
+    <button (click)="deleteTranslation()" class="btn btn-danger">Delete Translation
+      <!--    TODO spinner-->
+      <!--    <ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner>-->
+    </button>
+  </p>
 
-<h1>{{title || " "}}</h1>
+  <h1>{{translatedQuiz.title.lang_code}} translation of {{quiz.title.text || " "}}</h1>
 
-<hr/>
+  <hr/>
 
-<div id="content" ui-view>
-</div>
+  <app-quizzes-translation-form [quiz]="translatedQuiz"></app-quizzes-translation-form>
+
+</ng-container>

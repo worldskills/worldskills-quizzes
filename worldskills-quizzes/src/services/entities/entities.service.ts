@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {EntityList} from '../../types/entity';
+import {FetchParams} from '../../types/common';
+import {httpParamsFromFetchParams} from '../../utils/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +16,8 @@ export class EntitiesService {
   constructor(private http: HttpClient) {
   }
 
-  fetchList() {
-    const params = new HttpParams();
-    params.set('limit', '100');
+  fetchList(fetchParams: FetchParams = {limit: 100}) {
+    const params = httpParamsFromFetchParams(fetchParams);
     params.set('role', 'EditQuizzes');
     params.set('roleApp', '1300');
     this.loading = true;

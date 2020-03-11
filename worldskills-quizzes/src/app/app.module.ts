@@ -27,8 +27,8 @@ import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-quest
 import {QuizzesQuestionFormComponent} from './quizzes/quizzes-question/quizzes-question-form/quizzes-question-form.component';
 // import { QuizzesTranslationCreateComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 // import { QuizzesTranslationCreateFormComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create-form/quizzes-translation-create-form.component';
-// import { QuizzesTranslationComponent } from './quizzes/quizzes-translation/quizzes-translation.component';
-// import { QuizzesTranslationFormComponent } from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
+import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
+import {QuizzesTranslationFormComponent} from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
 // import { QuizComponent } from './quiz/quiz.component';
 
 const serviceConfig = {
@@ -87,8 +87,8 @@ const httpConfig = {
     QuizzesQuestionFormComponent,
     // QuizzesTranslationCreateComponent,
     // QuizzesTranslationCreateFormComponent,
-    // QuizzesTranslationComponent,
-    // QuizzesTranslationFormComponent,
+    QuizzesTranslationComponent,
+    QuizzesTranslationFormComponent,
     // QuizComponent
   ],
   imports: [

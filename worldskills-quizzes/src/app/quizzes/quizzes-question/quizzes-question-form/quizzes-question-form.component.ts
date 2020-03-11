@@ -23,16 +23,16 @@ export class QuizzesQuestionFormComponent implements OnInit {
   constructor() {
   }
 
-  get controls() {
+  get answerControls() {
     return (this.form.get('answers') as FormArray).controls;
   }
 
   ngOnInit(): void {
     this.form = new FormGroup({
       question: new FormControl(this.question.text.text, Validators.required),
-      answers: new FormArray(this.answers.answers.map(anwer => new FormGroup({
-        answer: new FormControl(anwer.text.text),
-        correct: new FormControl(anwer.correct),
+      answers: new FormArray(this.answers.answers.map(answer => new FormGroup({
+        answer: new FormControl(answer.text.text),
+        correct: new FormControl(answer.correct),
         removed: new FormControl(false)
       }))),
     });

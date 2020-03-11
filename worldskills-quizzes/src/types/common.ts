@@ -19,6 +19,8 @@ export interface ListPage {
 }
 
 export interface FetchParams {
-  offset: number;
-  limit: number;
+  limit?: number;
+  offset?: number;
+  sort?: string;
+  l?: string;
 }

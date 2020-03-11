@@ -11,7 +11,7 @@
   </div>
 
   <div formArrayName="answers">
-    <ng-container *ngFor="let control of controls; let index=index">
+    <ng-container *ngFor="let control of answerControls; let index=index">
       <hr/>
       <div class="form-group" *ngIf="!control.get('removed').value">
         <label class="col-sm-3 control-label">Answer</label>
