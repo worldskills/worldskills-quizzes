@@ -15,7 +15,7 @@ import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes
 // import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
-// import {QuizComponent} from './quiz/quiz.component';
+import {QuizComponent} from './quiz/quiz.component';
 
 const routes: Routes = [
   {
@@ -28,6 +28,12 @@ const routes: Routes = [
     pathMatch: 'full',
     component: AppHomepageComponent,
     canActivate: [AdminAuthGuard]
+  },
+  {
+    path: 'quiz/:quizId',
+    pathMatch: 'full',
+    component: QuizComponent,
+    canActivate: [AdminAuthGuard] // TODO different guard
   },
   {
     path: 'quizzes',
