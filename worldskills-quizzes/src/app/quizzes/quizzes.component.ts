@@ -1,7 +1,7 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {QuizzesService} from '../../services/quizzes/quizzes.service';
 import {QuizList} from '../../types/quiz';
-import {ListPage} from '../../types/common';
+import {ListPage, listPageToFetchParam} from '../../types/common';
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,14 +9,15 @@ import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
   templateUrl: './quizzes.component.html',
   styleUrls: ['./quizzes.component.css']
 })
-export class QuizzesComponent implements OnInit, OnChanges {
+export class QuizzesComponent implements OnInit {
 
   faCheck = faCheck;
   faTimes = faTimes;
   list: QuizList = null;
+  loading = true;
   listPage: ListPage = {
     page: 1,
-    pageSize: 10
+    pageSize: 15
   };
 
   constructor(private quizzesService: QuizzesService) {
@@ -24,16 +25,13 @@ export class QuizzesComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.quizzesService.list.subscribe(list => (this.list = list));
-    this.quizzesService.fetchList();
+    this.quizzesService.loading.subscribe(loading => (this.loading = loading));
+    this.quizzesService.fetchList(listPageToFetchParam(this.listPage));
   }
 
-  fetch() {
-
+  fetch(page: number) {
+    this.listPage.page = page;
+    this.quizzesService.fetchList(listPageToFetchParam(this.listPage));
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
-
 
 }

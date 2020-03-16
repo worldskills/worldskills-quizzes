@@ -31,7 +31,9 @@ export class QuestionsService {
   fetchInstance(questionId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     this.loading = true;
-    const subscription = this.http.get<QuestionWithAnswers>(url ?? `https://api.worldskills.show/quizzes/questions/${questionId}`, {params});
+    const subscription = this.http.get<QuestionWithAnswers>(
+      url ?? `https://api.worldskills.show/quizzes/questions/${questionId}`, {params}
+    );
     subscription.subscribe(value => {
       this.loading = false;
       this.instance.next(value);

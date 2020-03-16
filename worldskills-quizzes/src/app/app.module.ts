@@ -12,7 +12,7 @@ import {LandingComponent} from './landing/landing.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 // import { QuizzesListComponent } from './quizzes/quizzes-list/quizzes-list.component';
-// import { QuizzesCreateComponent } from './quizzes/quizzes-create/quizzes-create.component';
+import {QuizzesCreateComponent} from './quizzes/quizzes-create/quizzes-create.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -74,7 +74,7 @@ const httpConfig = {
     QuizzesComponent,
     LandingComponent,
     // QuizzesListComponent,
-    // QuizzesCreateComponent,
+    QuizzesCreateComponent,
     QuizzesQuizComponent,
     QuizzesQuizFormComponent,
     QuizzesQuizQuestionsComponent,

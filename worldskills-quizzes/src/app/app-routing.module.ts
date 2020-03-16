@@ -16,6 +16,7 @@ import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes
 import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
 import {QuizComponent} from './quiz/quiz.component';
+import {QuizzesCreateComponent} from './quizzes/quizzes-create/quizzes-create.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,13 @@ const routes: Routes = [
         path: 'quizzes',
         pathMatch: 'full',
         component: QuizzesComponent,
+        canActivate: [AdminAuthGuard],
+        data: {breadcrumb: 'Quizzes'}
+      },
+      {
+        path: 'quizzes/create',
+        pathMatch: 'full',
+        component: QuizzesCreateComponent,
         canActivate: [AdminAuthGuard],
         data: {breadcrumb: 'Quizzes'}
       },

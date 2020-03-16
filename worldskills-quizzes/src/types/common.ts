@@ -25,6 +25,13 @@ export interface FetchParams {
   l?: string;
 }
 
+export function listPageToFetchParam(listPage: ListPage): FetchParams {
+  return {
+    limit: listPage.pageSize,
+    offset: listPage.pageSize * (listPage.page - 1),
+  };
+}
+
 export interface LocalizedText {
   lang_code: string;
   text: string;
