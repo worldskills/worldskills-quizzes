@@ -20,74 +20,86 @@ import {QuizComponent} from './quiz/quiz.component';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
+    // pathMatch: 'full',
     component: LandingComponent,
-  },
-  {
-    path: 'home',
-    pathMatch: 'full',
-    component: AppHomepageComponent,
-    canActivate: [AdminAuthGuard]
-  },
-  {
-    path: 'quiz/:quizId',
-    pathMatch: 'full',
-    component: QuizComponent,
-    canActivate: [AdminAuthGuard] // TODO different guard
-  },
-  {
-    path: 'quizzes',
-    pathMatch: 'full',
-    component: QuizzesComponent,
-    canActivate: [AdminAuthGuard],
-  },
-  {
-    path: 'quizzes/:quizId',
-    component: QuizzesQuizComponent,
-    canActivate: [AdminAuthGuard],
     children: [
       {
         path: '',
-        component: QuizzesQuizFormComponent,
-        canActivate: [AdminAuthGuard]
+        pathMatch: 'full',
+        redirectTo: '/quizzes'
       },
       {
-        path: 'questions',
-        component: QuizzesQuizQuestionsComponent,
+        path: 'quiz/:quizId',
+        pathMatch: 'full',
+        component: QuizComponent,
+        canActivate: [AdminAuthGuard], // TODO different guard
+        data: {breadcrumb: 'Quiz'}
+
+      },
+      {
+        path: 'quizzes',
+        pathMatch: 'full',
+        component: QuizzesComponent,
         canActivate: [AdminAuthGuard],
+        data: {breadcrumb: 'Quizzes'}
       },
       {
-        path: 'questions/:questionId',
-        component: QuizzesQuestionComponent,
-        canActivate: [AdminAuthGuard]
-      },
-      {
-        path: 'preview',
-        component: QuizzesQuizPreviewComponent,
-        canActivate: [AdminAuthGuard]
-      },
-      {
-        path: 'translations',
-        component: QuizzesQuizTranslationsComponent,
-        canActivate: [AdminAuthGuard]
-      },
-      {
-        path: 'translations/:locale',
-        component: QuizzesTranslationComponent,
-        canActivate: [AdminAuthGuard]
-      },
-      {
-        path: 'attempts',
-        component: QuizzesQuizAttemptsComponent,
-        canActivate: [AdminAuthGuard]
-      },
-      {
-        path: 'attempts/:attemptId',
-        component: QuizzesAttemptComponent,
-        canActivate: [AdminAuthGuard]
+        path: 'quizzes/:quizId',
+        component: QuizzesQuizComponent,
+        canActivate: [AdminAuthGuard],
+        children: [
+          {
+            path: '',
+            component: QuizzesQuizFormComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Quiz'}
+          },
+          {
+            path: 'questions',
+            component: QuizzesQuizQuestionsComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Questions'}
+          },
+          {
+            path: 'questions/:questionId',
+            component: QuizzesQuestionComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Question'}
+          },
+          {
+            path: 'preview',
+            component: QuizzesQuizPreviewComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Preview'}
+          },
+          {
+            path: 'translations',
+            component: QuizzesQuizTranslationsComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Translations'}
+          },
+          {
+            path: 'translations/:locale',
+            component: QuizzesTranslationComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Translation'}
+          },
+          {
+            path: 'attempts',
+            component: QuizzesQuizAttemptsComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Attempts'}
+          },
+          {
+            path: 'attempts/:attemptId',
+            component: QuizzesAttemptComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Attempts'}
+          }
+        ]
       }
     ]
-  }
+  },
   // children: [
   //   {
   //     path: 'create',

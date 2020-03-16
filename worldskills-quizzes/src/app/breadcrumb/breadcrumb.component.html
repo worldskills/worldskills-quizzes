@@ -1,0 +1,16 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" *ngIf="showHomeItem && !isAtHome">
+      <a routerLink="{{ homeItemRoute }}">{{ homeItemText }}</a>
+    </li>
+    <li class="breadcrumb-item {{ last ? 'active' : '' }}"
+        *ngFor="let breadcrumb of service.breadcrumbs; let last = last;">
+      <a *ngIf="!last" [routerLink]="[breadcrumb.url, breadcrumb.params]">
+        {{ breadcrumb.label }}
+      </a>
+      <span *ngIf="last">
+          {{ breadcrumb.label }}
+      </span>
+    </li>
+  </ol>
+</nav>

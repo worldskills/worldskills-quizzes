@@ -9,31 +9,29 @@ import {Router} from '@angular/router';
 })
 export class LandingComponent implements OnInit {
 
-  constructor(private auth: AuthService, private user: UserService, private router: Router) {
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) {
   }
 
   ngOnInit(): void {
-    if (this.auth.isLoggedIn()) {
+    if (this.authService.isLoggedIn()) {
       console.log('logged in');
-      this.auth.loadUserProfile(user => {
+      this.authService.loadUserProfile(user => {
         if ('ok' in user && !user.ok) {
-          this.user.logout().subscribe({
+          this.userService.logout().subscribe({
             error: () => {
               console.log('ERROR');
-              this.auth.login();
+              this.authService.login();
             },
             next: () => {
               console.log('NEXT');
-              this.auth.login();
+              this.authService.login();
             }
           });
-        } else {
-          this.router.navigate(['/quizzes']).catch(e => console.error(e));
         }
       });
     } else {
       console.log('logged out');
-      this.auth.login();
+      this.authService.login();
     }
   }
 

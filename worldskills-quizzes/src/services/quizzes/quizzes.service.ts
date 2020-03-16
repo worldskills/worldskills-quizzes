@@ -1,20 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import {ReplaySubject, Subscription} from 'rxjs';
 import {Quiz, QuizList} from '../../types/quiz';
 import {FetchParams} from '../../types/common';
-import {httpParamsFromFetchParams} from '../../utils/http';
+import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizzesService {
 
-  private loading = false;
-  public list = new BehaviorSubject<QuizList>(null);
-  public instance = new BehaviorSubject<Quiz>(null);
+  private listSubscription: Subscription;
+  private instanceSubscription: Subscription;
+  public list = new ReplaySubject<QuizList>(1);
+  public instance = new ReplaySubject<Quiz>(1);
+  public loading = new ReplaySubject<boolean>(1);
 
   constructor(private http: HttpClient) {
+    this.loading.next(false);
   }
 
 // (function () {
@@ -39,25 +42,16 @@ export class QuizzesService {
 
   fetchList(fetchParams: FetchParams = {offset: 0, limit: 15}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    this.loading = true;
-
-    const subscription = this.http.get<QuizList>(url ?? 'https://api.worldskills.show/quizzes', {params});
-    subscription.subscribe(value => {
-      this.loading = false;
-      this.list.next(value);
-    });
-    return subscription;
+    const observable = this.http.get<QuizList>(url ?? 'https://api.worldskills.show/quizzes', {params});
+    this.listSubscription = multicastRequestLoader<QuizList>(observable, this.list, this.loading, this.listSubscription);
+    return observable;
   }
 
   fetchInstance(quizId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    this.loading = true;
-    const subscription = this.http.get<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, {params});
-    subscription.subscribe(value => {
-      this.loading = false;
-      this.instance.next(value);
-    });
-    return subscription;
+    const observable = this.http.get<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, {params});
+    this.instanceSubscription = multicastRequestLoader<Quiz>(observable, this.instance, this.loading, this.instanceSubscription);
+    return observable;
   }
 
 }

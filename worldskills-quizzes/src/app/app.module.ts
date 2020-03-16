@@ -30,6 +30,7 @@ import {QuizzesQuestionFormComponent} from './quizzes/quizzes-question/quizzes-q
 import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
 import {QuizzesTranslationFormComponent} from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
 import {QuizComponent} from './quiz/quiz.component';
+import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
 
 const serviceConfig = {
   appCode: 1300,
@@ -89,7 +90,8 @@ const httpConfig = {
     // QuizzesTranslationCreateFormComponent,
     QuizzesTranslationComponent,
     QuizzesTranslationFormComponent,
-    QuizComponent
+    QuizComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,

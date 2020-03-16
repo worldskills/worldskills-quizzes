@@ -1,1 +1,8 @@
-Loading...
+<div class="container">
+  <app-breadcrumb
+    [showHomeItem]="true"
+    [homeItemText]="'Home'"
+    [homeItemRoute]="'/'">
+  </app-breadcrumb>
+  <router-outlet></router-outlet>
+</div>

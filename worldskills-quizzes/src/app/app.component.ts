@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {UserService} from '@worldskills/worldskills-angular-lib';
+import {Component, OnInit} from '@angular/core';
+import {AuthService, UserModel, UserService} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
 
 @Component({
@@ -7,18 +7,26 @@ import {Router} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   date;
+  user: UserModel;
+  isLoggedIn = false;
 
-  constructor(private user: UserService, private router: Router) {
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) {
     this.date = new Date();
   }
 
-  logout(e: MouseEvent) {
-    e.preventDefault();
-    console.log(e, 'loogging out');
-    this.user.logout().subscribe({
+  ngOnInit(): void {
+    this.userService.getLoggedInUser().subscribe((user: UserModel) => {
+      this.user = user;
+      this.isLoggedIn = true;
+    });
+  }
+
+  logout() {
+    this.userService.logout().subscribe({
       complete: () => {
+        this.isLoggedIn = false;
         this.router.navigate(['/']).catch(e2 => console.error(e2));
       }
     });
