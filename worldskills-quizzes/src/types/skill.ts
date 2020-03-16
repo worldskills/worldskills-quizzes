@@ -49,4 +49,4 @@ export interface Skill {
   links: Array<Link>;
 }
 
-export type SkillList = List<Event, 'skills'>;
+export type SkillList = List<Skill, 'skills'>;

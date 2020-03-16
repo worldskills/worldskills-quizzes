@@ -1,43 +1,38 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {ReplaySubject, Subscription} from 'rxjs';
 import {QuestionList, QuestionWithAnswers} from '../../types/question';
 import {HttpClient} from '@angular/common/http';
 import {FetchParams} from '../../types/common';
-import {httpParamsFromFetchParams} from '../../utils/http';
+import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionsService {
 
-  private loading = false;
-  public list = new BehaviorSubject<QuestionList>(null);
-  public instance = new BehaviorSubject<QuestionWithAnswers>(null);
+  public loading = new ReplaySubject<boolean>(1);
+  private listSubscription: Subscription;
+  private instanceSubscription: Subscription;
+  public list = new ReplaySubject<QuestionList>(1);
+  public instance = new ReplaySubject<QuestionWithAnswers>(1);
 
   constructor(private http: HttpClient) {
   }
 
   fetchList(quizId: number, fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    this.loading = true;
-    const subscription = this.http.get<QuestionList>(url ?? `https://api.worldskills.show/quizzes/${quizId}/questions`, {params});
-    subscription.subscribe(value => {
-      this.loading = false;
-      this.list.next(value);
-    });
-    return subscription;
+    const observable = this.http.get<QuestionList>(url ?? `https://api.worldskills.show/quizzes/${quizId}/questions`, {params});
+    this.listSubscription = multicastRequestLoader<QuestionList>(observable, this.list, this.loading, this.listSubscription);
+    return observable;
   }
 
   fetchInstance(questionId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    this.loading = true;
-    const subscription = this.http.get<QuestionWithAnswers>(
+    const observable = this.http.get<QuestionWithAnswers>(
       url ?? `https://api.worldskills.show/quizzes/questions/${questionId}`, {params}
     );
-    subscription.subscribe(value => {
-      this.loading = false;
-      this.instance.next(value);
-    });
-    return subscription;
+    this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(
+      observable, this.instance, this.loading, this.instanceSubscription);
+    return observable;
   }
 }

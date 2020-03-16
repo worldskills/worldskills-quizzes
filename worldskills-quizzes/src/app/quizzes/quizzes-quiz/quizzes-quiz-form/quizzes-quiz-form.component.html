@@ -1,10 +1,10 @@
-<form class="form-horizontal" novalidate (ngSubmit)="save()" #form="ngForm">
+<form class="form-horizontal" novalidate (ngSubmit)="submit()" #form="ngForm">
   <div class="form-group"
-       [ngClass]="{'has-error': instance && instance && form.errors && form.errors.title}">
+       [ngClass]="{'has-error': quiz && quiz && form.errors && form.errors.title}">
     <label for="title" class="col-sm-3 control-label">Title <span class="required">*</span></label>
     <div class="col-sm-4">
       <input type="text" class="form-control" id="title" name="title" required
-             [ngModel]="instance && instance.title ? instance.title.text : ''">
+             [ngModel]="quiz && quiz.title ? quiz.title.text : ''">
     </div>
     <div class="col-sm-5">
       <span class="help-block" *ngIf="form.submitted && form.errors && form.errors.title.required">Please enter a title!</span>
@@ -16,7 +16,7 @@
       class="required">*</span></label>
     <div class="col-sm-4">
       <select class="form-control" id="ws_entity" name="ws_entity" required
-              [ngModel]="instance ? instance.ws_entity : ''">
+              [ngModel]="quiz ? quiz.ws_entity : ''">
         <option *ngFor="let entity of entities ? entities.ws_entity_list : []"
                 [value]="entity.id">{{entity.name.text}}</option>
         <!--              ng-options="entity.name.text for entity in entities track by entity.id">-->
@@ -31,7 +31,7 @@
     <label for="event" class="col-sm-3 control-label">Event</label>
     <div class="col-sm-4">
       <select class="form-control" id="event" name="event"
-              [ngModel]="instance ? instance.event : ''">
+              [ngModel]="quiz && quiz.event ? quiz.event.id : ''">
         <option *ngFor="let event of events ? events.events : []"
                 [value]="event.id">{{event.name}}</option>
         <!--              ng-options="event.name for event in events track by event.id"-->
@@ -44,9 +44,9 @@
     <label for="skill" class="col-sm-3 control-label">Skill</label>
     <div class="col-sm-4">
       <select class="form-control" id="skill" name="skill"
-              [ngModel]="instance ? instance.skill : ''">
+              [ngModel]="quiz && quiz.skill ? quiz.skill : ''">
         <option *ngFor="let skill of skills ? skills.skills : []"
-                [value]="skill.id">{{skill.name}}</option>
+                [value]="skill.id">{{skill.name.text}}</option>
         <!--              ng-options="skill.name.text for skill in skills track by skill.id">-->
       </select>
     </div>
@@ -55,14 +55,14 @@
     <label for="max_questions" class="col-sm-3 control-label">Max Questions</label>
     <div class="col-sm-3">
       <input type="text" class="form-control" id="max_questions" name="max_questions"
-             [ngModel]="instance ? instance.max_questions : ''">
+             [ngModel]="quiz ? quiz.max_questions : ''">
     </div>
   </div>
   <div class="form-group">
     <label for="required_score_pass" class="col-sm-3 control-label">Required score to pass</label>
     <div class="col-sm-3">
       <input type="text" class="form-control" id="required_score_pass" name="required_score_pass"
-             [ngModel]="instance ? instance.required_score_pass : ''">
+             [ngModel]="quiz ? quiz.required_score_pass : ''">
     </div>
     <div class="col-sm-5 col-sm-offset-1">
       <span class="help-block">Leave empty to require all answers to be correct.</span>
@@ -73,21 +73,21 @@
       <div class="checkbox">
         <label>
           <input type="checkbox" id="random_questions" name="random_questions"
-                 [ngModel]="instance ? instance.random_questions : ''">
+                 [ngModel]="quiz ? quiz.random_questions : ''">
           Show random Questions
         </label>
       </div>
       <div class="checkbox">
         <label>
           <input type="checkbox" id="reveal_correct_answers" name="reveal_correct_answers"
-                 [ngModel]="instance ? instance.reveal_correct_answers : ''">
+                 [ngModel]="quiz ? quiz.reveal_correct_answers : ''">
           Reveal correct answers after finishing quiz
         </label>
       </div>
       <div class="checkbox">
         <label>
           <input type="checkbox" id="active" name="active"
-                 [ngModel]="instance ? instance.active : ''">
+                 [ngModel]="quiz ? quiz.active : ''">
           Active (Quiz can be answered)
         </label>
       </div>
@@ -97,7 +97,7 @@
     <label for="url_learning" class="col-sm-3 control-label">URL Learning</label>
     <div class="col-sm-4">
       <input type="text" class="form-control" id="url_learning" name="url_learning"
-             [ngModel]="instance ? instance.url_learning : ''">
+             [ngModel]="quiz ? quiz.url_learning : ''">
     </div>
     <div class="col-sm-5">
       <span class="help-block">Address with information about the questions.</span>
@@ -107,7 +107,7 @@
     <label for="url_success" class="col-sm-3 control-label">URL Success</label>
     <div class="col-sm-4">
       <input type="text" class="form-control" id="url_success" name="url_success"
-             [ngModel]="instance ? instance.url_success : ''">
+             [ngModel]="quiz ? quiz.url_success : ''">
     </div>
     <div class="col-sm-5">
       <span class="help-block">Link for the user to continue after a passed quiz.</span>
@@ -120,7 +120,7 @@
         <!--        TODO fix this-->
         <!--        <ws-text-spinner *ngIf="loading" class="ng-hide"></ws-text-spinner>-->
       </button>
-      <a routerLink="/quizzes/{{instance ? instance.id : ''}}">Cancel</a>
+      <a routerLink="/quizzes/{{quiz ? quiz.id : ''}}">Cancel</a>
     </div>
   </div>
 </form>

@@ -1,5 +1,6 @@
 import {Link, List, LocalizedText} from './common';
 import {Entity} from './entity';
+import {Skill} from './skill';
 
 export interface Quiz {
   id: number;
@@ -18,7 +19,7 @@ export interface Quiz {
     id: number,
     name: string
   };
-  skill: any;
+  skill: Skill;
   created: string;
   active: boolean;
   links: Array<Link<QuizLinkType>>;

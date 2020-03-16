@@ -8,7 +8,6 @@ import {SkillsService} from '../../../services/skills/skills.service';
 import {EventList} from '../../../types/event';
 import {SkillList} from '../../../types/skill';
 import {EntityList} from '../../../types/entity';
-import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-quizzes-quiz',
@@ -17,7 +16,7 @@ import {forkJoin} from 'rxjs';
 })
 export class QuizzesQuizComponent implements OnInit {
 
-  instance: Quiz = null;
+  quiz: Quiz = null;
   events: EventList = null;
   skills: SkillList = null;
   entities: EntityList = null;
@@ -34,19 +33,11 @@ export class QuizzesQuizComponent implements OnInit {
   ngOnInit(): void {
     this.router.params.subscribe(value => {
       const {quizId} = value;
-      this.quizzesService.instance.subscribe(instance => {
-        if (instance) {
-          forkJoin({
-            events: this.eventsService.fetchList(),
-            skills: this.skillsService.fetchList(instance.event.id),
-            entities: this.entitiesService.fetchList()
-          }).subscribe(({events, skills, entities}) => {
-            this.events = events;
-            this.skills = skills;
-            this.entities = entities;
-            this.instance = instance;
-          });
-        }
+      this.quizzesService.instance.subscribe(quiz => {
+        this.quiz = quiz;
+        this.eventsService.fetchList().subscribe(events => (this.events = events));
+        this.skillsService.fetchList(quizId).subscribe(skills => (this.skills = skills));
+        this.entitiesService.fetchList().subscribe(entities => (this.entities = entities));
       });
       this.quizzesService.fetchInstance(quizId);
     });

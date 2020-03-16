@@ -1,37 +1,34 @@
-<ol class="breadcrumb">
-  <li><a ui-sref="quizzes.list">Quizzes</a></li>
-  <li class="active">{{instance ? instance.title.text : " "}}</li>
-</ol>
-
 <!--TODO fix this-->
 <!--<alerts></alerts>-->
+<ng-container *ngIf="quiz">
+  <div class="alert alert-warning" role="alert" *ngIf="quiz.has_attempts">
+    <p>This Quiz already has attempts. Questions cannot be deleted or added.</p>
+  </div>
 
-<div class="alert alert-warning" role="alert" *ngIf="instance && instance.has_attempts">
-  <p>This Quiz already has attempts. Questions cannot be deleted or added.</p>
-</div>
+  <p class="pull-right">
+    <button ng-click="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">Delete Quiz
+      <!--    TODO spinner-->
+      <!--    <ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner>-->
+    </button>
+  </p>
 
-<p class="pull-right">
-  <button ng-click="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">Delete Quiz
-    <!--    TODO spinner-->
-    <!--    <ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner>-->
-  </button>
-</p>
+  <h1>{{quiz.title.text}}</h1>
 
-<h1>{{instance ? instance.title.text : " "}}</h1>
+  <ul class="nav nav-tabs">
+    <li routerLinkActive="active"><a routerLink="/quizzes/{{quiz.id}}">Quiz</a>
+    </li>
+    <li routerLinkActive="active"><a routerLink="/quizzes/{{quiz.id}}/questions">Questions</a>
+    </li>
+    <li routerLinkActive="active"><a routerLink="/quizzes/{{quiz.id}}/preview">Preview</a>
+    </li>
+    <li routerLinkActive="active"><a
+      routerLink="/quizzes/{{quiz.id}}/translations">Translations</a></li>
+    <li routerLinkActive="active"><a routerLink="/quizzes/{{quiz.id}}/attempts">Attempts</a>
+    </li>
+  </ul>
 
-<ul class="nav nav-tabs">
-  <li routerLinkActive="active"><a routerLink="/quizzes/{{instance ? instance.id : ''}}">Quiz</a>
-  </li>
-  <li routerLinkActive="active"><a routerLink="/quizzes/{{instance ? instance.id : ''}}/questions">Questions</a>
-  </li>
-  <li routerLinkActive="active"><a routerLink="/quizzes/{{instance ? instance.id : ''}}/preview">Preview</a>
-  </li>
-  <li routerLinkActive="active"><a
-    routerLink="/quizzes/{{instance ? instance.id : ''}}/translations">Translations</a></li>
-  <li routerLinkActive="active"><a routerLink="/quizzes/{{instance ? instance.id : ''}}/attempts">Attempts</a>
-  </li>
-</ul>
-
-<div id="content">
-  <router-outlet></router-outlet>
-</div>
+  <div id="content">
+    <router-outlet></router-outlet>
+  </div>
+</ng-container>
+<ws-spinner *ngIf="!quiz"></ws-spinner>

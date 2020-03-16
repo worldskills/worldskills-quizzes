@@ -44,14 +44,14 @@ export class QuizzesService {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<QuizList>(url ?? 'https://api.worldskills.show/quizzes', {params});
     this.listSubscription = multicastRequestLoader<QuizList>(observable, this.list, this.loading, this.listSubscription);
-    return observable;
+    return this.list;
   }
 
   fetchInstance(quizId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, {params});
     this.instanceSubscription = multicastRequestLoader<Quiz>(observable, this.instance, this.loading, this.instanceSubscription);
-    return observable;
+    return this.instance;
   }
 
 }

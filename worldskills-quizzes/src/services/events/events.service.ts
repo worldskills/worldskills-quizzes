@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import {ReplaySubject, Subscription} from 'rxjs';
 import {EventList} from '../../types/event';
 import {FetchParams} from '../../types/common';
-import {httpParamsFromFetchParams} from '../../utils/http';
+import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
 
-  private loading = false;
-  public list = new BehaviorSubject<EventList>(null);
+  private listSubscription: Subscription;
+  public loading = new ReplaySubject<boolean>(1);
+  public list = new ReplaySubject<EventList>(1);
 
   constructor(private http: HttpClient) {
   }
@@ -19,12 +20,8 @@ export class EventsService {
   fetchList(fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'start_date_desc'}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     params.set('type', 'competition');
-    this.loading = true;
-    const subscription = this.http.get<EventList>(url ?? `https://api.worldskills.show/events`, {params});
-    subscription.subscribe(value => {
-      this.loading = false;
-      this.list.next(value);
-    });
-    return subscription;
+    const observable = this.http.get<EventList>(url ?? `https://api.worldskills.show/events`, {params});
+    this.listSubscription = multicastRequestLoader<EventList>(observable, this.list, this.loading, this.listSubscription);
+    return this.list;
   }
 }

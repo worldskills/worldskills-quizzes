@@ -17,6 +17,8 @@ import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {QuizzesCreateComponent} from './quizzes/quizzes-create/quizzes-create.component';
+import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
+import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
 
 const routes: Routes = [
   {
@@ -47,7 +49,7 @@ const routes: Routes = [
       {
         path: 'quizzes/create',
         pathMatch: 'full',
-        component: QuizzesCreateComponent,
+        component: QuizzesQuizCreateComponent,
         canActivate: [AdminAuthGuard],
         data: {breadcrumb: 'Quizzes'}
       },
@@ -58,7 +60,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: QuizzesQuizFormComponent,
+            component: QuizzesQuizUpdateComponent,
             canActivate: [AdminAuthGuard],
             data: {breadcrumb: 'Quiz'}
           },

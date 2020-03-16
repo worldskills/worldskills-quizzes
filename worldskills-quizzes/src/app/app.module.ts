@@ -31,6 +31,8 @@ import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes
 import {QuizzesTranslationFormComponent} from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
+import { QuizzesQuizUpdateComponent } from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
+import { QuizzesQuizCreateComponent } from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
 
 const serviceConfig = {
   appCode: 1300,
@@ -91,7 +93,9 @@ const httpConfig = {
     QuizzesTranslationComponent,
     QuizzesTranslationFormComponent,
     QuizComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    QuizzesQuizUpdateComponent,
+    QuizzesQuizCreateComponent
   ],
   imports: [
     BrowserModule,
