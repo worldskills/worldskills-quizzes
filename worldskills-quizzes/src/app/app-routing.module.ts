@@ -1,11 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AppHomepageComponent} from './app-homepage/app-homepage.component';
 import {AdminAuthGuard} from '../security/admin-auth.guard';
 import {QuizzesComponent} from './quizzes/quizzes.component';
 import {LandingComponent} from './landing/landing.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
-import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
 import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-question.component';
 // import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
@@ -16,7 +14,6 @@ import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes
 import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
 import {QuizComponent} from './quiz/quiz.component';
-import {QuizzesCreateComponent} from './quizzes/quizzes-create/quizzes-create.component';
 import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
 import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
 

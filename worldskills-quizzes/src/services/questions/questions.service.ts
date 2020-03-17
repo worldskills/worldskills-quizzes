@@ -4,6 +4,7 @@ import {QuestionList, QuestionWithAnswers} from '../../types/question';
 import {HttpClient} from '@angular/common/http';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
+import {share} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,9 @@ export class QuestionsService {
 
   fetchList(quizId: number, fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.get<QuestionList>(url ?? `https://api.worldskills.show/quizzes/${quizId}/questions`, {params});
+    const observable = this.http.get<QuestionList>(
+      url ?? `https://api.worldskills.show/quizzes/${quizId}/questions`, {params}
+    ).pipe(share());
     this.listSubscription = multicastRequestLoader<QuestionList>(observable, this.list, this.loading, this.listSubscription);
     return observable;
   }
@@ -30,7 +33,7 @@ export class QuestionsService {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<QuestionWithAnswers>(
       url ?? `https://api.worldskills.show/quizzes/questions/${questionId}`, {params}
-    );
+    ).pipe(share());
     this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(
       observable, this.instance, this.loading, this.instanceSubscription);
     return observable;

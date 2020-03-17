@@ -4,6 +4,7 @@ import {ReplaySubject, Subscription} from 'rxjs';
 import {SkillList} from '../../types/skill';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
+import {share} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,10 @@ export class SkillsService {
 
   fetchList(eventId: number, fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.get<SkillList>(url ?? `https://api.worldskills.show/events/${eventId}/skills`, {params});
+    const observable = this.http.get<SkillList>(
+      url ?? `https://api.worldskills.show/events/${eventId}/skills`, {params}
+    ).pipe(share());
     this.listSubscription = multicastRequestLoader<SkillList>(observable, this.list, this.loading, this.listSubscription);
-    return this.list;
+    return observable;
   }
 }

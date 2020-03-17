@@ -11,8 +11,6 @@ import {QuizzesComponent} from './quizzes/quizzes.component';
 import {LandingComponent} from './landing/landing.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-// import { QuizzesListComponent } from './quizzes/quizzes-list/quizzes-list.component';
-import {QuizzesCreateComponent} from './quizzes/quizzes-create/quizzes-create.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -21,18 +19,14 @@ import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-p
 import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
 import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
-// import { QuizzesQuestionCreateComponent } from './quizzes/quizzes-question-create/quizzes-question-create.component';
-// import { QuizzesQuestionCreateFormComponent } from './quizzes/quizzes-question-create/quizzes-question-create-form/quizzes-question-create-form.component';
 import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-question.component';
 import {QuizzesQuestionFormComponent} from './quizzes/quizzes-question/quizzes-question-form/quizzes-question-form.component';
-// import { QuizzesTranslationCreateComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
-// import { QuizzesTranslationCreateFormComponent } from './quizzes/quizzes-translation-create/quizzes-translation-create-form/quizzes-translation-create-form.component';
 import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
 import {QuizzesTranslationFormComponent} from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
-import { QuizzesQuizUpdateComponent } from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
-import { QuizzesQuizCreateComponent } from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
+import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
+import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
 
 const serviceConfig = {
   appCode: 1300,
@@ -75,8 +69,6 @@ const httpConfig = {
     AppHomepageComponent,
     QuizzesComponent,
     LandingComponent,
-    // QuizzesListComponent,
-    QuizzesCreateComponent,
     QuizzesQuizComponent,
     QuizzesQuizFormComponent,
     QuizzesQuizQuestionsComponent,

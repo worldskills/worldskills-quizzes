@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {EntityList} from '../../types/entity';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
+import {share} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,11 @@ export class EntitiesService {
   }
 
   fetchList(fetchParams: FetchParams = {limit: 100}, url?: string) {
-    const params = httpParamsFromFetchParams(fetchParams);
-    params.set('role', 'EditQuizzes');
-    params.set('roleApp', '1300');
-    const observable = this.http.get<EntityList>(url ?? 'https://api.worldskills.show/auth/ws_entities', {params});
+    let params = httpParamsFromFetchParams(fetchParams);
+    params = params.set('role', 'EditQuizzes');
+    params = params.set('roleApp', '1300');
+    const observable = this.http.get<EntityList>(url ?? 'https://api.worldskills.show/auth/ws_entities', {params}).pipe(share());
     this.listSubscription = multicastRequestLoader<EntityList>(observable, this.list, this.loading, this.listSubscription);
-    return this.list;
+    return observable;
   }
 }

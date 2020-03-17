@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Quiz} from '../../../../types/quiz';
+import {QuizRequest} from '../../../../types/quiz';
 import {EventList} from '../../../../types/event';
 import {EntityList} from '../../../../types/entity';
 import {EntitiesService} from '../../../../services/entities/entities.service';
@@ -7,6 +7,7 @@ import {EventsService} from '../../../../services/events/events.service';
 import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-quizzes-quiz-create',
@@ -23,6 +24,7 @@ export class QuizzesQuizCreateComponent implements OnInit {
     private entitiesService: EntitiesService,
     private eventsService: EventsService,
     private quizzesService: QuizzesService,
+    private router: Router
   ) {
   }
 
@@ -35,8 +37,10 @@ export class QuizzesQuizCreateComponent implements OnInit {
     ]).pipe(map(([l1, l2]) => l1 || l2)).subscribe(loading => (this.loading = loading));
   }
 
-  create(quiz: Quiz) {
-
+  create(quiz: QuizRequest) {
+    this.quizzesService.create(quiz).subscribe(q => {
+      this.router.navigateByUrl(`/quizzes/${q.id}`).catch(e => alert(e));
+    });
   }
 
 }

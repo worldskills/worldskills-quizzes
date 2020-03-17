@@ -39,7 +39,7 @@
               <fa-icon *ngIf="quiz.active" [icon]="faCheck" class="text-success"></fa-icon>
               <fa-icon *ngIf="!quiz.active" [icon]="faTimes" class="text-danger"></fa-icon>
             </td>
-            <td>{{quiz.event.name}}</td>
+            <td>{{quiz.event ? quiz.event.name : ''}}</td>
             <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
           </tr>
           <tr *ngIf="list.quizzes.length === 0">

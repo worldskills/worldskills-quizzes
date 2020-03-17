@@ -1,75 +1,81 @@
-<form class="form-horizontal" novalidate (ngSubmit)="submit()" #form="ngForm">
-  <div class="form-group"
-       [ngClass]="{'has-error': quiz && quiz && form.errors && form.errors.title}">
-    <label for="title" class="col-sm-3 control-label">Title <span class="required">*</span></label>
+<form class="form-horizontal" [ngClass]="{'was-validated': this.form.submitted}" novalidate
+      (ngSubmit)="submit()" #form="ngForm">
+  <div class="form-group row">
+    <label for="title" class="col-sm-3 col-form-label">Title<span class="required">*</span></label>
     <div class="col-sm-4">
       <input type="text" class="form-control" id="title" name="title" required
              [ngModel]="quiz && quiz.title ? quiz.title.text : ''">
     </div>
     <div class="col-sm-5">
-      <span class="help-block" *ngIf="form.submitted && form.errors && form.errors.title.required">Please enter a title!</span>
+      <span class="form-text text-danger" style="display: block"
+            *ngIf="form.submitted && this.form.controls.title.errors && this.form.controls.title.errors.required">
+      Please enter a title!</span>
     </div>
   </div>
-  <div class="form-group"
-       [ngClass]="{'has-error': form.submitted && form.errors &&  form.errors.ws_entity}">
-    <label for="ws_entity" class="col-sm-3 control-label">Entity <span
+  <div class="form-group row">
+    <label for="ws_entity" class="col-sm-3 col-form-label">Entity<span
       class="required">*</span></label>
     <div class="col-sm-4">
-      <select class="form-control" id="ws_entity" name="ws_entity" required
-              [ngModel]="quiz ? quiz.ws_entity : ''">
+      <select class="form-control"
+              id="ws_entity" name="ws_entity" required
+              [ngModel]="quiz && quiz.ws_entity ? quiz.ws_entity.id : ''">
         <option *ngFor="let entity of entities ? entities.ws_entity_list : []"
                 [value]="entity.id">{{entity.name.text}}</option>
-        <!--              ng-options="entity.name.text for entity in entities track by entity.id">-->
       </select>
     </div>
     <div class="col-sm-5">
-      <span class="help-block"><span
-        *ngIf="form.submitted && form.errors && form.errors.ws_entity.required">Please select an entity!</span> Owner of the entry, select the organization you are working for.</span>
+      <span class="form-text">
+        <span class="text-danger"
+              *ngIf="form.submitted && this.form.controls.ws_entity.errors && this.form.controls.ws_entity.errors.required">
+          Please select an entity!
+        </span>
+        Owner of the entry, select the organization you are working for.</span>
     </div>
   </div>
-  <div class="form-group">
-    <label for="event" class="col-sm-3 control-label">Event</label>
+  <div class="form-group row">
+    <label for="event" class="col-sm-3 col-form-label">Event</label>
     <div class="col-sm-4">
-      <select class="form-control" id="event" name="event"
+      <select class="form-control" id="event" name="event" (change)="onEventChange()"
               [ngModel]="quiz && quiz.event ? quiz.event.id : ''">
+        <option></option>
         <option *ngFor="let event of events ? events.events : []"
                 [value]="event.id">{{event.name}}</option>
-        <!--              ng-options="event.name for event in events track by event.id"-->
-        <!--        TODO what is this?-->
-        <!--              ng-change="changeEvent()">-->
       </select>
     </div>
   </div>
-  <div class="form-group">
-    <label for="skill" class="col-sm-3 control-label">Skill</label>
+  <div class="form-group row">
+    <label for="skill" class="col-sm-3 col-form-label">Skill</label>
     <div class="col-sm-4">
-      <select class="form-control" id="skill" name="skill"
-              [ngModel]="quiz && quiz.skill ? quiz.skill : ''">
+      <select [disabled]="!skills || skillsLoading" class="form-control" id="skill" name="skill"
+              [ngModel]="quiz && quiz.skill ? quiz.skill.id : ''">
+        <option></option>
         <option *ngFor="let skill of skills ? skills.skills : []"
                 [value]="skill.id">{{skill.name.text}}</option>
-        <!--              ng-options="skill.name.text for skill in skills track by skill.id">-->
       </select>
     </div>
+    <div *ngIf="skillsLoading" class="col-sm-5">
+      <ws-spinner></ws-spinner>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="max_questions" class="col-sm-3 control-label">Max Questions</label>
+  <div class="form-group row">
+    <label for="max_questions" class="col-sm-3 col-form-label">Max Questions</label>
     <div class="col-sm-3">
       <input type="text" class="form-control" id="max_questions" name="max_questions"
              [ngModel]="quiz ? quiz.max_questions : ''">
     </div>
   </div>
-  <div class="form-group">
-    <label for="required_score_pass" class="col-sm-3 control-label">Required score to pass</label>
+  <div class="form-group row">
+    <label for="required_score_pass" class="col-sm-3 col-form-label">Required score to pass</label>
     <div class="col-sm-3">
       <input type="text" class="form-control" id="required_score_pass" name="required_score_pass"
              [ngModel]="quiz ? quiz.required_score_pass : ''">
     </div>
-    <div class="col-sm-5 col-sm-offset-1">
-      <span class="help-block">Leave empty to require all answers to be correct.</span>
+    <div class="col-sm-5 offset-sm-1">
+      <span class="form-text">Leave empty to require all answers to be correct.</span>
     </div>
   </div>
-  <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
+  <div class="form-group row">
+    <div class="offset-sm-3 col-sm-9">
       <div class="checkbox">
         <label>
           <input type="checkbox" id="random_questions" name="random_questions"
@@ -93,34 +99,32 @@
       </div>
     </div>
   </div>
-  <div class="form-group">
-    <label for="url_learning" class="col-sm-3 control-label">URL Learning</label>
+  <div class="form-group row">
+    <label for="url_learning" class="col-sm-3 col-form-label">URL Learning</label>
     <div class="col-sm-4">
       <input type="text" class="form-control" id="url_learning" name="url_learning"
              [ngModel]="quiz ? quiz.url_learning : ''">
     </div>
     <div class="col-sm-5">
-      <span class="help-block">Address with information about the questions.</span>
+      <span class="form-text">Address with information about the questions.</span>
     </div>
   </div>
-  <div class="form-group">
-    <label for="url_success" class="col-sm-3 control-label">URL Success</label>
+  <div class="form-group row">
+    <label for="url_success" class="col-sm-3 col-form-label">URL Success</label>
     <div class="col-sm-4">
       <input type="text" class="form-control" id="url_success" name="url_success"
              [ngModel]="quiz ? quiz.url_success : ''">
     </div>
     <div class="col-sm-5">
-      <span class="help-block">Link for the user to continue after a passed quiz.</span>
+      <span class="form-text">Link for the user to continue after a passed quiz.</span>
     </div>
   </div>
-  <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
-      <button type="submit" class="btn btn-success" id="saveQuiz">
-        Save
-        <!--        TODO fix this-->
-        <!--        <ws-text-spinner *ngIf="loading" class="ng-hide"></ws-text-spinner>-->
-      </button>
-      <a routerLink="/quizzes/{{quiz ? quiz.id : ''}}">Cancel</a>
+  <div class="form-group row">
+    <div class="offset-sm-3 col-sm-9">
+      <button type="submit" class="btn btn-success" id="saveQuiz" [disabled]="quizzesLoading">Save
+      </button>&nbsp;
+      <a class="btn btn-secondary" routerLink="/quizzes">Cancel</a><br/>
+      <ws-spinner *ngIf="quizzesLoading"></ws-spinner>
     </div>
   </div>
 </form>
