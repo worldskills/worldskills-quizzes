@@ -8,6 +8,7 @@ import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-quiz-create',
@@ -24,7 +25,8 @@ export class QuizzesQuizCreateComponent implements OnInit {
     private entitiesService: EntitiesService,
     private eventsService: EventsService,
     private quizzesService: QuizzesService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {
   }
 
@@ -38,7 +40,9 @@ export class QuizzesQuizCreateComponent implements OnInit {
   }
 
   create(quiz: QuizRequest) {
-    this.quizzesService.create(quiz).subscribe(q => {
+    this.quizzesService.createInstance(quiz).subscribe(q => {
+      this.alertService.setAlert('new-alert', AlertType.success,
+        null, undefined, 'The Quiz has been added successfully. Please add now questions for the Quiz.', true);
       this.router.navigateByUrl(`/quizzes/${q.id}`).catch(e => alert(e));
     });
   }

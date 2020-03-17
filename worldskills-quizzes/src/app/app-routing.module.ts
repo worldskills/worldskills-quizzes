@@ -6,11 +6,9 @@ import {LandingComponent} from './landing/landing.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-question.component';
-// import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
 import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
 import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
 import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
-// import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
 import {QuizComponent} from './quiz/quiz.component';
@@ -44,7 +42,7 @@ const routes: Routes = [
         data: {breadcrumb: 'Quizzes'}
       },
       {
-        path: 'quizzes/create',
+        path: 'quizzes/createInstance',
         pathMatch: 'full',
         component: QuizzesQuizCreateComponent,
         canActivate: [AdminAuthGuard],
@@ -109,7 +107,7 @@ const routes: Routes = [
   },
   // children: [
   //   {
-  //     path: 'create',
+  //     path: 'createInstance',
   //     component: QuizzesCreateComponent
   //   }
   // ]
@@ -118,14 +116,14 @@ const routes: Routes = [
   //   component: QuizzesQuizComponent,
   //   children: [
   //     {
-  //       path: 'questions/create',
+  //       path: 'questions/createInstance',
   //       component: QuizzesQuestionCreateComponent
   //     },
   //     {
   //       path: 'translations',
   //       children: [
   //         {
-  //           path: 'create',
+  //           path: 'createInstance',
   //           component: QuizzesTranslationCreateComponent
   //         },
   //         {

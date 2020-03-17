@@ -25,7 +25,7 @@ export function fetchLink<T extends string = null>(linkable: { links: Array<Link
 
 export function multicastRequestLoader<T>(
   observable: Observable<T>,
-  subject: ReplaySubject<T>,
+  subject: ReplaySubject<T> | undefined,
   loader: ReplaySubject<boolean>,
   subscription: Subscription): Subscription {
   loader.next(true);
@@ -34,7 +34,9 @@ export function multicastRequestLoader<T>(
   }
   return observable.subscribe(value => {
     loader.next(false);
-    subject.next(value);
+    if (subject) {
+      subject.next(value);
+    }
   }, error => {
     loader.next(false);
     console.error(error);

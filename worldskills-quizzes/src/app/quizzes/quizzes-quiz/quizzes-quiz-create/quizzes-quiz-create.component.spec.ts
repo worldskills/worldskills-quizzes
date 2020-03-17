@@ -19,7 +19,7 @@ describe('QuizzesQuizCreateComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should createInstance', () => {
     expect(component).toBeTruthy();
   });
 });

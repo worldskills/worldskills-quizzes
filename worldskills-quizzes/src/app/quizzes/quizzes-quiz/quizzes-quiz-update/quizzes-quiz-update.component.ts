@@ -8,6 +8,8 @@ import {EventsService} from '../../../../services/events/events.service';
 import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-quiz-update',
@@ -26,6 +28,8 @@ export class QuizzesQuizUpdateComponent implements OnInit {
     private entitiesService: EntitiesService,
     private eventsService: EventsService,
     private quizzesService: QuizzesService,
+    private router: Router,
+    private alertService: AlertService
   ) {
   }
 
@@ -41,7 +45,12 @@ export class QuizzesQuizUpdateComponent implements OnInit {
   }
 
   update(quiz: QuizRequest) {
-    // TODO
+    this.quizzesService.updateInstance(this.quiz.id, quiz).subscribe(() => {
+        this.alertService.setAlert('new-alert', AlertType.success,
+          null, undefined, 'The Quiz has been saved successfully.', true);
+        this.router.navigateByUrl('/quizzes').catch(e => alert(e));
+      }
+    );
   }
 
 }

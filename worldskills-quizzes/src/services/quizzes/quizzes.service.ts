@@ -55,17 +55,24 @@ export class QuizzesService {
     return observable;
   }
 
-  create(quiz: QuizRequest, fetchParams: FetchParams = {}, url?: string) {
+  createInstance(quiz: QuizRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.post<Quiz>(url ?? `https://api.worldskills.show/quizzes`, quiz, {params}).pipe(share());
+    const observable = this.http.post<Quiz>(url ?? 'https://api.worldskills.show/quizzes', quiz, {params}).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Quiz>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;
   }
 
-  update(quiz: QuizRequest, fetchParams: FetchParams = {}, url?: string) {
+  updateInstance(quizId: number, quiz: QuizRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.post<Quiz>(url ?? `https://api.worldskills.show/quizzes`, quiz, {params}).pipe(share());
+    const observable = this.http.put<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, quiz, {params}).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Quiz>(observable, this.instance, this.loading, this.instanceSubscription);
+    return observable;
+  }
+
+  deleteInstance(quizId: number, fetchParams: FetchParams = {}, url?: string) {
+    const params = httpParamsFromFetchParams(fetchParams);
+    const observable = this.http.delete<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, {params}).pipe(share());
+    this.instanceSubscription = multicastRequestLoader<Quiz>(observable, undefined, this.loading, this.instanceSubscription);
     return observable;
   }
 
