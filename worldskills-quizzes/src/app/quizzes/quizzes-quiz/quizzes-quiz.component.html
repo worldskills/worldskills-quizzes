@@ -16,7 +16,7 @@
 
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}">Quiz</a>
+      <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/quizzes/{{quiz.id}}">Quiz</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/questions">Questions</a>

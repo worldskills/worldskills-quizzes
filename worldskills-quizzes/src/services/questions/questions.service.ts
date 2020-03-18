@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject, Subscription} from 'rxjs';
-import {QuestionList, QuestionWithAnswers} from '../../types/question';
+import {QuestionList, QuestionRequest, QuestionWithAnswers} from '../../types/question';
 import {HttpClient} from '@angular/common/http';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
@@ -36,6 +36,37 @@ export class QuestionsService {
     ).pipe(share());
     this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(
       observable, this.instance, this.loading, this.instanceSubscription);
+    return observable;
+  }
+
+  createInstance(quizId: number, question: QuestionRequest, fetchParams: FetchParams = {}, url?: string) {
+    const params = httpParamsFromFetchParams(fetchParams);
+    const observable = this.http.post<QuestionWithAnswers>(
+      url ?? `https://api.worldskills.show/quizzes/${quizId}/questions`, question, {params}
+    ).pipe(share());
+    this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(
+      observable, this.instance, this.loading, this.instanceSubscription
+    );
+    return observable;
+  }
+
+  updateInstance(questionId: number, question: QuestionRequest, fetchParams: FetchParams = {}, url?: string) {
+    const params = httpParamsFromFetchParams(fetchParams);
+    const observable = this.http.put<QuestionWithAnswers>(
+      url ?? `https://api.worldskills.show/quizzes/questions/${questionId}`, question, {params}
+    ).pipe(share());
+    this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(
+      observable, this.instance, this.loading, this.instanceSubscription
+    );
+    return observable;
+  }
+
+  deleteInstance(questionId: number, fetchParams: FetchParams = {}, url?: string) {
+    const params = httpParamsFromFetchParams(fetchParams);
+    const observable = this.http.delete<QuestionWithAnswers>(
+      url ?? `https://api.worldskills.show/quizzes/questions/${questionId}`, {params}
+    ).pipe(share());
+    this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(observable, undefined, this.loading, this.instanceSubscription);
     return observable;
   }
 }

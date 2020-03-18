@@ -19,14 +19,15 @@ import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-p
 import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
 import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
-import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-question.component';
-import {QuizzesQuestionFormComponent} from './quizzes/quizzes-question/quizzes-question-form/quizzes-question-form.component';
+import {QuizzesQuestionUpdateComponent} from './quizzes/quizzes-question-update/quizzes-question-update.component';
+import {QuizzesQuestionFormComponent} from './quizzes/quizzes-question-form/quizzes-question-form.component';
 import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
 import {QuizzesTranslationFormComponent} from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
 import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
 import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
+import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
 
 const serviceConfig = {
   appCode: 1300,
@@ -76,9 +77,8 @@ const httpConfig = {
     QuizzesQuizTranslationsComponent,
     QuizzesQuizAttemptsComponent,
     QuizzesAttemptComponent,
-    // QuizzesQuestionCreateComponent,
-    // QuizzesQuestionCreateFormComponent,
-    QuizzesQuestionComponent,
+    QuizzesQuestionUpdateComponent,
+    QuizzesQuestionCreateComponent,
     QuizzesQuestionFormComponent,
     // QuizzesTranslationCreateComponent,
     // QuizzesTranslationCreateFormComponent,

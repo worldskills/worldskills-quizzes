@@ -1,9 +1,14 @@
 import {List, LocalizedText} from './common';
 
-export interface Answer {
-  id: number;
+export interface AnswerRequest {
+  id?: number;
   text: LocalizedText;
   correct: boolean;
+  sort?: number;
+}
+
+export interface Answer extends AnswerRequest {
+  id: number;
   sort: number;
 }
 

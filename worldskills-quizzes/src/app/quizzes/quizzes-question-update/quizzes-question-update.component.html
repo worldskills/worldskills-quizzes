@@ -1,0 +1,41 @@
+<ng-template [ngIf]="answers && question" [ngIfElse]="loader">
+  <div class="page-header">
+    <p class="float-right">
+      <button (click)="deleteQuestion()" class="btn btn-danger"
+              *ngIf="!quiz.has_attempts">
+        <ng-container *ngIf="!loading">Delete Question</ng-container>
+        <ng-container *ngIf="loading">
+          <ws-spinner></ws-spinner>
+        </ng-container>
+      </button>
+      <button (click)="deactivateQuestion()" class="btn btn-danger"
+              *ngIf="quiz.has_attempts && question.active">
+        <ng-container *ngIf="!loading">Deactivate Question</ng-container>
+        <ng-container *ngIf="loading">
+          <ws-spinner></ws-spinner>
+        </ng-container>
+      </button>
+      <button (click)="activateQuestion()" class="btn btn-success"
+              *ngIf="quiz.has_attempts && !question.active">
+        <ng-container *ngIf="!loading">Activate Question</ng-container>
+        <ng-container *ngIf="loading">
+          <ws-spinner></ws-spinner>
+        </ng-container>
+      </button>
+    </p>
+
+    <h2>Question <span *ngIf="!question.active" class="badge">Inactive</span></h2>
+  </div>
+
+  <hr/>
+
+  <app-quizzes-question-form
+    [answers]="answers"
+    [question]="question"
+    [quiz]="quiz"
+    (save)="save($event)"
+  ></app-quizzes-question-form>
+</ng-template>
+<ng-template #loader>
+  <ws-spinner></ws-spinner>
+</ng-template>

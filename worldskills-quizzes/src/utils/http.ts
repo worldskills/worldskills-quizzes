@@ -27,7 +27,7 @@ export function multicastRequestLoader<T>(
   observable: Observable<T>,
   subject: ReplaySubject<T> | undefined,
   loader: ReplaySubject<boolean>,
-  subscription: Subscription): Subscription {
+  subscription: Subscription = null): Subscription {
   loader.next(true);
   if (subscription) {
     subscription.unsubscribe();

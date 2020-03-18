@@ -10,9 +10,15 @@ export interface QuestionWithAnswers extends Question {
   answers: Array<Answer>;
 }
 
-export interface Question {
-  id: number;
+export interface QuestionRequest {
   text: LocalizedText;
+  weight?: number;
+  sort?: number;
+  active?: boolean;
+}
+
+export interface Question extends QuestionRequest {
+  id: number;
   weight: number;
   sort: number;
   active: boolean;

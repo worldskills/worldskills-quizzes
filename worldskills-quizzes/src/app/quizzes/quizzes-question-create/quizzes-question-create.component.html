@@ -1,11 +1,8 @@
-<ol class="breadcrumb">
-  <li><a ui-sref="quizzes.list">Quizzes</a></li>
-  <li class="active">Add Quiz</li>
-</ol>
-
-<h1>Add Quiz</h1>
+<h2>Add Question</h2>
 
 <hr/>
 
-<div id="content" ui-view>
-</div>
+<app-quizzes-question-form
+  [quiz]="quiz"
+  (save)="save($event)"
+></app-quizzes-question-form>

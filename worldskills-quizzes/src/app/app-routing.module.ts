@@ -5,7 +5,7 @@ import {QuizzesComponent} from './quizzes/quizzes.component';
 import {LandingComponent} from './landing/landing.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
-import {QuizzesQuestionComponent} from './quizzes/quizzes-question/quizzes-question.component';
+import {QuizzesQuestionUpdateComponent} from './quizzes/quizzes-question-update/quizzes-question-update.component';
 import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
 import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
 import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
@@ -14,6 +14,7 @@ import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt
 import {QuizComponent} from './quiz/quiz.component';
 import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
 import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
+import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,7 @@ const routes: Routes = [
         data: {breadcrumb: 'Quizzes'}
       },
       {
-        path: 'quizzes/createInstance',
+        path: 'quizzes/create',
         pathMatch: 'full',
         component: QuizzesQuizCreateComponent,
         canActivate: [AdminAuthGuard],
@@ -66,8 +67,14 @@ const routes: Routes = [
             data: {breadcrumb: 'Questions'}
           },
           {
+            path: 'questions/create',
+            component: QuizzesQuestionCreateComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Questions'}
+          },
+          {
             path: 'questions/:questionId',
-            component: QuizzesQuestionComponent,
+            component: QuizzesQuestionUpdateComponent,
             canActivate: [AdminAuthGuard],
             data: {breadcrumb: 'Question'}
           },
@@ -107,7 +114,7 @@ const routes: Routes = [
   },
   // children: [
   //   {
-  //     path: 'createInstance',
+  //     path: 'create',
   //     component: QuizzesCreateComponent
   //   }
   // ]
@@ -116,14 +123,14 @@ const routes: Routes = [
   //   component: QuizzesQuizComponent,
   //   children: [
   //     {
-  //       path: 'questions/createInstance',
+  //       path: 'questions/create',
   //       component: QuizzesQuestionCreateComponent
   //     },
   //     {
   //       path: 'translations',
   //       children: [
   //         {
-  //           path: 'createInstance',
+  //           path: 'create',
   //           component: QuizzesTranslationCreateComponent
   //         },
   //         {

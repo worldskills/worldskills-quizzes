@@ -19,7 +19,7 @@ describe('AppHomepageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should createInstance', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
