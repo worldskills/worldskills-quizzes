@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ReplaySubject, Subscription} from 'rxjs';
+import {forkJoin, ReplaySubject, Subscription} from 'rxjs';
 import {QuestionList, QuestionRequest, QuestionWithAnswers} from '../../types/question';
 import {HttpClient} from '@angular/common/http';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
 import {share} from 'rxjs/operators';
+import {Answer} from '../../types/answer';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,19 @@ export class QuestionsService {
       observable, this.instance, this.loading, this.instanceSubscription
     );
     return observable;
+  }
+
+  updateInstances(questions: Array<{ questionId: number, question: QuestionRequest }>, fetchParams: FetchParams = {}, url?: string) {
+    const params = httpParamsFromFetchParams(fetchParams);
+    const observables = [];
+    questions.forEach(({questionId, question}) => {
+      observables.push(this.http.put<QuestionWithAnswers>(
+        url ?? `https://api.worldskills.show/quizzes/questions/${questionId}`, question, {params}
+      ).pipe(share()));
+    });
+    const forkJoined = forkJoin<QuestionWithAnswers>(observables);
+    multicastRequestLoader<Array<QuestionWithAnswers>>(forkJoined, undefined, this.loading);
+    return forkJoined;
   }
 
   deleteInstance(questionId: number, fetchParams: FetchParams = {}, url?: string) {

@@ -13,18 +13,20 @@ import {fetchLink} from '../../../../utils/http';
 export class QuizzesQuizTranslationsComponent implements OnInit {
 
   quiz: Quiz = null;
-  translatedQuizzes: Array<Quiz> = [];
+  translatedQuizzes: Array<Quiz>;
 
   constructor(private quizzesService: QuizzesService, private http: HttpClient) {
   }
 
   ngOnInit(): void {
     this.quizzesService.instance.subscribe(quiz => {
-      if (quiz) {
-        this.quiz = {...quiz};
-        const supportedLocales = fetchLink(quiz, 'i18n');
-        const requests: Array<Observable<Quiz>> = supportedLocales.map(supportedLocale => this.http.get<Quiz>(supportedLocale.href));
+      this.quiz = quiz;
+      const supportedLocales = fetchLink(quiz, 'i18n');
+      const requests: Array<Observable<Quiz>> = supportedLocales.map(supportedLocale => this.http.get<Quiz>(supportedLocale.href));
+      if (requests.length > 0) {
         forkJoin(requests).subscribe(translatedQuizzes => (this.translatedQuizzes = translatedQuizzes));
+      } else {
+        this.translatedQuizzes = [];
       }
     });
   }

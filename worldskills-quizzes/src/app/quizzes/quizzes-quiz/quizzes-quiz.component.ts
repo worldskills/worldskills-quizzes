@@ -45,12 +45,14 @@ export class QuizzesQuizComponent implements OnInit {
   }
 
   deleteQuiz() {
-    this.quizzesService.deleteInstance(this.quiz.id).subscribe(() => {
-        this.alertService.setAlert('new-alert', AlertType.success,
-          null, undefined, 'The Quiz has been deleted successfully.', true);
-        this.router.navigateByUrl('/quizzes').catch(e => alert(e));
-      }
-    );
+    if (confirm('Deleting the Quiz will also delete all questions and attempts. Click OK to proceed.')) {
+      this.quizzesService.deleteInstance(this.quiz.id).subscribe(() => {
+          this.alertService.setAlert('new-alert', AlertType.success,
+            null, undefined, 'The Quiz has been deleted successfully.', true);
+          this.router.navigateByUrl('/quizzes').catch(e => alert(e));
+        }
+      );
+    }
   }
 
 }

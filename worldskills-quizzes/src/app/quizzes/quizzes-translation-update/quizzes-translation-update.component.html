@@ -1,16 +1,11 @@
-<ng-container *ngIf="quiz && translatedQuiz">
-  <!--  TODO nav-->
-  <!--<ol class="breadcrumb">-->
-  <!--  <li><a ui-sref="quizzes.list">Quizzes</a></li>-->
-  <!--  <li><a ui-sref="quizzes.quiz.form({id: quiz.id})">{{quiz.title.text}}</a></li>-->
-  <!--  <li><a ui-sref="quizzes.quiz.translations({id: quiz.id})">Translations</a></li>-->
-  <!--  <li class="active">{{locale|translate}}</li>-->
-  <!--</ol>-->
+<ng-container *ngIf="translatedQuiz">
 
-  <p class="pull-right">
-    <button (click)="deleteTranslation()" class="btn btn-danger">Delete Translation
-      <!--    TODO spinner-->
-      <!--    <ws-text-spinner ng-show="deleteLoading" class="ng-hide"></ws-text-spinner>-->
+  <p class="float-right">
+    <button (click)="deleteTranslation(translatedQuiz.title.lang_code)" class="btn btn-danger">
+      <ng-container *ngIf="!loading">Delete Translation</ng-container>
+      <ng-container *ngIf="loading">
+        <ws-spinner></ws-spinner>
+      </ng-container>
     </button>
   </p>
 
@@ -18,6 +13,13 @@
 
   <hr/>
 
-  <app-quizzes-translation-form [quiz]="translatedQuiz"></app-quizzes-translation-form>
+  <app-quizzes-translation-form
+    [locale]="translatedQuiz.title.lang_code"
+    [quiz]="translatedQuiz"
+    (save)="save($event)">
+  </app-quizzes-translation-form>
 
+</ng-container>
+<ng-container *ngIf="!translatedQuiz">
+  <ws-spinner></ws-spinner>
 </ng-container>

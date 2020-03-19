@@ -19,7 +19,7 @@ export function httpParamsFromFetchParams(fetchParams: FetchParams): HttpParams 
   return params;
 }
 
-export function fetchLink<T extends string = null>(linkable: { links: Array<Link<T>> }, key: string): Array<Link<any>> {
+export function fetchLink<T extends string = null>(linkable: { links: Array<Link<T>> }, key: string): Array<Link<T>> {
   return linkable.links.filter(link => link.rel === key);
 }
 

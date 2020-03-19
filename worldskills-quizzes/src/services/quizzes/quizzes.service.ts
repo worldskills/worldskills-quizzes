@@ -76,4 +76,13 @@ export class QuizzesService {
     return observable;
   }
 
+  deleteTranslations(quizId: number, locale: string, fetchParams: FetchParams = {}, url?: string) {
+    const params = httpParamsFromFetchParams(fetchParams);
+    const observable = this.http.delete<Quiz>(
+      url ?? `https://api.worldskills.show/quizzes/${quizId}/translations/${locale}`, {params}
+    ).pipe(share());
+    multicastRequestLoader<Quiz>(observable, undefined, this.loading);
+    return observable;
+  }
+
 }

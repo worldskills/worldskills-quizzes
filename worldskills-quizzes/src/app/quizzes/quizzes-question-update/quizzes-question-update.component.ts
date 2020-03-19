@@ -46,11 +46,29 @@ export class QuizzesQuestionUpdateComponent implements OnInit {
   }
 
   deleteQuestion() {
-    this.questionsService.deleteInstance(this.question.id).subscribe(() => {
-      this.alertService.setAlert('delete-question', AlertType.success,
-        null, undefined, 'The Question has been deleted successfully.', true);
-      this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
-    });
+    if (confirm('Deleting the Question will also delete all answers. Click OK to proceed.')) {
+      this.questionsService.deleteInstance(this.question.id).subscribe(() => {
+        this.questionsService.fetchList(this.quiz.id).subscribe(list => {
+          const observables = [];
+          list.questions.sort((a, b) => a.sort - b.sort).forEach((question, index) => {
+            question.sort = index + 1;
+            observables.push(this.questionsService.updateInstance(question.id, question));
+          });
+          if (observables.length > 0) {
+            const forkJoined = forkJoin(observables);
+            forkJoined.subscribe(() => {
+              this.alertService.setAlert('delete-question', AlertType.success,
+                null, undefined, 'The Question has been deleted successfully.', true);
+              this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
+            });
+          } else {
+            this.alertService.setAlert('delete-question', AlertType.success,
+              null, undefined, 'The Question has been deleted successfully.', true);
+            this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
+          }
+        });
+      });
+    }
   }
 
   deactivateQuestion() {
@@ -90,8 +108,8 @@ export class QuizzesQuestionUpdateComponent implements OnInit {
         observables.push(this.answersService.deleteInstances(question.deletedAnswers.map(answer => answer.id)));
       }
       if (observables.length > 0) {
-        const forkedJoin = forkJoin(observables);
-        forkedJoin.subscribe(() => {
+        const forkJoined = forkJoin(observables);
+        forkJoined.subscribe(() => {
           this.alertService.setAlert('update-question', AlertType.success,
             null, undefined, 'The Question has been updated successfully.', true);
           this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));

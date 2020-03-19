@@ -48,7 +48,7 @@ const routes: Routes = [
         pathMatch: 'full',
         component: QuizzesQuizCreateComponent,
         canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Create quiz'}
+        data: {breadcrumb: 'Add quiz'}
       },
       {
         path: 'quizzes/:quizId',
@@ -71,7 +71,7 @@ const routes: Routes = [
             path: 'questions/create',
             component: QuizzesQuestionCreateComponent,
             canActivate: [AdminAuthGuard],
-            data: {breadcrumb: 'Create question'}
+            data: {breadcrumb: 'Add question'}
           },
           {
             path: 'questions/:questionId',
@@ -95,7 +95,7 @@ const routes: Routes = [
             path: 'translations/create',
             component: QuizzesTranslationCreateComponent,
             canActivate: [AdminAuthGuard],
-            data: {breadcrumb: 'Create translation'}
+            data: {breadcrumb: 'Add translation'}
           },
           {
             path: 'translations/:locale',

@@ -1,13 +1,8 @@
-<ol class="breadcrumb">
-  <li><a ui-sref="quizzes.list">Quizzes</a></li>
-  <li><a ui-sref="quizzes.quiz.form({id: quiz.id})">{{quiz.title.text}}</a></li>
-  <li><a ui-sref="quizzes.quiz.translations({id: quiz.id})">Translations</a></li>
-  <li class="active">Add Translation</li>
-</ol>
-
 <h2>Add Translation</h2>
 
 <hr/>
 
-<div id="content" ui-view>
-</div>
+<app-quizzes-translation-form
+  [quiz]="quiz"
+  (save)="save($event)">
+</app-quizzes-translation-form>

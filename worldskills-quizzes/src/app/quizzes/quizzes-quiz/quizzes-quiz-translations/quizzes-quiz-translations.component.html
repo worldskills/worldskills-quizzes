@@ -1,27 +1,22 @@
-<ng-container *ngIf="quiz && translatedQuizzes">
-  <p>
-    <a routerLink="/quizzes/{{quiz.id}}/translations/create" class="btn btn-success">Add
-      Translation</a>
-  </p>
+<p>
+  <a routerLink="/quizzes/{{quiz.id}}/translations/create" class="btn btn-success">Add
+    Translation</a>
+</p>
 
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <colgroup>
-        <col width="50%"/>
-        <col width="50%"/>
-      </colgroup>
-      <thead>
-      <tr>
-        <th>Language</th>
-        <th>Translated Title</th>
-      </tr>
-      </thead>
-      <!--      <tfoot>-->
-      <!--      <tr ng-show="!translationsLoading">-->
-      <!--        <td colspan="2"></td>-->
-      <!--      </tr>-->
-      <!--      </tfoot>-->
-      <tbody>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <colgroup>
+      <col width="50%"/>
+      <col width="50%"/>
+    </colgroup>
+    <thead>
+    <tr>
+      <th>Language</th>
+      <th>Translated Title</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngIf="translatedQuizzes">
       <tr *ngFor="let quiz of translatedQuizzes">
         <td><a
           routerLink="/quizzes/{{quiz.id}}/translations/{{quiz.title.lang_code}}">{{quiz.title.lang_code}}</a>
@@ -33,15 +28,14 @@
       <tr *ngIf="translatedQuizzes.length === 0">
         <td colspan="2">No translations found.</td>
       </tr>
-      <!--      <tr ng-show="!translationsLoading && translations.length == 0">-->
-      <!--        <td colspan="2">No translations found.</td>-->
-      <!--      </tr>-->
-      <!--      <tr ng-show="translationsLoading">-->
-      <!--        <td colspan="2">-->
-      <!--          <ws-spinner></ws-spinner>-->
-      <!--        </td>-->
-      <!--      </tr>-->
-      </tbody>
-    </table>
-  </div>
-</ng-container>
+    </ng-container>
+    <ng-container *ngIf="!translatedQuizzes">
+      <tr>
+        <td colspan="2">
+          <ws-spinner></ws-spinner>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>

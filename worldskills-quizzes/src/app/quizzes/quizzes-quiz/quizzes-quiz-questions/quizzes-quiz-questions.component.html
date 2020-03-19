@@ -23,7 +23,7 @@
     </tr>
     </tfoot>
     <tbody>
-    <ng-container *ngIf="questions &&  questions.questions">
+    <ng-template [ngIf]="questions &&  questions.questions && !loading" [ngIfElse]="loader">
       <tr *ngFor="let question of questions.questions; let index=index;">
         <td>{{index + 1}}</td>
         <td><a routerLink="/quizzes/{{quiz ? quiz.id : ''}}/questions/{{question.id}}"
@@ -46,7 +46,10 @@
       <tr *ngIf="questions.questions.length === 0">
         <td colspan="3">No Questions found.</td>
       </tr>
-    </ng-container>
+    </ng-template>
+    <ng-template #loader>
+      <ws-spinner></ws-spinner>
+    </ng-template>
     </tbody>
   </table>
 </div>
