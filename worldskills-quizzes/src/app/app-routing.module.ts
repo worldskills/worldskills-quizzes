@@ -8,13 +8,14 @@ import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz
 import {QuizzesQuestionUpdateComponent} from './quizzes/quizzes-question-update/quizzes-question-update.component';
 import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
 import {QuizzesQuizTranslationsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-translations/quizzes-quiz-translations.component';
-import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
+import {QuizzesTranslationUpdateComponent} from './quizzes/quizzes-translation-update/quizzes-translation-update.component';
 import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-attempts/quizzes-quiz-attempts.component';
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
 import {QuizComponent} from './quiz/quiz.component';
-import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
-import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
+import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz-update/quizzes-quiz-update.component';
+import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz-create/quizzes-quiz-create.component';
 import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
+import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 
 const routes: Routes = [
   {
@@ -47,7 +48,7 @@ const routes: Routes = [
         pathMatch: 'full',
         component: QuizzesQuizCreateComponent,
         canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Quizzes'}
+        data: {breadcrumb: 'Create quiz'}
       },
       {
         path: 'quizzes/:quizId',
@@ -70,13 +71,13 @@ const routes: Routes = [
             path: 'questions/create',
             component: QuizzesQuestionCreateComponent,
             canActivate: [AdminAuthGuard],
-            data: {breadcrumb: 'Questions'}
+            data: {breadcrumb: 'Create question'}
           },
           {
             path: 'questions/:questionId',
             component: QuizzesQuestionUpdateComponent,
             canActivate: [AdminAuthGuard],
-            data: {breadcrumb: 'Question'}
+            data: {breadcrumb: 'Edit question'}
           },
           {
             path: 'preview',
@@ -91,10 +92,16 @@ const routes: Routes = [
             data: {breadcrumb: 'Translations'}
           },
           {
-            path: 'translations/:locale',
-            component: QuizzesTranslationComponent,
+            path: 'translations/create',
+            component: QuizzesTranslationCreateComponent,
             canActivate: [AdminAuthGuard],
-            data: {breadcrumb: 'Translation'}
+            data: {breadcrumb: 'Create translation'}
+          },
+          {
+            path: 'translations/:locale',
+            component: QuizzesTranslationUpdateComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Edit translation'}
           },
           {
             path: 'attempts',
@@ -106,7 +113,7 @@ const routes: Routes = [
             path: 'attempts/:attemptId',
             component: QuizzesAttemptComponent,
             canActivate: [AdminAuthGuard],
-            data: {breadcrumb: 'Attempts'}
+            data: {breadcrumb: 'Attempt'}
           }
         ]
       }

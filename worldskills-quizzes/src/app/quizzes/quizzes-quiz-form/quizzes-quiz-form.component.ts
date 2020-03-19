@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Quiz, QuizRequest} from '../../../../types/quiz';
+import {Quiz, QuizRequest} from '../../../types/quiz';
 import {NgForm} from '@angular/forms';
-import {EventList} from '../../../../types/event';
-import {SkillList} from '../../../../types/skill';
-import {EntityList} from '../../../../types/entity';
-import {SkillsService} from '../../../../services/skills/skills.service';
-import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
+import {EventList} from '../../../types/event';
+import {SkillList} from '../../../types/skill';
+import {EntityList} from '../../../types/entity';
+import {SkillsService} from '../../../services/skills/skills.service';
+import {QuizzesService} from '../../../services/quizzes/quizzes.service';
 
 @Component({
   selector: 'app-quizzes-quiz-form',

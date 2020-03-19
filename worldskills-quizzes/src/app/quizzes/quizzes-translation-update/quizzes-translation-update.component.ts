@@ -6,11 +6,11 @@ import {ActivatedRoute} from '@angular/router';
 import {httpParamsFromFetchParams} from '../../../utils/http';
 
 @Component({
-  selector: 'app-quizzes-translation',
-  templateUrl: './quizzes-translation.component.html',
-  styleUrls: ['./quizzes-translation.component.css']
+  selector: 'app-quizzes-translation-update',
+  templateUrl: './quizzes-translation-update.component.html',
+  styleUrls: ['./quizzes-translation-update.component.css']
 })
-export class QuizzesTranslationComponent implements OnInit {
+export class QuizzesTranslationUpdateComponent implements OnInit {
 
   quiz: Quiz = null;
   translatedQuiz: Quiz = null;

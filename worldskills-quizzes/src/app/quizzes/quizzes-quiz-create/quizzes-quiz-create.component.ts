@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {QuizRequest} from '../../../../types/quiz';
-import {EventList} from '../../../../types/event';
-import {EntityList} from '../../../../types/entity';
-import {EntitiesService} from '../../../../services/entities/entities.service';
-import {EventsService} from '../../../../services/events/events.service';
-import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
+import {QuizRequest} from '../../../types/quiz';
+import {EventList} from '../../../types/event';
+import {EntityList} from '../../../types/entity';
+import {EntitiesService} from '../../../services/entities/entities.service';
+import {EventsService} from '../../../services/events/events.service';
+import {QuizzesService} from '../../../services/quizzes/quizzes.service';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';

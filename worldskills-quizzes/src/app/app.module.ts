@@ -12,7 +12,7 @@ import {LandingComponent} from './landing/landing.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
-import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz/quizzes-quiz-form/quizzes-quiz-form.component';
+import {QuizzesQuizFormComponent} from './quizzes/quizzes-quiz-form/quizzes-quiz-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 import {QuizzesQuizPreviewComponent} from './quizzes/quizzes-quiz/quizzes-quiz-preview/quizzes-quiz-preview.component';
@@ -21,12 +21,12 @@ import {QuizzesQuizAttemptsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-
 import {QuizzesAttemptComponent} from './quizzes/quizzes-attempt/quizzes-attempt.component';
 import {QuizzesQuestionUpdateComponent} from './quizzes/quizzes-question-update/quizzes-question-update.component';
 import {QuizzesQuestionFormComponent} from './quizzes/quizzes-question-form/quizzes-question-form.component';
-import {QuizzesTranslationComponent} from './quizzes/quizzes-translation/quizzes-translation.component';
-import {QuizzesTranslationFormComponent} from './quizzes/quizzes-translation/quizzes-translation-form/quizzes-translation-form.component';
+import {QuizzesTranslationUpdateComponent} from './quizzes/quizzes-translation-update/quizzes-translation-update.component';
+import {QuizzesTranslationFormComponent} from './quizzes/quizzes-translation-form/quizzes-translation-form.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
-import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-update/quizzes-quiz-update.component';
-import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz/quizzes-quiz-create/quizzes-quiz-create.component';
+import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz-update/quizzes-quiz-update.component';
+import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz-create/quizzes-quiz-create.component';
 import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
 
 const serviceConfig = {
@@ -82,7 +82,7 @@ const httpConfig = {
     QuizzesQuestionFormComponent,
     // QuizzesTranslationCreateComponent,
     // QuizzesTranslationCreateFormComponent,
-    QuizzesTranslationComponent,
+    QuizzesTranslationUpdateComponent,
     QuizzesTranslationFormComponent,
     QuizComponent,
     BreadcrumbComponent,

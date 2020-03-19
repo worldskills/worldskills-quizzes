@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Quiz} from '../../../../types/quiz';
+import {Quiz} from '../../../types/quiz';
 import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
-import {QuestionList, QuestionWithAnswers} from '../../../../types/question';
-import {QuestionsService} from '../../../../services/questions/questions.service';
-import {AnswersService} from '../../../../services/answers/answers.service';
+import {QuestionList, QuestionWithAnswers} from '../../../types/question';
+import {QuestionsService} from '../../../services/questions/questions.service';
+import {AnswersService} from '../../../services/answers/answers.service';
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {forkJoin} from 'rxjs';
 
