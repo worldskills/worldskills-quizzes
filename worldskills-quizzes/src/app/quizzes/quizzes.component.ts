@@ -13,7 +13,7 @@ export class QuizzesComponent implements OnInit {
 
   faCheck = faCheck;
   faTimes = faTimes;
-  list: QuizList = null;
+  quizzes: QuizList = null;
   loading = true;
   listPage: ListPage = {
     page: 1,
@@ -24,7 +24,7 @@ export class QuizzesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.quizzesService.list.subscribe(list => (this.list = list));
+    this.quizzesService.list.subscribe(quizzes => (this.quizzes = quizzes));
     this.quizzesService.loading.subscribe(loading => (this.loading = loading));
     this.quizzesService.fetchList(listPageToFetchParam(this.listPage));
   }

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../../../types/quiz';
 import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
-import {Attempt} from '../../../../types/attempt';
+import {AttemptsList} from '../../../../types/attempt';
 import {fetchLink} from '../../../../utils/http';
 import {AttemptsService} from '../../../../services/attempts/attempts.service';
+import {ListPage, listPageToFetchParam} from '../../../../types/common';
 
 @Component({
   selector: 'app-quizzes-quiz-attempts',
@@ -13,24 +14,29 @@ import {AttemptsService} from '../../../../services/attempts/attempts.service';
 export class QuizzesQuizAttemptsComponent implements OnInit {
 
   quiz: Quiz = null;
-  attempts: Array<Attempt> = null;
+  attempts: AttemptsList = null;
+  loading = true;
+  listPage: ListPage = {
+    page: 1,
+    pageSize: 15
+  };
+  private apiEndpoint: string;
 
   constructor(private quizzesService: QuizzesService, private attemptsService: AttemptsService) {
   }
 
   ngOnInit(): void {
+    this.attemptsService.list.subscribe(attempts => (this.attempts = attempts));
+    this.attemptsService.loading.subscribe(loading => (this.loading = loading));
     this.quizzesService.instance.subscribe(quiz => {
-      if (quiz) {
-        this.quiz = {...quiz};
-        const attemptsLink = fetchLink(quiz, 'attempts');
-        this.attemptsService.list.subscribe(attemptsList => {
-          if (attemptsList) {
-            this.attempts = attemptsList.attempts;
-          }
-        });
-        this.attemptsService.fetchList(quiz.id, {limit: 1000}, attemptsLink[0].href);
-      }
+      this.quiz = quiz;
+      this.apiEndpoint = fetchLink(this.quiz, 'attempts')[0].href;
+      this.attemptsService.fetchList(this.quiz.id, listPageToFetchParam(this.listPage), this.apiEndpoint);
     });
   }
 
+  fetch(page: number) {
+    this.listPage.page = page;
+    this.attemptsService.fetchList(this.quiz.id, listPageToFetchParam(this.listPage), this.apiEndpoint);
+  }
 }

@@ -30,8 +30,8 @@
         </tr>
         </tfoot>
         <tbody>
-        <ng-template [ngIf]="list && !loading" [ngIfElse]="loader">
-          <tr *ngFor="let quiz of list.quizzes">
+        <ng-template [ngIf]="quizzes && !loading" [ngIfElse]="loader">
+          <tr *ngFor="let quiz of quizzes.quizzes">
             <td><a routerLink="/quizzes/{{quiz.id}}">{{quiz.id}}</a></td>
             <td><a routerLink="/quizzes/{{quiz.id}}"
                    title="{{quiz.title.text}}">{{quiz.title.text}}</a></td>
@@ -42,7 +42,7 @@
             <td>{{quiz.event ? quiz.event.name : ''}}</td>
             <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
           </tr>
-          <tr *ngIf="list.quizzes.length === 0">
+          <tr *ngIf="quizzes.quizzes.length === 0">
             <td colspan="5">No quizzes found.</td>
           </tr>
         </ng-template>
@@ -56,13 +56,15 @@
         </tbody>
       </table>
     </div>
-    <ngb-pagination
-      [collectionSize]="list ? list.total_count : 0"
-      [(page)]="listPage.page"
-      [pageSize]="listPage.pageSize"
-      [maxSize]="10"
-      [boundaryLinks]="true"
-      (pageChange)="fetch($event)">
-    </ngb-pagination>
+    <ng-container *ngIf="quizzes">
+      <ngb-pagination
+        [collectionSize]="quizzes.total_count"
+        [(page)]="listPage.page"
+        [pageSize]="listPage.pageSize"
+        [maxSize]="10"
+        [boundaryLinks]="true"
+        (pageChange)="fetch($event)">
+      </ngb-pagination>
+    </ng-container>
   </div>
 </div>

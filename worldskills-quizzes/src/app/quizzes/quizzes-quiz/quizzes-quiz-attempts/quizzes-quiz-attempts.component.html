@@ -1,36 +1,57 @@
-<ng-container *ngIf="quiz && attempts">
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <colgroup>
-        <col width="10%"/>
-        <col width="60%"/>
-        <col width="20%"/>
-        <col width="10%"/>
-      </colgroup>
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>User</th>
-        <th>Started</th>
-        <th>Score</th>
-      </tr>
-      </thead>
-      <tfoot>
-      <tr>
-        <td colspan="4"></td>
-      </tr>
-      </tfoot>
-      <tbody>
-      <tr *ngFor="let attempt of attempts">
-        <td><a routerLink="/quizzes/{{quiz.id}}/attempts/{{attempt.id}}">{{attempt.id}}</a></td>
-        <td>{{attempt.user.firstName}} {{attempt.user.lastName}}</td>
-        <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
-        <td><span *ngIf="attempt.score !== null">{{attempt.score}}</span></td>
-      </tr>
-      <tr *ngIf="attempts.length === 0">
-        <td colspan="4">No attempts found.</td>
-      </tr>
-      </tbody>
-    </table>
+<div class="row mt-2">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <colgroup>
+          <col width="10%"/>
+          <col width="60%"/>
+          <col width="20%"/>
+          <col width="10%"/>
+        </colgroup>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Started</th>
+          <th>Score</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td colspan="4"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <ng-template [ngIf]="attempts && !loading" [ngIfElse]="loader">
+          <tr *ngFor="let attempt of attempts.attempts">
+            <td><a routerLink="/quizzes/{{quiz.id}}/attempts/{{attempt.id}}">{{attempt.id}}</a></td>
+            <td>{{attempt.user.firstName}} {{attempt.user.lastName}}</td>
+            <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
+            <td><span *ngIf="attempt.score !== null">{{attempt.score}}</span></td>
+          </tr>
+          <tr *ngIf="attempts.attempts.length === 0">
+            <td colspan="4">No attempts found.</td>
+          </tr>
+        </ng-template>
+        <ng-template #loader>
+          <tr>
+            <td colspan="4">
+              <ws-spinner></ws-spinner>
+            </td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </table>
+    </div>
+    <ng-container *ngIf="attempts">
+      <ngb-pagination
+        [collectionSize]="attempts.total_count"
+        [(page)]="listPage.page"
+        [pageSize]="listPage.pageSize"
+        [maxSize]="10"
+        [boundaryLinks]="true"
+        (pageChange)="fetch($event)">
+      </ngb-pagination>
+    </ng-container>
   </div>
-</ng-container>
+</div>

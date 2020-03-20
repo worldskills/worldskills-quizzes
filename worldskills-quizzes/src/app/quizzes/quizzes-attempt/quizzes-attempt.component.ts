@@ -15,6 +15,7 @@ export class QuizzesAttemptComponent implements OnInit {
   quiz: Quiz = null;
   attempt: Attempt = null;
   alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  loading = true;
 
   constructor(
     private quizzesService: QuizzesService,
@@ -24,20 +25,13 @@ export class QuizzesAttemptComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.quizzesService.instance.subscribe(quiz => {
-      if (quiz) {
-        this.quiz = {...quiz};
-
-        this.attemptsService.instance.subscribe(attempt => {
-          this.attempt = attempt;
-        });
-
-        this.router.params.subscribe(value => {
-          const {attemptId} = value;
-          const l = (window.navigator.language || (window.navigator as any).userLanguage || 'en').substring(0, 2);
-          this.attemptsService.fetchInstance(attemptId, {l});
-        });
-      }
+    this.attemptsService.instance.subscribe(attempt => {console.log(attempt);this.attempt = attempt;});
+    this.attemptsService.loading.subscribe(loading => (this.loading = loading));
+    this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz));
+    this.router.params.subscribe(value => {
+      const {attemptId} = value;
+      const l = (window.navigator.language || (window.navigator as any).userLanguage || 'en').substring(0, 2);
+      this.attemptsService.fetchInstance(attemptId, {l});
     });
   }
 
