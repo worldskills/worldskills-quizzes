@@ -3,7 +3,12 @@ import {AnsweredQuestionWithAnswers} from './question';
 import {Quiz} from './quiz';
 import {Link, List} from './common';
 
-export interface Attempt {
+// tslint:disable-next-line:no-empty-interface
+export interface AttemptRequest {
+
+}
+
+export interface Attempt extends AttemptRequest {
   id: number;
   quiz: Quiz;
   state: string;
