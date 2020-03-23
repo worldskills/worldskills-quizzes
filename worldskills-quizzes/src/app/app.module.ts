@@ -6,9 +6,8 @@ import {AppComponent} from './app.component';
 import {AuthConfig, OAuthModule} from 'angular-oauth2-oidc';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {WorldskillsAngularLibModule, WsHttpInterceptor} from '@worldskills/worldskills-angular-lib';
-import {AppHomepageComponent} from './app-homepage/app-homepage.component';
 import {QuizzesComponent} from './quizzes/quizzes.component';
-import {LandingComponent} from './landing/landing.component';
+import {RootComponent} from './landing/root.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
@@ -29,6 +28,8 @@ import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz-update/quizzes-
 import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz-create/quizzes-quiz-create.component';
 import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
 import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
+import {NotFoundComponent} from './not-found/not-found.component';
+import {HttpInterceptorService} from '../services/http-interceptor/http-interceptor.service';
 
 const serviceConfig = {
   appCode: 1300,
@@ -68,9 +69,8 @@ const httpConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    AppHomepageComponent,
     QuizzesComponent,
-    LandingComponent,
+    RootComponent,
     QuizzesQuizComponent,
     QuizzesQuizFormComponent,
     QuizzesQuizQuestionsComponent,
@@ -87,7 +87,8 @@ const httpConfig = {
     QuizComponent,
     BreadcrumbComponent,
     QuizzesQuizUpdateComponent,
-    QuizzesQuizCreateComponent
+    QuizzesQuizCreateComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +101,8 @@ const httpConfig = {
     ReactiveFormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: WsHttpInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: WsHttpInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}
   ],
   bootstrap: [AppComponent]
 })

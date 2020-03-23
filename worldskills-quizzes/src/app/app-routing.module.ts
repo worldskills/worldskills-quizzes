@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminAuthGuard} from '../security/admin-auth.guard';
 import {QuizzesComponent} from './quizzes/quizzes.component';
-import {LandingComponent} from './landing/landing.component';
+import {RootComponent} from './landing/root.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 import {QuizzesQuestionUpdateComponent} from './quizzes/quizzes-question-update/quizzes-question-update.component';
@@ -16,12 +16,13 @@ import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz-update/quizzes-
 import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz-create/quizzes-quiz-create.component';
 import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
 import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
     // pathMatch: 'full',
-    component: LandingComponent,
+    component: RootComponent,
     children: [
       {
         path: '',
@@ -116,70 +117,14 @@ const routes: Routes = [
             data: {breadcrumb: 'Attempt'}
           }
         ]
+      },
+      {
+        path: '**',
+        component: NotFoundComponent,
+        data: {breadcrumb: 'Not found'}
       }
     ]
-  },
-  // children: [
-  //   {
-  //     path: 'create',
-  //     component: QuizzesCreateComponent
-  //   }
-  // ]
-  // {
-  //   path: ':id',
-  //   component: QuizzesQuizComponent,
-  //   children: [
-  //     {
-  //       path: 'questions/create',
-  //       component: QuizzesQuestionCreateComponent
-  //     },
-  //     {
-  //       path: 'translations',
-  //       children: [
-  //         {
-  //           path: 'create',
-  //           component: QuizzesTranslationCreateComponent
-  //         },
-  //         {
-  //           path: ':locale',
-  //           component: QuizzesTranslationComponent
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: 'questions',
-  //   component: QuizzesQuizQuestionsComponent,
-  //   children: [
-  //     {
-  //       path: ':id',
-  //       component: QuizzesQuestionComponent
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: 'preview',
-  //   component: QuizzesQuizPreviewComponent
-  // },
-  // {
-  //   path: 'translations',
-  //   component: QuizzesQuizTranslationsComponent
-  // },
-  // {
-  //   path: 'attempts',
-  //   component: QuizzesQuizAttemptsComponent,
-  //   children: [
-  //     {
-  //       path: ':id',
-  //       component: QuizzesAttemptComponent
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: 'quiz/:id',
-  //   component: QuizComponent
-  // }
+  }
 ];
 
 @NgModule({
