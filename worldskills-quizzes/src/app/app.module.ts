@@ -7,7 +7,7 @@ import {AuthConfig, OAuthModule} from 'angular-oauth2-oidc';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {WorldskillsAngularLibModule, WsHttpInterceptor} from '@worldskills/worldskills-angular-lib';
 import {QuizzesComponent} from './quizzes/quizzes.component';
-import {RootComponent} from './landing/root.component';
+import {RootComponent} from './root/root.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
@@ -23,7 +23,6 @@ import {QuizzesQuestionFormComponent} from './quizzes/quizzes-question-form/quiz
 import {QuizzesTranslationUpdateComponent} from './quizzes/quizzes-translation-update/quizzes-translation-update.component';
 import {QuizzesTranslationFormComponent} from './quizzes/quizzes-translation-form/quizzes-translation-form.component';
 import {QuizComponent} from './quiz/quiz.component';
-import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
 import {QuizzesQuizUpdateComponent} from './quizzes/quizzes-quiz-update/quizzes-quiz-update.component';
 import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz-create/quizzes-quiz-create.component';
 import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
@@ -87,7 +86,6 @@ const httpConfig = {
     QuizzesTranslationUpdateComponent,
     QuizzesTranslationFormComponent,
     QuizComponent,
-    BreadcrumbComponent,
     QuizzesQuizUpdateComponent,
     QuizzesQuizCreateComponent,
     NotFoundComponent

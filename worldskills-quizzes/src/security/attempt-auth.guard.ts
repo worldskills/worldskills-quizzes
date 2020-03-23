@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {AuthService, UserService, WSAuthGuard} from '@worldskills/worldskills-angular-lib';
 
 @Injectable({providedIn: 'root'})
-export class AdminAuthGuard extends WSAuthGuard implements CanActivate {
+export class AttemptAuthGuard extends WSAuthGuard implements CanActivate {
   path: ActivatedRouteSnapshot[];
   route: ActivatedRouteSnapshot;
 
@@ -13,7 +13,7 @@ export class AdminAuthGuard extends WSAuthGuard implements CanActivate {
     protected userService: UserService
   ) {
     super(authService, router, userService);
-    this.roles = ['Admin'];
+    this.roles = ['AttemptQuizzes'];
     this.redirectRoute = [];
   }
 

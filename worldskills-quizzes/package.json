@@ -26,7 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "@sentry/browser": "^5.13.0",
     "@worldskills/bootstrap": "^4.3.3",
-    "@worldskills/worldskills-angular-lib": "^3.7.1",
+    "@worldskills/worldskills-angular-lib": "^3.7.3",
     "angular-oauth2-oidc": "^8.0.4",
     "json2typescript": "^1.2.5",
     "popper.js": "^1.16.1",

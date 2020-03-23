@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {AuthService, UserModel, UserService} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
 
@@ -11,16 +11,21 @@ export class AppComponent implements OnInit {
   date;
   user: UserModel;
   isLoggedIn = false;
+  showLoginAndLogoutButtons = true;
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router) {
     this.date = new Date();
   }
 
   ngOnInit(): void {
-    this.userService.getLoggedInUser().subscribe((user: UserModel) => {
+    this.authService.currentUser.subscribe((user: UserModel) => {
       this.user = user;
       this.isLoggedIn = true;
     });
+  }
+
+  login() {
+    this.authService.login();
   }
 
   logout() {

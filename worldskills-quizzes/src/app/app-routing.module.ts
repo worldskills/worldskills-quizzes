@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminAuthGuard} from '../security/admin-auth.guard';
 import {QuizzesComponent} from './quizzes/quizzes.component';
-import {RootComponent} from './landing/root.component';
+import {RootComponent} from './root/root.component';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
 import {QuizzesQuizQuestionsComponent} from './quizzes/quizzes-quiz/quizzes-quiz-questions/quizzes-quiz-questions.component';
 import {QuizzesQuestionUpdateComponent} from './quizzes/quizzes-question-update/quizzes-question-update.component';
@@ -17,6 +17,7 @@ import {QuizzesQuizCreateComponent} from './quizzes/quizzes-quiz-create/quizzes-
 import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/quizzes-question-create.component';
 import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 import {NotFoundComponent} from './not-found/not-found.component';
+import {AttemptAuthGuard} from '../security/attempt-auth.guard';
 
 const routes: Routes = [
   {
@@ -33,13 +34,14 @@ const routes: Routes = [
         path: 'quiz/:quizId',
         pathMatch: 'full',
         component: QuizComponent,
+        canActivate: [AttemptAuthGuard],
         data: {breadcrumb: 'Quiz'}
       },
       {
         path: 'quizzes',
         pathMatch: 'full',
-        component: QuizzesComponent,
         canActivate: [AdminAuthGuard],
+        component: QuizzesComponent,
         data: {breadcrumb: 'Quizzes'}
       },
       {
@@ -53,6 +55,7 @@ const routes: Routes = [
         path: 'quizzes/:quizId',
         component: QuizzesQuizComponent,
         canActivate: [AdminAuthGuard],
+        data: {breadcrumb: 'Quiz'},
         children: [
           {
             path: '',
