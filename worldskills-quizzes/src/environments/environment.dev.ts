@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  worldskillsApiQuizzes: 'https://api.worldskills.show/quizzes',
-  worldskillsApiImages: 'https://api.worldskills.show/images',
-  worldskillsApiEvents: 'https://api.worldskills.show/events',
-  worldskillsApiAuth: 'https://api.worldskills.show/auth',
-  worldskillsClientId: '91c518ccad27',
-  worldskillsAuthorizeUrl: 'https://auth.worldskills.show/oauth/authorize',
-  worldskillsAuthorizeRedirect: 'http://localhost:11301/',
-  worldskillsAuthorizeUserinfoEndpoint: 'https://auth.worldskills.show/auth/users/loggedIn',
+  worldskillsApiQuizzes: 'http://localhost:8080/quizzes',
+  worldskillsApiImages: 'http://localhost:8080/images',
+  worldskillsApiEvents: 'http://localhost:8080/events',
+  worldskillsApiAuth: 'http://localhost:8080/auth',
+  worldskillsClientId: '269f5d21',
+  worldskillsAuthorizeUrl: 'http://worldskills-auth.dev/oauth/authorize',
+  worldskillsAuthorizeRedirect: 'http://localhost:11300/',
+  worldskillsAuthorizeUserinfoEndpoint: 'http://worldskills-auth.dev/oauth/users/loggedIn',
   worldskillsAuthUriPatterns: ['api.worldskills.show'],
   loadChildEntityRoles: true,
   filterAuthRoles: [1300]

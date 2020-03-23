@@ -5,6 +5,7 @@ import {EventList} from '../../types/event';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
 import {share} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class EventsService {
   fetchList(fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'start_date_desc'}, url?: string) {
     let params = httpParamsFromFetchParams(fetchParams);
     params = params.set('type', 'competition');
-    const observable = this.http.get<EventList>(url ?? `https://api.worldskills.show/events`, {params}).pipe(share());;
+    const observable = this.http.get<EventList>(url ?? environment.worldskillsApiEvents, {params}).pipe(share());;
     this.listSubscription = multicastRequestLoader<EventList>(observable, this.list, this.loading, this.listSubscription);
     return observable;
   }

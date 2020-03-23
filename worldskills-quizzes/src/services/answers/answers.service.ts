@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
 import {share} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class AnswersService {
   fetchList(questionId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<AnswersList>(
-      url ?? `https://api.worldskills.show/quizzes/questions/${questionId}/answers`, {params}
+      url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}/answers`, {params}
     ).pipe(share());
     this.listSubscription = multicastRequestLoader<AnswersList>(observable, this.list, this.loading, this.listSubscription);
     return observable;
@@ -32,7 +33,7 @@ export class AnswersService {
   createInstance(questionId: number, answer: AnswerRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.post<Answer>(
-      url ?? `https://api.worldskills.show/quizzes/questions/${questionId}/answers`, answer, {params}
+      url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}/answers`, answer, {params}
     ).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Answer>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;
@@ -43,7 +44,7 @@ export class AnswersService {
     const observables = [];
     answers.forEach(answer => {
       observables.push(this.http.post<Answer>(
-        url ?? `https://api.worldskills.show/quizzes/questions/${questionId}/answers`, answer, {params}
+        url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}/answers`, answer, {params}
       ).pipe(share()));
     });
     const forkJoined = forkJoin<Answer>(observables);
@@ -54,7 +55,7 @@ export class AnswersService {
   updateInstance(answerId: number, answer: AnswerRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.put<Answer>(
-      url ?? `https://api.worldskills.show/quizzes/answers/${answerId}`, answer, {params}
+      url ?? `${environment.worldskillsApiQuizzes}/answers/${answerId}`, answer, {params}
     ).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Answer>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;
@@ -65,7 +66,7 @@ export class AnswersService {
     const observables = [];
     answers.forEach(({answerId, answer}) => {
       observables.push(this.http.put<Answer>(
-        url ?? `https://api.worldskills.show/quizzes/answers/${answerId}`, answer, {params}
+        url ?? `${environment.worldskillsApiQuizzes}/answers/${answerId}`, answer, {params}
       ).pipe(share()));
     });
     const forkJoined = forkJoin<Answer>(observables);
@@ -75,7 +76,7 @@ export class AnswersService {
 
   deleteInstance(answerId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.delete<Answer>(url ?? `https://api.worldskills.show/quizzes/answers/${answerId}`, {params}).pipe(share());
+    const observable = this.http.delete<Answer>(url ?? `${environment.worldskillsApiQuizzes}/answers/${answerId}`, {params}).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Answer>(observable, undefined, this.loading, this.instanceSubscription);
     return observable;
   }
@@ -84,7 +85,7 @@ export class AnswersService {
     const params = httpParamsFromFetchParams(fetchParams);
     const observables = [];
     answersIds.forEach(answerId => {
-      observables.push(this.http.delete<Answer>(url ?? `https://api.worldskills.show/quizzes/answers/${answerId}`, {params}).pipe(share()));
+      observables.push(this.http.delete<Answer>(url ?? `${environment.worldskillsApiQuizzes}/answers/${answerId}`, {params}).pipe(share()));
     });
     const forkJoined = forkJoin<Answer>(observables);
     multicastRequestLoader<Array<Answer>>(forkJoined, undefined, this.loading);

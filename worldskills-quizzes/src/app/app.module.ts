@@ -30,29 +30,31 @@ import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/
 import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {HttpInterceptorService} from '../services/http-interceptor/http-interceptor.service';
+import {environment} from '../environments/environment';
 
 const serviceConfig = {
   appCode: 1300,
-  userServiceEndpoint: 'https://api.worldskills.show/auth',
-  resourceApiPath: 'https://api.worldskills.show/quizzes',
-  authApiPath: 'https://api.worldskills.show/auth'
+  userServiceEndpoint: environment.worldskillsApiAuth,
+  resourceApiPath: environment.worldskillsApiQuizzes,
+  authApiPath: environment.worldskillsApiAuth
 };
 
 // oauth client app configuration
 const oAuthConfig = {
   // login page URI
-  loginUrl: 'https://auth.worldskills.show/oauth/authorize',
+  loginUrl: environment.worldskillsAuthorizeUrl,
 
   // this should match your configured redirecctUri in auth admin
-  redirectUri: 'http://localhost:11301/',
+  redirectUri: environment.worldskillsAuthorizeRedirect,
 
   // load the user information object
-  userinfoEndpoint: 'https://api.worldskills.show/auth/users/loggedIn?show_child_roles=false&app_code=1300',
+  // tslint:disable-next-line:max-line-length
+  userinfoEndpoint: `${environment.worldskillsAuthorizeUserinfoEndpoint}?show_child_roles=${environment.loadChildEntityRoles ? 'true' : 'false'}&${environment.filterAuthRoles.map(appCode => `app_code=${appCode}`).join('&')}`,
 
   // this should match the auth admin valiue
-  clientId: '91c518ccad27',
+  clientId: environment.worldskillsClientId,
 
-  requireHttps: false,
+  requireHttps: environment.production,
 
   // keep this false
   oidc: false
@@ -63,7 +65,7 @@ const httpConfig = {
   encoderUriPatterns: [],
 
   // used to automagically inject auth tokens in http requests
-  authUriPatterns: ['api.worldskills.show']
+  authUriPatterns: environment.worldskillsAuthUriPatterns
 };
 
 @NgModule({

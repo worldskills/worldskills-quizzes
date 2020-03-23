@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
 import {share} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class AttemptsService {
   fetchList(quizId: number, fetchParams: FetchParams = {limit: 1000}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<AttemptsList>(
-      url ?? `https://api.worldskills.show/quizzes/${quizId}/attempts`, {params}
+      url ?? `${environment.worldskillsApiQuizzes}/${quizId}/attempts`, {params}
     ).pipe(share());
     this.listSubscription = multicastRequestLoader<AttemptsList>(observable, this.list, this.loading, this.listSubscription);
     return observable;
@@ -32,7 +33,7 @@ export class AttemptsService {
   fetchInstance(attemptId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<Attempt>(
-      url ?? `https://api.worldskills.show/quizzes/attempts/${attemptId}`, {params}
+      url ?? `${environment.worldskillsApiQuizzes}/attempts/${attemptId}`, {params}
     ).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Attempt>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;
@@ -41,7 +42,7 @@ export class AttemptsService {
   createInstance(quizId: number, attempt: AttemptRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.post<Attempt>(
-      url ?? `https://api.worldskills.show/quizzes/${quizId}/attempts`, attempt, {params}
+      url ?? `${environment.worldskillsApiQuizzes}/${quizId}/attempts`, attempt, {params}
     ).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Attempt>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;
@@ -51,7 +52,7 @@ export class AttemptsService {
     attemptId: number, questionId: number, answerId: number, attempt: AttemptRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.put<Attempt>(
-      url ?? `https://api.worldskills.show/quizzes/attempts/${attemptId}/questions/${questionId}/answers/${answerId}`,
+      url ?? `${environment.worldskillsApiQuizzes}/attempts/${attemptId}/questions/${questionId}/answers/${answerId}`,
       attempt, {params}
     ).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Attempt>(observable, this.instance, this.loading, this.instanceSubscription);
@@ -61,7 +62,7 @@ export class AttemptsService {
   finishInstance(attemptId: number, attempt: AttemptRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.put<Attempt>(
-      url ?? `https://api.worldskills.show/quizzes/attempts/${attemptId}/finish`, attempt, {params}
+      url ?? `${environment.worldskillsApiQuizzes}/attempts/${attemptId}/finish`, attempt, {params}
     ).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Attempt>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;

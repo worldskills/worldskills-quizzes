@@ -33,9 +33,7 @@ const routes: Routes = [
         path: 'quiz/:quizId',
         pathMatch: 'full',
         component: QuizComponent,
-        canActivate: [AdminAuthGuard], // TODO different guard
         data: {breadcrumb: 'Quiz'}
-
       },
       {
         path: 'quizzes',
@@ -128,7 +126,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

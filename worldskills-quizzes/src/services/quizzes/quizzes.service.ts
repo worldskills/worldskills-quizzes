@@ -5,6 +5,7 @@ import {Quiz, QuizList, QuizRequest} from '../../types/quiz';
 import {FetchParams} from '../../types/common';
 import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
 import {share} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,57 +22,37 @@ export class QuizzesService {
     this.loading.next(false);
   }
 
-// (function () {
-//     'use strict';
-//
-//     var quizzesApp = angular.module('quizzesApp');
-//     quizzesApp.constant('WORLDSKILLS_API_QUIZZES',
-//       'https://api.worldskills.show/quizzes');
-//     quizzesApp.constant('WORLDSKILLS_API_IMAGES',
-//       'https://api.worldskills.show/images');
-//     quizzesApp.constant('WORLDSKILLS_API_EVENTS',
-//       'https://api.worldskills.show/events');
-//     quizzesApp.constant('WORLDSKILLS_API_AUTH',
-//       'https://api.worldskills.show/auth');
-//     quizzesApp.constant('WORLDSKILLS_CLIENT_ID', '483a531c5e66');
-//     quizzesApp.constant('WORLDSKILLS_AUTHORIZE_URL',
-//       'https://auth.worldskills.show/oauth/authorize');
-//     quizzesApp.constant('LOAD_CHILD_ENTITY_ROLES', true);
-//     quizzesApp.constant('FILTER_AUTH_ROLES', [1300]); // Quizzes
-//
-//   })();
-
   fetchList(fetchParams: FetchParams = {offset: 0, limit: 15}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.get<QuizList>(url ?? 'https://api.worldskills.show/quizzes', {params}).pipe(share());
+    const observable = this.http.get<QuizList>(url ?? environment.worldskillsApiQuizzes, {params}).pipe(share());
     this.listSubscription = multicastRequestLoader<QuizList>(observable, this.list, this.loading, this.listSubscription);
     return observable;
   }
 
   fetchInstance(quizId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.get<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, {params}).pipe(share());
+    const observable = this.http.get<Quiz>(url ?? `${environment.worldskillsApiQuizzes}/${quizId}`, {params}).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Quiz>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;
   }
 
   createInstance(quiz: QuizRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.post<Quiz>(url ?? 'https://api.worldskills.show/quizzes', quiz, {params}).pipe(share());
+    const observable = this.http.post<Quiz>(url ?? environment.worldskillsApiQuizzes, quiz, {params}).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Quiz>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;
   }
 
   updateInstance(quizId: number, quiz: QuizRequest, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.put<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, quiz, {params}).pipe(share());
+    const observable = this.http.put<Quiz>(url ?? `${environment.worldskillsApiQuizzes}/${quizId}`, quiz, {params}).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Quiz>(observable, this.instance, this.loading, this.instanceSubscription);
     return observable;
   }
 
   deleteInstance(quizId: number, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.delete<Quiz>(url ?? `https://api.worldskills.show/quizzes/${quizId}`, {params}).pipe(share());
+    const observable = this.http.delete<Quiz>(url ?? `${environment.worldskillsApiQuizzes}/${quizId}`, {params}).pipe(share());
     this.instanceSubscription = multicastRequestLoader<Quiz>(observable, undefined, this.loading, this.instanceSubscription);
     return observable;
   }
@@ -79,7 +60,7 @@ export class QuizzesService {
   deleteTranslations(quizId: number, locale: string, fetchParams: FetchParams = {}, url?: string) {
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.delete<Quiz>(
-      url ?? `https://api.worldskills.show/quizzes/${quizId}/translations/${locale}`, {params}
+      url ?? `${environment.worldskillsApiQuizzes}/${quizId}/translations/${locale}`, {params}
     ).pipe(share());
     multicastRequestLoader<Quiz>(observable, undefined, this.loading);
     return observable;
