@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService, UserModel, UserService} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
 

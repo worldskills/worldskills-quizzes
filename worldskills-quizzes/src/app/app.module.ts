@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {environment} from '../environments/environment';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -29,7 +30,8 @@ import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/
 import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {HttpInterceptorService} from '../services/http-interceptor/http-interceptor.service';
-import {environment} from '../environments/environment';
+import {CkEditorDirective} from './directives/ck-editor/ck-editor.directive';
+import {WsSpinnerComponent} from './ws-spinner/ws-spinner.component';
 
 const serviceConfig = {
   appCode: 1300,
@@ -88,7 +90,9 @@ const httpConfig = {
     QuizComponent,
     QuizzesQuizUpdateComponent,
     QuizzesQuizCreateComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    CkEditorDirective,
+    WsSpinnerComponent
   ],
   imports: [
     BrowserModule,
