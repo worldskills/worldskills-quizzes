@@ -11,7 +11,6 @@ export class AppComponent implements OnInit {
   date;
   user: UserModel;
   isLoggedIn = false;
-  showLoginAndLogoutButtons = true;
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router) {
     this.date = new Date();
