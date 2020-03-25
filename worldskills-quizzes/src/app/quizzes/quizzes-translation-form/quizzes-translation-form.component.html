@@ -7,9 +7,9 @@
       <div class="col-sm-4">
         <select class="form-control" [formControl]="form.controls.locale">
           <option></option>
-          <option value="de">{{'de'}}</option>
-          <option value="fr">{{'fr'}}</option>
-          <option value="pt_BR">{{'pt_BR'}}</option>
+          <option value="de">{{'de' | langCodeToName}}</option>
+          <option value="fr">{{'fr' | langCodeToName}}</option>
+          <option value="pt_BR">{{'pt_BR' | langCodeToName}}</option>
         </select>
       </div>
       <div class="col-sm-5">

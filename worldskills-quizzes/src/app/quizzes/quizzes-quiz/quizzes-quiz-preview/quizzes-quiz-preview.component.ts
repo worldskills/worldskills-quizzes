@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
 import {QuestionsService} from '../../../../services/questions/questions.service';
 import {AnswersService} from '../../../../services/answers/answers.service';
 import {Quiz} from '../../../../types/quiz';
 import {QuestionList, QuestionWithAnswers} from '../../../../types/question';
 import WsComponent from '../../../../utils/ws.component';
+import {QuizService} from '../../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-quizzes-quiz-preview',
@@ -18,7 +18,7 @@ export class QuizzesQuizPreviewComponent extends WsComponent implements OnInit {
   questions: QuestionList<QuestionWithAnswers>;
 
   constructor(
-    private quizzesService: QuizzesService,
+    private quizService: QuizService,
     private questionsService: QuestionsService,
     private answersService: AnswersService
   ) {
@@ -27,7 +27,7 @@ export class QuizzesQuizPreviewComponent extends WsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribe(
-      this.quizzesService.instance.subscribe(quiz => {
+      this.quizService.subject.subscribe(quiz => {
         if (quiz) {
           this.quiz = {...quiz};
           this.questionsService.fetch(quiz.id);
@@ -38,7 +38,7 @@ export class QuizzesQuizPreviewComponent extends WsComponent implements OnInit {
           const questionsWithAnswers = [...questions.questions.map(qs => ({...qs, answers: null}))];
           this.questions = {...questions, questions: questionsWithAnswers};
           this.questions.questions.forEach((question, index) => {
-            this.answersService.fetchList(question.id).subscribe(answers => {
+            this.answersService.fetch(question.id).subscribe(answers => {
               this.questions.questions[index].answers = answers.answers;
             });
           });

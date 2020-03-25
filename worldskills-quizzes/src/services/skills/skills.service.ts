@@ -1,30 +1,35 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ReplaySubject, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {SkillList} from '../../types/skill';
 import {FetchParams} from '../../types/common';
-import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
+import {httpParamsFromFetchParams} from '../../utils/http';
 import {share} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import WsService, {FULL, MulticastOptions, P1, P2, P3, RequestOptions} from '../../utils/ws.service';
+
+export const DEFAULT_FETCH_PARAMS: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'};
 
 @Injectable({
   providedIn: 'root'
 })
-export class SkillsService {
-
-  private listSubscription: Subscription;
-  public loading = new ReplaySubject<boolean>(1);
-  public list = new ReplaySubject<SkillList>(1);
+export class SkillsService extends WsService<SkillList> {
 
   constructor(private http: HttpClient) {
+    super();
   }
 
-  fetchList(eventId: number, fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'}, url?: string) {
+  fetch(eventId: number, rOpt?: RequestOptions): Observable<SkillList>;
+  fetch(eventId: number, params: FetchParams, rOpt?: RequestOptions): Observable<SkillList>;
+  fetch(eventId: number, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<SkillList>;
+  fetch(eventId: number, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<SkillList>;
+  fetch(eventId: number, p1: P1, p2?: P2, p3?: P3): Observable<SkillList> {
+    const {fetchParams, multicastOptions, requestOptions} = WsService.resolveArgs(p1, p2, p3, FULL, DEFAULT_FETCH_PARAMS);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<SkillList>(
-      url ?? `${environment.worldskillsApiEvents}/${eventId}/skills`, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEvents}/${eventId}/skills`, {params}
     ).pipe(share());
-    this.listSubscription = multicastRequestLoader<SkillList>(observable, this.list, this.loading, this.listSubscription);
-    return observable;
+    return this.request(observable, multicastOptions);
   }
+
 }

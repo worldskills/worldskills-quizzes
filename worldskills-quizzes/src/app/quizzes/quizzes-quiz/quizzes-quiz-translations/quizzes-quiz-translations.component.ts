@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {QuizzesService} from '../../../../services/quizzes/quizzes.service';
 import {Quiz} from '../../../../types/quiz';
 import {forkJoin, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {fetchLink} from '../../../../utils/http';
 import WsComponent from '../../../../utils/ws.component';
+import {QuizService} from '../../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-quizzes-quiz-translations',
@@ -16,13 +16,13 @@ export class QuizzesQuizTranslationsComponent extends WsComponent implements OnI
   quiz: Quiz = null;
   translatedQuizzes: Array<Quiz>;
 
-  constructor(private quizzesService: QuizzesService, private http: HttpClient) {
+  constructor(private quizService: QuizService, private http: HttpClient) {
     super();
   }
 
   ngOnInit(): void {
     this.subscribe(
-      this.quizzesService.instance.subscribe(quiz => {
+      this.quizService.subject.subscribe(quiz => {
         this.quiz = quiz;
         const supportedLocales = fetchLink(quiz, 'i18n');
         const requests: Array<Observable<Quiz>> = supportedLocales.map(supportedLocale => this.http.get<Quiz>(supportedLocale.href));

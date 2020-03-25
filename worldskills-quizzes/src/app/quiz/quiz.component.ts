@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {QuizzesService} from '../../services/quizzes/quizzes.service';
 import {ActivatedRoute} from '@angular/router';
 import {Quiz} from '../../types/quiz';
 import {Attempt} from '../../types/attempt';
-import {AttemptsService} from '../../services/attempts/attempts.service';
 import {map} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
 import WsComponent from '../../utils/ws.component';
+import {AttemptService} from '../../services/attempt/attempt.service';
+import {QuizService} from '../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-quiz',
@@ -22,37 +22,41 @@ export class QuizComponent extends WsComponent implements OnInit {
   error = null;
   locale: string;
 
-  constructor(private quizzesService: QuizzesService, private attemptsService: AttemptsService, private router: ActivatedRoute) {
+  constructor(
+    private quizService: QuizService,
+    private attemptService: AttemptService,
+    private router: ActivatedRoute
+  ) {
     super();
   }
 
   ngOnInit(): void {
     this.locale = (window.navigator.language || (window.navigator as any).userLanguage || 'en').substring(0, 2);
     this.subscribe(
-      combineLatest([this.quizzesService.loading, this.attemptsService.loading])
+      combineLatest([this.quizService.loading, this.attemptService.loading])
       .pipe(map(([l1, l2]) => l1 || l2))
       .subscribe(loading => this.loading = loading),
-      this.attemptsService.instance.subscribe(attempt => (this.attempt = attempt)),
-      this.quizzesService.instance.subscribe({
+      this.attemptService.subject.subscribe(attempt => (this.attempt = attempt)),
+      this.quizService.subject.subscribe({
         next: quiz => {
           this.quiz = quiz;
-          this.attemptsService.createInstance(this.quiz.id, {}, {l: this.locale});
+          this.attemptService.create(this.quiz.id, {}, {l: this.locale});
         },
         error: error => (this.error = error)
       })
     );
     this.router.params.subscribe(params => {
       const {quizId} = params;
-      this.quizzesService.fetchInstance(quizId, {l: this.locale});
+      this.quizService.fetch(quizId, {l: this.locale});
     });
   }
 
   selectAnswer(questionId: number, answerId: number) {
-    this.attemptsService.updateInstance(this.attempt.id, questionId, answerId, {}, {l: this.locale});
+    this.attemptService.update(this.attempt.id, questionId, answerId, {}, {l: this.locale});
   }
 
   finish() {
-    this.attemptsService.finishInstance(this.attempt.id, {}, {l: this.locale});
+    this.attemptService.finish(this.attempt.id, {}, {l: this.locale});
   }
 
   retry() {

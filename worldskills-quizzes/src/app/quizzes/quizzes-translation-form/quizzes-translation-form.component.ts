@@ -80,7 +80,7 @@ export class QuizzesTranslationFormComponent extends WsComponent implements OnIn
         this.questions = {...questions, questions: questionsWithAnswers};
         const requests = [];
         this.questions.questions.forEach((question, index) => {
-          const observable = this.answersService.fetchList(question.id, {l: this.quiz.title.lang_code});
+          const observable = this.answersService.fetch(question.id, {l: this.quiz.title.lang_code});
           observable.subscribe(answers => {
             this.questions.questions[index].answers = answers.answers;
           });

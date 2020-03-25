@@ -30,7 +30,7 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribe(
-      this.skillsService.list.subscribe(skills => (this.skills = skills)),
+      this.skillsService.subject.subscribe(skills => (this.skills = skills)),
       this.skillsService.loading.subscribe(skillsLoading => (this.skillsLoading = skillsLoading)),
       this.quizzesService.loading.subscribe(quizzesLoading => (this.quizzesLoading = quizzesLoading))
     );
@@ -45,9 +45,9 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
     if (this.form) {
       const eventId = this.form.controls.event.value;
       if (eventId !== '') {
-        this.skillsService.fetchList(parseInt(eventId));
+        this.skillsService.fetch(parseInt(eventId));
       } else {
-        this.skillsService.list.next({skills: [], total_count: 0});
+        this.skillsService.subject.next({skills: [], total_count: 0});
       }
     }
   }

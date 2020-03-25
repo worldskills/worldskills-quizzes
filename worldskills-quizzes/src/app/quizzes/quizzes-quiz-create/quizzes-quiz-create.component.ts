@@ -4,12 +4,12 @@ import {EventList} from '../../../types/event';
 import {EntityList} from '../../../types/entity';
 import {EntitiesService} from '../../../services/entities/entities.service';
 import {EventsService} from '../../../services/events/events.service';
-import {QuizzesService} from '../../../services/quizzes/quizzes.service';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
 import WsComponent from '../../../utils/ws.component';
+import {QuizService} from '../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-quizzes-quiz-create',
@@ -25,7 +25,7 @@ export class QuizzesQuizCreateComponent extends WsComponent implements OnInit {
   constructor(
     private entitiesService: EntitiesService,
     private eventsService: EventsService,
-    private quizzesService: QuizzesService,
+    private quizService: QuizService,
     private router: Router,
     private alertService: AlertService
   ) {
@@ -34,8 +34,8 @@ export class QuizzesQuizCreateComponent extends WsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribe(
-      this.eventsService.list.subscribe(events => (this.events = events)),
-      this.entitiesService.list.subscribe(entities => (this.entities = entities)),
+      this.eventsService.subject.subscribe(events => (this.events = events)),
+      this.entitiesService.subject.subscribe(entities => (this.entities = entities)),
       combineLatest([
         this.eventsService.loading,
         this.entitiesService.loading,
@@ -44,12 +44,12 @@ export class QuizzesQuizCreateComponent extends WsComponent implements OnInit {
       .subscribe(loading => (this.loading = loading))
     );
 
-    this.eventsService.fetchList();
-    this.entitiesService.fetchList();
+    this.eventsService.fetch();
+    this.entitiesService.fetch();
   }
 
   create(quiz: QuizRequest) {
-    this.quizzesService.createInstance(quiz).subscribe(q => {
+    this.quizService.create(quiz).subscribe(q => {
       this.alertService.setAlert('new-alert', AlertType.success,
         null, undefined, 'The Quiz has been added successfully. Please add now questions for the Quiz.', true);
       this.router.navigateByUrl(`/quizzes/${q.id}`).catch(e => alert(e));

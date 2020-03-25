@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {QuizzesService} from '../../../services/quizzes/quizzes.service';
-import {AttemptsService} from '../../../services/attempts/attempts.service';
 import {Quiz} from '../../../types/quiz';
 import {Attempt} from '../../../types/attempt';
 import {ActivatedRoute} from '@angular/router';
 import WsComponent from '../../../utils/ws.component';
+import {AttemptService} from '../../../services/attempt/attempt.service';
+import {QuizService} from '../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-quizzes-attempt',
@@ -19,8 +19,8 @@ export class QuizzesAttemptComponent extends WsComponent implements OnInit {
   loading = true;
 
   constructor(
-    private quizzesService: QuizzesService,
-    private attemptsService: AttemptsService,
+    private quizService: QuizService,
+    private attemptService: AttemptService,
     private router: ActivatedRoute
   ) {
     super();
@@ -28,13 +28,13 @@ export class QuizzesAttemptComponent extends WsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribe(
-      this.attemptsService.instance.subscribe(attempt => (this.attempt = attempt)),
-      this.attemptsService.loading.subscribe(loading => (this.loading = loading)),
-      this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz)),
+      this.attemptService.subject.subscribe(attempt => (this.attempt = attempt)),
+      this.attemptService.loading.subscribe(loading => (this.loading = loading)),
+      this.quizService.subject.subscribe(quiz => (this.quiz = quiz)),
       this.router.params.subscribe(value => {
         const {attemptId} = value;
         const l = (window.navigator.language || (window.navigator as any).userLanguage || 'en').substring(0, 2);
-        this.attemptsService.fetchInstance(attemptId, {l});
+        this.attemptService.fetch(attemptId, {l});
       })
     );
   }

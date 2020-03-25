@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../../types/quiz';
-import {QuizzesService} from '../../../services/quizzes/quizzes.service';
 import {TranslationFormSubmitData} from '../quizzes-translation-form/quizzes-translation-form.component';
-import {AnswersService} from '../../../services/answers/answers.service';
 import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {QuestionService} from '../../../services/question/question.service';
 import WsComponent from '../../../utils/ws.component';
+import {AnswerService} from '../../../services/answer/answer.service';
+import {QuizService} from '../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-quizzes-translation-create',
@@ -20,22 +20,22 @@ export class QuizzesTranslationCreateComponent extends WsComponent implements On
   loading = false;
 
   constructor(
-    private quizzesService: QuizzesService,
+    private quizService: QuizService,
     private questionService: QuestionService,
-    private answersService: AnswersService,
+    private answerService: AnswerService,
     private router: Router,
     private alertService: AlertService) {
     super();
   }
 
   ngOnInit(): void {
-    this.subscribe(this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz)));
+    this.subscribe(this.quizService.subject.subscribe(quiz => (this.quiz = quiz)));
   }
 
   save(data: TranslationFormSubmitData) {
     const observables = [];
     const l = data.locale;
-    observables.push(this.quizzesService.updateInstance(
+    observables.push(this.quizService.update(
       data.quizId,
       data.quiz,
       {l}
@@ -45,7 +45,7 @@ export class QuizzesTranslationCreateComponent extends WsComponent implements On
       {l}
     ));
     data.questions.forEach(question => {
-      observables.push(this.answersService.updateInstances(
+      observables.push(this.answerService.updateMany(
         question.answers.map(({answerId, answer}) => ({answerId, answer})),
         {l}
       ));

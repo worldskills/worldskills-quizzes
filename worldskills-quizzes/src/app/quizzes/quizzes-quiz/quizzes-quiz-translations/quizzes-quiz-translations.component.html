@@ -19,7 +19,7 @@
     <ng-container *ngIf="translatedQuizzes">
       <tr *ngFor="let quiz of translatedQuizzes">
         <td><a
-          routerLink="/quizzes/{{quiz.id}}/translations/{{quiz.title.lang_code}}">{{quiz.title.lang_code}}</a>
+          routerLink="/quizzes/{{quiz.id}}/translations/{{quiz.title.lang_code}}">{{quiz.title.lang_code | langCodeToName}}</a>
         </td>
         <td><a
           routerLink="/quizzes/{{quiz.id}}/translations/{{quiz.title.lang_code}}">{{quiz.title.text}}</a>

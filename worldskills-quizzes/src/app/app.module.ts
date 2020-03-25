@@ -32,6 +32,7 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {HttpInterceptorService} from '../services/http-interceptor/http-interceptor.service';
 import {CkEditorDirective} from './directives/ck-editor/ck-editor.directive';
 import {WsSpinnerComponent} from './ws-spinner/ws-spinner.component';
+import {LangCodeToNamePipe} from '../pipes/lang-code-to-name/lang-code-to-name.pipe';
 
 const serviceConfig = {
   appCode: 1300,
@@ -92,7 +93,8 @@ const httpConfig = {
     QuizzesQuizCreateComponent,
     NotFoundComponent,
     CkEditorDirective,
-    WsSpinnerComponent
+    WsSpinnerComponent,
+    LangCodeToNamePipe
   ],
   imports: [
     BrowserModule,

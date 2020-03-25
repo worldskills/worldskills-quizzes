@@ -27,15 +27,15 @@ export class QuizzesComponent extends WsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribe(
-      this.quizzesService.list.subscribe(quizzes => (this.quizzes = quizzes)),
+      this.quizzesService.subject.subscribe(quizzes => (this.quizzes = quizzes)),
       this.quizzesService.loading.subscribe(loading => (this.loading = loading))
     );
-    this.quizzesService.fetchList(listPageToFetchParam(this.listPage));
+    this.quizzesService.fetch(listPageToFetchParam(this.listPage));
   }
 
   fetch(page: number) {
     this.listPage.page = page;
-    this.quizzesService.fetchList(listPageToFetchParam(this.listPage));
+    this.quizzesService.fetch(listPageToFetchParam(this.listPage));
   }
 
 }

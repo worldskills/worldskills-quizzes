@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {QuizzesService} from '../../../services/quizzes/quizzes.service';
 import {AnswersService} from '../../../services/answers/answers.service';
 import {QuestionsService} from '../../../services/questions/questions.service';
 import {Quiz} from '../../../types/quiz';
@@ -11,6 +10,8 @@ import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
 import {forkJoin} from 'rxjs';
 import {QuestionService} from '../../../services/question/question.service';
 import WsComponent from '../../../utils/ws.component';
+import {AnswerService} from '../../../services/answer/answer.service';
+import {QuizService} from '../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-quizzes-question-update',
@@ -25,10 +26,11 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
   loading = false;
 
   constructor(
-    private quizzesService: QuizzesService,
+    private quizService: QuizService,
     private questionService: QuestionService,
     private questionsService: QuestionsService,
     private answersService: AnswersService,
+    private answerService: AnswerService,
     private route: ActivatedRoute,
     private router: Router,
     private alertService: AlertService
@@ -38,13 +40,13 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
 
   ngOnInit(): void {
     this.subscribe(
-      this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz)),
+      this.quizService.subject.subscribe(quiz => (this.quiz = quiz)),
       this.questionService.subject.subscribe(question => (this.question = question)),
-      this.answersService.list.subscribe(answers => (this.answers = answers)),
+      this.answersService.subject.subscribe(answers => (this.answers = answers)),
       this.answersService.loading.subscribe(loading => (this.loading = loading)),
       this.route.params.subscribe(value => {
         const {questionId} = value;
-        this.answersService.fetchList(questionId);
+        this.answersService.fetch(questionId);
         this.questionService.fetch(questionId);
       })
     );
@@ -101,16 +103,16 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
       const storedAnswers: Array<AnswerRequest> = question.answers.filter(answer => !!answer.id);
       const newAnswers: Array<AnswerRequest> = question.answers.filter(answer => !answer.id);
       if (storedAnswers.length > 0) {
-        observables.push(this.answersService.updateInstances(storedAnswers.map(storedAnswer => ({
+        observables.push(this.answerService.updateMany(storedAnswers.map(storedAnswer => ({
           answerId: storedAnswer.id,
           answer: storedAnswer
         }))));
       }
       if (newAnswers.length > 0) {
-        observables.push(this.answersService.createInstances(this.question.id, newAnswers));
+        observables.push(this.answerService.createMany(this.question.id, newAnswers));
       }
       if (question.deletedAnswers.length > 0) {
-        observables.push(this.answersService.deleteInstances(question.deletedAnswers.map(answer => answer.id)));
+        observables.push(this.answerService.deleteMany(question.deletedAnswers.map(answer => answer.id)));
       }
       if (observables.length > 0) {
         const forkJoined = forkJoin(observables);
