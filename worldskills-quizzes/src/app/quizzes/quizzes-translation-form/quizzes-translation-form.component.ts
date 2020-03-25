@@ -8,6 +8,7 @@ import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {combineLatest, forkJoin} from 'rxjs';
 import {AnswerRequest} from '../../../types/answer';
 import {map} from 'rxjs/operators';
+import WsComponent from '../../../utils/ws.component';
 
 export interface TranslationFormData {
   locale: string;
@@ -44,7 +45,7 @@ export interface TranslationFormSubmitData {
   templateUrl: './quizzes-translation-form.component.html',
   styleUrls: ['./quizzes-translation-form.component.css']
 })
-export class QuizzesTranslationFormComponent implements OnInit, OnChanges {
+export class QuizzesTranslationFormComponent extends WsComponent implements OnInit, OnChanges {
 
   @Input() quiz: Quiz;
   @Input() locale: string = null;
@@ -57,6 +58,7 @@ export class QuizzesTranslationFormComponent implements OnInit, OnChanges {
   questions: QuestionList<QuestionWithAnswers>;
 
   constructor(private questionsService: QuestionsService, private answersService: AnswersService) {
+    super();
   }
 
   ngOnInit(): void {
@@ -68,41 +70,44 @@ export class QuizzesTranslationFormComponent implements OnInit, OnChanges {
   }
 
   initForm() {
-    combineLatest([this.questionsService.loading, this.answersService.loading])
-    .pipe(map(([l1, l2]) => l1 || l2))
-    .subscribe(loading => this.loading = loading);
-    this.questionsService.list.subscribe(questions => {
-      const questionsWithAnswers = [...questions.questions.map(qs => ({...qs, answers: []}))];
-      this.questions = {...questions, questions: questionsWithAnswers};
-      const requests = [];
-      this.questions.questions.forEach((question, index) => {
-        const observable = this.answersService.fetchList(question.id, {l: this.quiz.title.lang_code});
-        observable.subscribe(answers => {
-          this.questions.questions[index].answers = answers.answers;
+    this.subscriptions.unsubscribe();
+    this.subscribe(
+      combineLatest([this.questionsService.loading, this.answersService.loading])
+      .pipe(map(([l1, l2]) => l1 || l2))
+      .subscribe(loading => this.loading = loading),
+      this.questionsService.subject.subscribe(questions => {
+        const questionsWithAnswers = [...questions.questions.map(qs => ({...qs, answers: []}))];
+        this.questions = {...questions, questions: questionsWithAnswers};
+        const requests = [];
+        this.questions.questions.forEach((question, index) => {
+          const observable = this.answersService.fetchList(question.id, {l: this.quiz.title.lang_code});
+          observable.subscribe(answers => {
+            this.questions.questions[index].answers = answers.answers;
+          });
+          requests.push(observable);
         });
-        requests.push(observable);
-      });
-      forkJoin(requests).subscribe(() => {
-        this.form = new FormGroup({
-          locale: new FormControl(this.quiz.title.lang_code),
-          title: new FormControl(this.quiz.title.text),
-          questions: new FormArray(this.questions.questions.map(q => new FormGroup({
-            questionId: new FormControl(q.id),
-            question: new FormControl(q.text.text),
-            sort: new FormControl(q.sort),
-            answers: new FormArray(
-              q.answers.map(a => new FormGroup({
-                answerId: new FormControl(a.id),
-                answer: new FormControl(a.text.text),
-                correct: new FormControl(a.correct),
-                sort: new FormControl(a.sort)
-              }))
-            ),
-          })))
+        forkJoin(requests).subscribe(() => {
+          this.form = new FormGroup({
+            locale: new FormControl(this.quiz.title.lang_code),
+            title: new FormControl(this.quiz.title.text),
+            questions: new FormArray(this.questions.questions.map(q => new FormGroup({
+              questionId: new FormControl(q.id),
+              question: new FormControl(q.text.text),
+              sort: new FormControl(q.sort),
+              answers: new FormArray(
+                q.answers.map(a => new FormGroup({
+                  answerId: new FormControl(a.id),
+                  answer: new FormControl(a.text.text),
+                  correct: new FormControl(a.correct),
+                  sort: new FormControl(a.sort)
+                }))
+              ),
+            })))
+          });
         });
-      });
-    });
-    this.questionsService.fetchList(this.quiz.id, {limit: 100, l: this.locale || this.quiz.title.lang_code, sort: 'name_asc'});
+      })
+    );
+    this.questionsService.fetch(this.quiz.id, {limit: 100, l: this.locale || this.quiz.title.lang_code, sort: 'name_asc'});
   }
 
   get questionControls() {

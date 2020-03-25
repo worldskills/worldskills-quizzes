@@ -6,13 +6,14 @@ import {Attempt} from '../../types/attempt';
 import {AttemptsService} from '../../services/attempts/attempts.service';
 import {map} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
+import WsComponent from '../../utils/ws.component';
 
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent extends WsComponent implements OnInit {
 
   quiz: Quiz;
   attempt: Attempt;
@@ -22,21 +23,24 @@ export class QuizComponent implements OnInit {
   locale: string;
 
   constructor(private quizzesService: QuizzesService, private attemptsService: AttemptsService, private router: ActivatedRoute) {
+    super();
   }
 
   ngOnInit(): void {
-    combineLatest([this.quizzesService.loading, this.attemptsService.loading])
-    .pipe(map(([l1, l2]) => l1 || l2))
-    .subscribe(loading => this.loading = loading);
     this.locale = (window.navigator.language || (window.navigator as any).userLanguage || 'en').substring(0, 2);
-    this.attemptsService.instance.subscribe(attempt => (this.attempt = attempt));
-    this.quizzesService.instance.subscribe({
-      next: quiz => {
-        this.quiz = quiz;
-        this.attemptsService.createInstance(this.quiz.id, {}, {l: this.locale});
-      },
-      error: error => (this.error = error)
-    });
+    this.subscribe(
+      combineLatest([this.quizzesService.loading, this.attemptsService.loading])
+      .pipe(map(([l1, l2]) => l1 || l2))
+      .subscribe(loading => this.loading = loading),
+      this.attemptsService.instance.subscribe(attempt => (this.attempt = attempt)),
+      this.quizzesService.instance.subscribe({
+        next: quiz => {
+          this.quiz = quiz;
+          this.attemptsService.createInstance(this.quiz.id, {}, {l: this.locale});
+        },
+        error: error => (this.error = error)
+      })
+    );
     this.router.params.subscribe(params => {
       const {quizId} = params;
       this.quizzesService.fetchInstance(quizId, {l: this.locale});

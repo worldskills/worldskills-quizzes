@@ -6,15 +6,15 @@ import {EntitiesService} from '../../../services/entities/entities.service';
 import {EventsService} from '../../../services/events/events.service';
 import {EventList} from '../../../types/event';
 import {EntityList} from '../../../types/entity';
-import {take} from 'rxjs/operators';
 import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
+import WsComponent from '../../../utils/ws.component';
 
 @Component({
   selector: 'app-quizzes-quiz',
   templateUrl: './quizzes-quiz.component.html',
   styleUrls: ['./quizzes-quiz.component.css']
 })
-export class QuizzesQuizComponent implements OnInit {
+export class QuizzesQuizComponent extends WsComponent implements OnInit {
 
   quiz: Quiz = null;
   events: EventList = null;
@@ -29,19 +29,18 @@ export class QuizzesQuizComponent implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertService
   ) {
+    super();
   }
 
   ngOnInit(): void {
-    this.route.params.pipe(take(1)).subscribe(value => {
+    this.route.params.subscribe(value => {
       const {quizId} = value;
-      this.quizzesService.instance.subscribe(quiz => {
-        this.quiz = quiz;
-      });
+      this.subscribe(this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz)));
       this.eventsService.fetchList().subscribe(events => (this.events = events));
       this.entitiesService.fetchList().subscribe(entities => (this.entities = entities));
       this.quizzesService.fetchInstance(quizId);
     });
-    this.quizzesService.loading.subscribe(loading => (this.deleteLoading = loading));
+    this.subscribe(this.quizzesService.loading.subscribe(loading => (this.deleteLoading = loading)));
   }
 
   deleteQuiz() {

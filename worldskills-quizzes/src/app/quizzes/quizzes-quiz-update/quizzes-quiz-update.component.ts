@@ -10,13 +10,14 @@ import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
+import WsComponent from '../../../utils/ws.component';
 
 @Component({
   selector: 'app-quizzes-quiz-update',
   templateUrl: './quizzes-quiz-update.component.html',
   styleUrls: ['./quizzes-quiz-update.component.css']
 })
-export class QuizzesQuizUpdateComponent implements OnInit {
+export class QuizzesQuizUpdateComponent extends WsComponent implements OnInit {
 
   quiz: Quiz = null;
   events: EventList = null;
@@ -31,17 +32,20 @@ export class QuizzesQuizUpdateComponent implements OnInit {
     private router: Router,
     private alertService: AlertService
   ) {
+    super();
   }
 
   ngOnInit(): void {
-    this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz));
-    this.eventsService.list.subscribe(events => (this.events = events));
-    this.entitiesService.list.subscribe(entities => (this.entities = entities));
-    combineLatest([
-      this.quizzesService.loading,
-      this.eventsService.loading,
-      this.entitiesService.loading,
-    ]).pipe(map(([l1, l2, l3]) => l1 || l2 || l3)).subscribe(loading => (this.loading = loading));
+    this.subscribe(
+      this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz)),
+      this.eventsService.list.subscribe(events => (this.events = events)),
+      this.entitiesService.list.subscribe(entities => (this.entities = entities)),
+      combineLatest([
+        this.quizzesService.loading,
+        this.eventsService.loading,
+        this.entitiesService.loading,
+      ]).pipe(map(([l1, l2, l3]) => l1 || l2 || l3)).subscribe(loading => (this.loading = loading))
+    );
   }
 
   update(quiz: QuizRequest) {

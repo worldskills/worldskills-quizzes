@@ -6,13 +6,14 @@ import {SkillList} from '../../../types/skill';
 import {EntityList} from '../../../types/entity';
 import {SkillsService} from '../../../services/skills/skills.service';
 import {QuizzesService} from '../../../services/quizzes/quizzes.service';
+import WsComponent from '../../../utils/ws.component';
 
 @Component({
   selector: 'app-quizzes-quiz-form',
   templateUrl: './quizzes-quiz-form.component.html',
   styleUrls: ['./quizzes-quiz-form.component.css']
 })
-export class QuizzesQuizFormComponent implements OnInit {
+export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
 
   @Input() quiz: Quiz = null;
   @Input() events: EventList = null;
@@ -24,12 +25,15 @@ export class QuizzesQuizFormComponent implements OnInit {
   @ViewChild('form') form: NgForm;
 
   constructor(private skillsService: SkillsService, private quizzesService: QuizzesService) {
+    super();
   }
 
   ngOnInit(): void {
-    this.skillsService.list.subscribe(skills => (this.skills = skills));
-    this.skillsService.loading.subscribe(skillsLoading => (this.skillsLoading = skillsLoading));
-    this.quizzesService.loading.subscribe(quizzesLoading => (this.quizzesLoading = quizzesLoading));
+    this.subscribe(
+      this.skillsService.list.subscribe(skills => (this.skills = skills)),
+      this.skillsService.loading.subscribe(skillsLoading => (this.skillsLoading = skillsLoading)),
+      this.quizzesService.loading.subscribe(quizzesLoading => (this.quizzesLoading = quizzesLoading))
+    );
   }
 
   onEventChange(): void {

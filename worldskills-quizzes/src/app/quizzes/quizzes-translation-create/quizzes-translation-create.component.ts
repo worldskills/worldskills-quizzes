@@ -2,32 +2,34 @@ import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../../types/quiz';
 import {QuizzesService} from '../../../services/quizzes/quizzes.service';
 import {TranslationFormSubmitData} from '../quizzes-translation-form/quizzes-translation-form.component';
-import {QuestionsService} from '../../../services/questions/questions.service';
 import {AnswersService} from '../../../services/answers/answers.service';
 import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
+import {QuestionService} from '../../../services/question/question.service';
+import WsComponent from '../../../utils/ws.component';
 
 @Component({
   selector: 'app-quizzes-translation-create',
   templateUrl: './quizzes-translation-create.component.html',
   styleUrls: ['./quizzes-translation-create.component.css']
 })
-export class QuizzesTranslationCreateComponent implements OnInit {
+export class QuizzesTranslationCreateComponent extends WsComponent implements OnInit {
 
   quiz: Quiz = null;
   loading = false;
 
   constructor(
     private quizzesService: QuizzesService,
-    private questionsService: QuestionsService,
+    private questionService: QuestionService,
     private answersService: AnswersService,
     private router: Router,
     private alertService: AlertService) {
+    super();
   }
 
   ngOnInit(): void {
-    this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz));
+    this.subscribe(this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz)));
   }
 
   save(data: TranslationFormSubmitData) {
@@ -38,7 +40,7 @@ export class QuizzesTranslationCreateComponent implements OnInit {
       data.quiz,
       {l}
     ));
-    observables.push(this.questionsService.updateInstances(
+    observables.push(this.questionService.updateMany(
       data.questions.map(({questionId, question}) => ({questionId, question})),
       {l}
     ));

@@ -1,87 +1,35 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, ReplaySubject, Subscription} from 'rxjs';
-import {QuestionList, QuestionRequest, QuestionWithAnswers} from '../../types/question';
+import {Observable} from 'rxjs';
+import {QuestionList} from '../../types/question';
 import {HttpClient} from '@angular/common/http';
 import {FetchParams} from '../../types/common';
-import {httpParamsFromFetchParams, multicastRequestLoader} from '../../utils/http';
-import {share} from 'rxjs/operators';
-import {Answer} from '../../types/answer';
+import WsService, {FULL, MulticastOptions, P1, P2, P3, RequestOptions} from '../../utils/ws.service';
+import {httpParamsFromFetchParams} from '../../utils/http';
 import {environment} from '../../environments/environment';
+import {share} from 'rxjs/operators';
+
+export const DEFAULT_FETCH_PARAMS: FetchParams = {limit: 100, l: 'en', sort: 'order_asc'};
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionsService {
-
-  public loading = new ReplaySubject<boolean>(1);
-  private listSubscription: Subscription;
-  private instanceSubscription: Subscription;
-  public list = new ReplaySubject<QuestionList>(1);
-  public instance = new ReplaySubject<QuestionWithAnswers>(1);
+export class QuestionsService extends WsService<QuestionList> {
 
   constructor(private http: HttpClient) {
+    super();
   }
 
-  fetchList(quizId: number, fetchParams: FetchParams = {limit: 100, l: 'en', sort: 'name_asc'}, url?: string) {
+  fetch(quizId: number, rOpt?: RequestOptions): Observable<QuestionList>;
+  fetch(quizId: number, params: FetchParams, rOpt?: RequestOptions): Observable<QuestionList>;
+  fetch(quizId: number, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionList>;
+  fetch(quizId: number, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionList>;
+  fetch(quizId: number, p1: P1, p2?: P2, p3?: P3): Observable<QuestionList> {
+    const {fetchParams, multicastOptions, requestOptions} = WsService.resolveArgs(p1, p2, p3, FULL, DEFAULT_FETCH_PARAMS);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<QuestionList>(
-      url ?? `${environment.worldskillsApiQuizzes}/${quizId}/questions`, {params}
+      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/${quizId}/questions`, {params}
     ).pipe(share());
-    this.listSubscription = multicastRequestLoader<QuestionList>(observable, this.list, this.loading, this.listSubscription);
-    return observable;
+    return this.request(observable, multicastOptions);
   }
 
-  fetchInstance(questionId: number, fetchParams: FetchParams = {}, url?: string) {
-    const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.get<QuestionWithAnswers>(
-      url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}`, {params}
-    ).pipe(share());
-    this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(
-      observable, this.instance, this.loading, this.instanceSubscription);
-    return observable;
-  }
-
-  createInstance(quizId: number, question: QuestionRequest, fetchParams: FetchParams = {}, url?: string) {
-    const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.post<QuestionWithAnswers>(
-      url ?? `${environment.worldskillsApiQuizzes}/${quizId}/questions`, question, {params}
-    ).pipe(share());
-    this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(
-      observable, this.instance, this.loading, this.instanceSubscription
-    );
-    return observable;
-  }
-
-  updateInstance(questionId: number, question: QuestionRequest, fetchParams: FetchParams = {}, url?: string) {
-    const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.put<QuestionWithAnswers>(
-      url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}`, question, {params}
-    ).pipe(share());
-    this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(
-      observable, this.instance, this.loading, this.instanceSubscription
-    );
-    return observable;
-  }
-
-  updateInstances(questions: Array<{ questionId: number, question: QuestionRequest }>, fetchParams: FetchParams = {}, url?: string) {
-    const params = httpParamsFromFetchParams(fetchParams);
-    const observables = [];
-    questions.forEach(({questionId, question}) => {
-      observables.push(this.http.put<QuestionWithAnswers>(
-        url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}`, question, {params}
-      ).pipe(share()));
-    });
-    const forkJoined = forkJoin<QuestionWithAnswers>(observables);
-    multicastRequestLoader<Array<QuestionWithAnswers>>(forkJoined, undefined, this.loading);
-    return forkJoined;
-  }
-
-  deleteInstance(questionId: number, fetchParams: FetchParams = {}, url?: string) {
-    const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.delete<QuestionWithAnswers>(
-      url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}`, {params}
-    ).pipe(share());
-    this.instanceSubscription = multicastRequestLoader<QuestionWithAnswers>(observable, undefined, this.loading, this.instanceSubscription);
-    return observable;
-  }
 }

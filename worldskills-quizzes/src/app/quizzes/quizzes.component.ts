@@ -3,13 +3,14 @@ import {QuizzesService} from '../../services/quizzes/quizzes.service';
 import {QuizList} from '../../types/quiz';
 import {ListPage, listPageToFetchParam} from '../../types/common';
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
+import WsComponent from '../../utils/ws.component';
 
 @Component({
   selector: 'app-quizzes',
   templateUrl: './quizzes.component.html',
   styleUrls: ['./quizzes.component.css']
 })
-export class QuizzesComponent implements OnInit {
+export class QuizzesComponent extends WsComponent implements OnInit {
 
   faCheck = faCheck;
   faTimes = faTimes;
@@ -21,11 +22,14 @@ export class QuizzesComponent implements OnInit {
   };
 
   constructor(private quizzesService: QuizzesService) {
+    super();
   }
 
   ngOnInit(): void {
-    this.quizzesService.list.subscribe(quizzes => (this.quizzes = quizzes));
-    this.quizzesService.loading.subscribe(loading => (this.loading = loading));
+    this.subscribe(
+      this.quizzesService.list.subscribe(quizzes => (this.quizzes = quizzes)),
+      this.quizzesService.loading.subscribe(loading => (this.loading = loading))
+    );
     this.quizzesService.fetchList(listPageToFetchParam(this.listPage));
   }
 

@@ -48,7 +48,7 @@
         <div class="col-sm-4">
           <button
             type="button"
-            class="btn btn-danger btn-xs"
+            class="btn btn-danger btn-sm"
             (click)="removeAnswer(control.controls.removed)"
             *ngIf="quiz ? !quiz.has_attempts : false">
             <fa-icon [icon]="faTimes"></fa-icon>
@@ -60,7 +60,7 @@
         <div class="offset-sm-8 col-sm-4">
           <button
             type="button"
-            class="btn btn-default btn-xs"
+            class="btn btn-default btn-sm"
             (click)="restoreAnswer(control.controls.removed)"
             *ngIf="quiz ? !quiz.has_attempts : false">
             <fa-icon [icon]="faRedo"></fa-icon>
@@ -78,7 +78,7 @@
         <p class="help-block">All answers will automatically be randomized for each attempt.</p>
       </div>
       <div class="col-sm-4">
-        <button type="button" class="btn btn-success btn-xs" (click)="addAnswer()">
+        <button type="button" class="btn btn-success btn-sm" (click)="addAnswer()">
           <fa-icon [icon]="faPlus"></fa-icon>
           Add answer
         </button>

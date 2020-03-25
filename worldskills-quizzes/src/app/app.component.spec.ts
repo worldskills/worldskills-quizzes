@@ -20,11 +20,11 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'worldskills-quizzes'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('worldskills-quizzes');
-  });
+  // it(`should have as title 'worldskills-quizzes'`, () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   const app = fixture.componentInstance;
+  //   expect(app.title).toEqual('worldskills-quizzes');
+  // });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);

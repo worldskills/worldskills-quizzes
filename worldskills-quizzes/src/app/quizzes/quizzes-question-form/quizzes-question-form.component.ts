@@ -8,6 +8,7 @@ import {QuestionsService} from '../../../services/questions/questions.service';
 import {AnswersService} from '../../../services/answers/answers.service';
 import {map} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
+import WsComponent from '../../../utils/ws.component';
 
 export interface QuestionFormData {
   question: string;
@@ -30,7 +31,7 @@ export interface QuestionFormSubmitData {
   templateUrl: './quizzes-question-form.component.html',
   styleUrls: ['./quizzes-question-form.component.css']
 })
-export class QuizzesQuestionFormComponent implements OnInit, OnChanges {
+export class QuizzesQuestionFormComponent extends WsComponent implements OnInit, OnChanges {
 
   @Input() quiz: Quiz = null;
   @Input() question: Question = null;
@@ -44,24 +45,28 @@ export class QuizzesQuestionFormComponent implements OnInit, OnChanges {
   loading = false;
 
   constructor(private questionsService: QuestionsService, private answersService: AnswersService) {
+    super();
   }
 
   get answerControls() {
     return (this.form.get('answers') as FormArray).controls as Array<FormGroup>;
   }
 
-  ngOnInit(): void {
-    this.initForm();
-  }
+  // ngOnInit(): void {
+  //   this.initForm();
+  // }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.initForm();
+    //this.initForm();
   }
 
-  initForm() {
-    combineLatest([this.questionsService.loading, this.answersService.loading])
-    .pipe(map(([l1, l2]) => l1 || l2))
-    .subscribe(loading => this.loading = loading);
+  ngOnInit() {
+    this.subscribe(
+      combineLatest([this.questionsService.loading, this.answersService.loading])
+      .pipe(map(([l1, l2]) => l1 || l2))
+      .subscribe(loading => this.loading = loading)
+    );
+
     const defaultAnswer = (correct = false) => ({
       id: new FormControl(null),
       answer: new FormControl(''),

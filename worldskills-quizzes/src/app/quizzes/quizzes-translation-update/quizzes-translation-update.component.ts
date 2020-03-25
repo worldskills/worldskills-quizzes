@@ -4,18 +4,19 @@ import {QuizzesService} from '../../../services/quizzes/quizzes.service';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fetchLink, httpParamsFromFetchParams} from '../../../utils/http';
-import {QuestionsService} from '../../../services/questions/questions.service';
 import {AnswersService} from '../../../services/answers/answers.service';
 import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
 import {TranslationFormSubmitData} from '../quizzes-translation-form/quizzes-translation-form.component';
 import {forkJoin} from 'rxjs';
+import WsComponent from '../../../utils/ws.component';
+import {QuestionService} from '../../../services/question/question.service';
 
 @Component({
   selector: 'app-quizzes-translation-update',
   templateUrl: './quizzes-translation-update.component.html',
   styleUrls: ['./quizzes-translation-update.component.css']
 })
-export class QuizzesTranslationUpdateComponent implements OnInit {
+export class QuizzesTranslationUpdateComponent extends WsComponent implements OnInit {
 
   quiz: Quiz = null;
   translatedQuiz: Quiz = null;
@@ -23,12 +24,13 @@ export class QuizzesTranslationUpdateComponent implements OnInit {
 
   constructor(
     private quizzesService: QuizzesService,
-    private questionsService: QuestionsService,
+    private questionService: QuestionService,
     private answersService: AnswersService,
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
     private alertService: AlertService) {
+    super();
   }
 
   deleteTranslation(locale: string) {
@@ -42,20 +44,22 @@ export class QuizzesTranslationUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.quizzesService.instance.subscribe(quiz => {
-      this.route.params.subscribe(({locale}) => {
-        const links = fetchLink<QuizLinkType>(quiz, 'self');
-        if (links.length > 0) {
-          this.http.get<Quiz>(links[0].href, {params: httpParamsFromFetchParams({l: locale})}
-          ).subscribe(translatedQuiz => {
-            this.translatedQuiz = translatedQuiz;
-            this.quiz = quiz;
-          });
-        } else {
-          console.error('cannot load links of quiz');
-        }
-      });
-    });
+    this.subscribe(
+      this.quizzesService.instance.subscribe(quiz => {
+        this.route.params.subscribe(({locale}) => {
+          const links = fetchLink<QuizLinkType>(quiz, 'self');
+          if (links.length > 0) {
+            this.http.get<Quiz>(links[0].href, {params: httpParamsFromFetchParams({l: locale})}
+            ).subscribe(translatedQuiz => {
+              this.translatedQuiz = translatedQuiz;
+              this.quiz = quiz;
+            });
+          } else {
+            console.error('cannot load links of quiz');
+          }
+        });
+      })
+    );
   }
 
   save(data: TranslationFormSubmitData) {
@@ -66,7 +70,7 @@ export class QuizzesTranslationUpdateComponent implements OnInit {
       data.quiz,
       {l}
     ));
-    observables.push(this.questionsService.updateInstances(
+    observables.push(this.questionService.updateMany(
       data.questions.map(({questionId, question}) => ({questionId, question})),
       {l}
     ));

@@ -9,13 +9,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {QuestionFormSubmitData} from '../quizzes-question-form/quizzes-question-form.component';
 import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
 import {forkJoin} from 'rxjs';
+import {QuestionService} from '../../../services/question/question.service';
+import WsComponent from '../../../utils/ws.component';
 
 @Component({
   selector: 'app-quizzes-question-update',
   templateUrl: './quizzes-question-update.component.html',
   styleUrls: ['./quizzes-question-update.component.css']
 })
-export class QuizzesQuestionUpdateComponent implements OnInit {
+export class QuizzesQuestionUpdateComponent extends WsComponent implements OnInit {
 
   quiz: Quiz;
   question: Question;
@@ -24,35 +26,38 @@ export class QuizzesQuestionUpdateComponent implements OnInit {
 
   constructor(
     private quizzesService: QuizzesService,
+    private questionService: QuestionService,
     private questionsService: QuestionsService,
     private answersService: AnswersService,
     private route: ActivatedRoute,
     private router: Router,
     private alertService: AlertService
   ) {
+    super();
   }
 
-  // TODO subscription management! VERY IMPORTANT to prevent leaks
   ngOnInit(): void {
-    this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz));
-    this.questionsService.instance.subscribe(question => (this.question = question));
-    this.answersService.list.subscribe(answers => (this.answers = answers));
-    this.answersService.loading.subscribe(loading => (this.loading = loading));
-    this.route.params.subscribe(value => {
-      const {questionId} = value;
-      this.answersService.fetchList(questionId);
-      this.questionsService.fetchInstance(questionId);
-    });
+    this.subscribe(
+      this.quizzesService.instance.subscribe(quiz => (this.quiz = quiz)),
+      this.questionService.subject.subscribe(question => (this.question = question)),
+      this.answersService.list.subscribe(answers => (this.answers = answers)),
+      this.answersService.loading.subscribe(loading => (this.loading = loading)),
+      this.route.params.subscribe(value => {
+        const {questionId} = value;
+        this.answersService.fetchList(questionId);
+        this.questionService.fetch(questionId);
+      })
+    );
   }
 
   deleteQuestion() {
     if (confirm('Deleting the Question will also delete all answers. Click OK to proceed.')) {
-      this.questionsService.deleteInstance(this.question.id).subscribe(() => {
-        this.questionsService.fetchList(this.quiz.id).subscribe(list => {
+      this.questionService.delete(this.question.id).subscribe(() => {
+        this.questionsService.fetch(this.quiz.id).subscribe(list => {
           const observables = [];
           list.questions.sort((a, b) => a.sort - b.sort).forEach((question, index) => {
             question.sort = index + 1;
-            observables.push(this.questionsService.updateInstance(question.id, question));
+            observables.push(this.questionService.update(question.id, question));
           });
           if (observables.length > 0) {
             const forkJoined = forkJoin(observables);
@@ -73,7 +78,7 @@ export class QuizzesQuestionUpdateComponent implements OnInit {
 
   deactivateQuestion() {
     const instance = {...this.question, active: false};
-    this.questionsService.updateInstance(this.question.id, instance).subscribe(() => {
+    this.questionService.update(this.question.id, instance).subscribe(() => {
       this.alertService.setAlert('activate-question', AlertType.success,
         null, undefined, 'The Question has been deactivated successfully.', true);
       this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
@@ -82,7 +87,7 @@ export class QuizzesQuestionUpdateComponent implements OnInit {
 
   activateQuestion() {
     const instance = {...this.question, active: true};
-    this.questionsService.updateInstance(this.question.id, instance).subscribe(() => {
+    this.questionService.update(this.question.id, instance).subscribe(() => {
       this.alertService.setAlert('deactivate-question', AlertType.success,
         null, undefined, 'The Question has been activated successfully.', true);
       this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
@@ -91,7 +96,7 @@ export class QuizzesQuestionUpdateComponent implements OnInit {
 
   save(question: QuestionFormSubmitData) {
     const instance = {...this.question, ...question.question};
-    this.questionsService.updateInstance(this.question.id, instance).subscribe(() => {
+    this.questionService.update(this.question.id, instance).subscribe(() => {
       const observables = [];
       const storedAnswers: Array<AnswerRequest> = question.answers.filter(answer => !!answer.id);
       const newAnswers: Array<AnswerRequest> = question.answers.filter(answer => !answer.id);
