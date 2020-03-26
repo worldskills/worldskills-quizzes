@@ -67,6 +67,7 @@ export class AnswerService extends WsService<Answer> {
   updateMany(answers: Many, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<Array<Answer>>;
   updateMany(answers: Many, p1: P1, p2?: P2, p3?: P3): Observable<Array<Answer>> {
     const {fetchParams, multicastOptions, requestOptions} = WsService.resolveArgs(p1, p2, p3, LOADER_ONLY);
+    console.log({fetchParams, multicastOptions, requestOptions});
     const params = httpParamsFromFetchParams(fetchParams);
     const observables = [];
     answers.forEach(({answerId, answer}) => {

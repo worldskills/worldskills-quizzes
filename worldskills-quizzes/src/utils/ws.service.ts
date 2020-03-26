@@ -74,9 +74,9 @@ abstract class WsService<T> {
     multicastOptions: MulticastOptions,
     requestOptions: RequestOptions
   } {
-    let fetchParams: FetchParams = defaultFetchParams;
-    let multicastOptions: MulticastOptions = defaultMulticastOptions;
-    let requestOptions: RequestOptions = {};
+    let fetchParams: FetchParams;
+    let multicastOptions: MulticastOptions;
+    let requestOptions: RequestOptions;
     if (isRequestOptions(p3)) {
       fetchParams = p1 as FetchParams;
       multicastOptions = p2 as MulticastOptions;
@@ -91,9 +91,9 @@ abstract class WsService<T> {
     } else if (isRequestOptions(p1)) {
       requestOptions = p1;
     } else {
-      if (!isMulticastOptions(p2)) {
-        fetchParams = p1 as FetchParams;
-        multicastOptions = p2;
+      if (!isMulticastOptions(p2) && isMulticastOptions(p1)) {
+        fetchParams = p2;
+        multicastOptions = p1 as MulticastOptions;
       } else {
         if (isMulticastOptions(p1)) {
           multicastOptions = p1;
@@ -101,6 +101,15 @@ abstract class WsService<T> {
           fetchParams = p1;
         }
       }
+    }
+    if (fetchParams === undefined) {
+      fetchParams = defaultFetchParams;
+    }
+    if (multicastOptions === undefined) {
+      multicastOptions = defaultMulticastOptions;
+    }
+    if (requestOptions === undefined) {
+      requestOptions = {};
     }
     return {
       fetchParams,
@@ -117,7 +126,8 @@ abstract class WsService<T> {
 
   private decrementLoader(): void {
     this.loaders.pipe(take(1)).subscribe(v => {
-      this.loaders.next(--v);
+      const loaders = Math.max(0, v - 1);
+      this.loaders.next(loaders);
     });
   }
 
@@ -127,6 +137,9 @@ abstract class WsService<T> {
       this.incrementLoader();
     }
     if (subscription && this.subscription) {
+      if (loader) {
+        this.decrementLoader();
+      }
       this.subscription.unsubscribe();
     }
     const s = observable.subscribe(value => {

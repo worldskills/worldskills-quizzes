@@ -4,7 +4,8 @@
       <div class="card" style="margin-bottom: 20px;" *ngFor="let question of questions.questions">
         <div class="card-header">
           <h5 class="float-left">Question {{question.sort}}</h5>
-          <a class="float-right" routerLink="/quizzes/{{quiz.id}}/questions/{{question.id}}">Edit</a>
+          <a class="float-right"
+             routerLink="/quizzes/{{quiz.id}}/questions/{{question.id}}">Edit</a>
           <div class="clearfix"></div>
         </div>
         <div class="card-body">
@@ -13,9 +14,9 @@
             <ng-container *ngIf="question.answers">
               <div class="form-check" *ngFor="let answer of question.answers">
                 <label>
-                  <input type="radio" [name]="'answers[' + answer.id + ']'">&nbsp;
-                  <span>{{alphabet[answer.sort - 1]}}: <span
-                    [innerHTML]="answer.text.text"></span></span>
+                  <input type="radio" [name]="'answers[' + question.id + ']'">&nbsp;
+                  <div style="display: inline-block">{{alphabet[answer.sort - 1]}}:&nbsp;</div>
+                  <div style="display: inline-block" [innerHTML]="answer.text.text"></div>
                 </label>
               </div>
             </ng-container>

@@ -8,7 +8,7 @@ import {httpParamsFromFetchParams} from '../../utils/http';
 import {environment} from '../../environments/environment';
 import {share} from 'rxjs/operators';
 
-export const DEFAULT_FETCH_PARAMS: FetchParams = {limit: 100, l: 'en', sort: 'order_asc'};
+export const DEFAULT_FETCH_PARAMS: FetchParams = {limit: 100, l: 'en', sort: 'sort_asc'};
 
 @Injectable({
   providedIn: 'root'

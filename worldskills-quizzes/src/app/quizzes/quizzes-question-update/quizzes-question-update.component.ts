@@ -109,9 +109,11 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
         }))));
       }
       if (newAnswers.length > 0) {
+        console.log(newAnswers);
         observables.push(this.answerService.createMany(this.question.id, newAnswers));
       }
       if (question.deletedAnswers.length > 0) {
+        console.log(question.deletedAnswers);
         observables.push(this.answerService.deleteMany(question.deletedAnswers.map(answer => answer.id)));
       }
       if (observables.length > 0) {

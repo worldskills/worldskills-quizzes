@@ -4,11 +4,11 @@ import {Question, QuestionRequest} from '../../../types/question';
 import {AnswerRequest, AnswersList} from '../../../types/answer';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {faPlus, faRedo, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {QuestionsService} from '../../../services/questions/questions.service';
 import {AnswersService} from '../../../services/answers/answers.service';
 import {map} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
 import WsComponent from '../../../utils/ws.component';
+import {QuestionService} from '../../../services/question/question.service';
 
 export interface QuestionFormData {
   question: string;
@@ -44,7 +44,7 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
   isSubmitted = false;
   loading = false;
 
-  constructor(private questionsService: QuestionsService, private answersService: AnswersService) {
+  constructor(private questionService: QuestionService, private answersService: AnswersService) {
     super();
   }
 
@@ -52,21 +52,15 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
     return (this.form.get('answers') as FormArray).controls as Array<FormGroup>;
   }
 
-  // ngOnInit(): void {
-  //   this.initForm();
-  // }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    //this.initForm();
-  }
-
   ngOnInit() {
     this.subscribe(
-      combineLatest([this.questionsService.loading, this.answersService.loading])
+      combineLatest([this.questionService.loading, this.answersService.loading])
       .pipe(map(([l1, l2]) => l1 || l2))
       .subscribe(loading => this.loading = loading)
     );
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
     const defaultAnswer = (correct = false) => ({
       id: new FormControl(null),
       answer: new FormControl(''),

@@ -59,15 +59,16 @@
                     [value]="answer.id"
                     [disabled]="attempt.state === 'finished'"
                   />&nbsp;
-                  <span
+                  <div
+                    style="display: inline-block"
                     [ngClass]="{
                       'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
                       'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
                         || (question.answer && answer.correct === true && question.correct === false)
                     }">
                     {{alphabet[answer.sort - 1]}}:&nbsp;
-                    <span [innerHTML]="answer.text.text"></span>
-                  </span>&nbsp;
+                  </div>&nbsp;
+                  <div style="display: inline-block" [innerHTML]="answer.text.text"></div>
                   <span
                     class="badge badge-danger"
                     *ngIf="question.answer && question.answer.id === answer.id && question.correct === false">

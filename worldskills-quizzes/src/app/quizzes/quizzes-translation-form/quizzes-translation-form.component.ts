@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Quiz, QuizRequest} from '../../../types/quiz';
 import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 import {QuestionList, QuestionRequest, QuestionWithAnswers} from '../../../types/question';
@@ -9,6 +9,7 @@ import {combineLatest, forkJoin} from 'rxjs';
 import {AnswerRequest} from '../../../types/answer';
 import {map} from 'rxjs/operators';
 import WsComponent from '../../../utils/ws.component';
+import {QuizService} from '../../../services/quiz/quiz.service';
 
 export interface TranslationFormData {
   locale: string;
@@ -45,7 +46,7 @@ export interface TranslationFormSubmitData {
   templateUrl: './quizzes-translation-form.component.html',
   styleUrls: ['./quizzes-translation-form.component.css']
 })
-export class QuizzesTranslationFormComponent extends WsComponent implements OnInit, OnChanges {
+export class QuizzesTranslationFormComponent extends WsComponent implements OnInit {
 
   @Input() quiz: Quiz;
   @Input() locale: string = null;
@@ -62,15 +63,6 @@ export class QuizzesTranslationFormComponent extends WsComponent implements OnIn
   }
 
   ngOnInit(): void {
-    this.initForm();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.initForm();
-  }
-
-  initForm() {
-    this.subscriptions.unsubscribe();
     this.subscribe(
       combineLatest([this.questionsService.loading, this.answersService.loading])
       .pipe(map(([l1, l2]) => l1 || l2))
