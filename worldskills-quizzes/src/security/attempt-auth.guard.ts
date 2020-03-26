@@ -18,6 +18,6 @@ export class AttemptAuthGuard extends WSAuthGuard implements CanActivate {
   }
 
   protected error(message: string) {
-    this.authService.login();
+    this.router.navigate(['/']);
   }
 }

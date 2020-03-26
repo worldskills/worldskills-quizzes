@@ -17,106 +17,108 @@ import {QuizzesQuestionCreateComponent} from './quizzes/quizzes-question-create/
 import {QuizzesTranslationCreateComponent} from './quizzes/quizzes-translation-create/quizzes-translation-create.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {AttemptAuthGuard} from '../security/attempt-auth.guard';
+import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: '/quizzes'
-  },
-  {
-    path: 'quiz/:quizId',
-    pathMatch: 'full',
-    component: QuizComponent,
-    canActivate: [AttemptAuthGuard],
-    data: {breadcrumb: 'Quiz'}
-  },
-  {
-    path: 'quizzes',
-    pathMatch: 'full',
-    canActivate: [AdminAuthGuard],
-    component: QuizzesComponent,
-    data: {breadcrumb: 'Quizzes'}
-  },
-  {
-    path: 'quizzes/create',
-    pathMatch: 'full',
-    component: QuizzesQuizCreateComponent,
-    canActivate: [AdminAuthGuard],
-    data: {breadcrumb: 'Add quiz'}
-  },
-  {
-    path: 'quizzes/:quizId',
-    component: QuizzesQuizComponent,
-    canActivate: [AdminAuthGuard],
-    data: {breadcrumb: 'Quiz'},
+    component: HomeComponent,
     children: [
       {
-        path: '',
-        component: QuizzesQuizUpdateComponent,
-        canActivate: [AdminAuthGuard],
+        path: 'quiz/:quizId',
+        pathMatch: 'full',
+        component: QuizComponent,
+        canActivate: [AttemptAuthGuard],
         data: {breadcrumb: 'Quiz'}
       },
       {
-        path: 'questions',
-        component: QuizzesQuizQuestionsComponent,
+        path: 'quizzes',
+        pathMatch: 'full',
         canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Questions'}
+        component: QuizzesComponent,
+        data: {breadcrumb: 'Quizzes'}
       },
       {
-        path: 'questions/create',
-        component: QuizzesQuestionCreateComponent,
+        path: 'quizzes/create',
+        pathMatch: 'full',
+        component: QuizzesQuizCreateComponent,
         canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Add question'}
+        data: {breadcrumb: 'Add quiz'}
       },
       {
-        path: 'questions/:questionId',
-        component: QuizzesQuestionUpdateComponent,
+        path: 'quizzes/:quizId',
+        component: QuizzesQuizComponent,
         canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Edit question'}
-      },
-      {
-        path: 'preview',
-        component: QuizzesQuizPreviewComponent,
-        canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Preview'}
-      },
-      {
-        path: 'translations',
-        component: QuizzesQuizTranslationsComponent,
-        canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Translations'}
-      },
-      {
-        path: 'translations/create',
-        component: QuizzesTranslationCreateComponent,
-        canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Add translation'}
-      },
-      {
-        path: 'translations/:locale',
-        component: QuizzesTranslationUpdateComponent,
-        canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Edit translation'}
-      },
-      {
-        path: 'attempts',
-        component: QuizzesQuizAttemptsComponent,
-        canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Attempts'}
-      },
-      {
-        path: 'attempts/:attemptId',
-        component: QuizzesAttemptComponent,
-        canActivate: [AdminAuthGuard],
-        data: {breadcrumb: 'Attempt'}
+        data: {breadcrumb: 'Quiz'},
+        children: [
+          {
+            path: '',
+            component: QuizzesQuizUpdateComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Quiz'}
+          },
+          {
+            path: 'questions',
+            component: QuizzesQuizQuestionsComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Questions'}
+          },
+          {
+            path: 'questions/create',
+            component: QuizzesQuestionCreateComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Add question'}
+          },
+          {
+            path: 'questions/:questionId',
+            component: QuizzesQuestionUpdateComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Edit question'}
+          },
+          {
+            path: 'preview',
+            component: QuizzesQuizPreviewComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Preview'}
+          },
+          {
+            path: 'translations',
+            component: QuizzesQuizTranslationsComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Translations'}
+          },
+          {
+            path: 'translations/create',
+            component: QuizzesTranslationCreateComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Add translation'}
+          },
+          {
+            path: 'translations/:locale',
+            component: QuizzesTranslationUpdateComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Edit translation'}
+          },
+          {
+            path: 'attempts',
+            component: QuizzesQuizAttemptsComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Attempts'}
+          },
+          {
+            path: 'attempts/:attemptId',
+            component: QuizzesAttemptComponent,
+            canActivate: [AdminAuthGuard],
+            data: {breadcrumb: 'Attempt'}
+          },
+          {
+            path: '**',
+            component: NotFoundComponent,
+            data: {breadcrumb: 'Not found'}
+          }
+        ]
       }
     ]
-  },
-  {
-    path: '**',
-    component: NotFoundComponent,
-    data: {breadcrumb: 'Not found'}
   }
 ];
 

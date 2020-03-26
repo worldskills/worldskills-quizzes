@@ -5,7 +5,8 @@ import {share} from 'rxjs/operators';
 
 export interface AuthStatus {
   isLoggedIn: boolean;
-  user: UserModel
+  user: UserModel,
+  authenticated: boolean;
 }
 
 @Injectable({
@@ -15,15 +16,22 @@ export class AuthService {
 
   authStatus = new BehaviorSubject<AuthStatus>({
     isLoggedIn: false,
-    user: undefined
+    user: undefined,
+    authenticated: false,
   });
 
   constructor(private authService: WsAuthService, private userService: UserService) {
+    this.authStatus.next({
+      isLoggedIn: this.authService.isLoggedIn(),
+      user: undefined,
+      authenticated: false,
+    });
     this.authService.currentUser.subscribe((user: UserModel) => {
       if (user instanceof UserModel) {
         this.authStatus.next({
           isLoggedIn: true,
-          user
+          user,
+          authenticated: true
         });
       }
     });
@@ -57,7 +65,8 @@ export class AuthService {
       complete: () => {
         this.authStatus.next({
           isLoggedIn: false,
-          user: undefined
+          user: undefined,
+          authenticated: false
         });
       }
     });

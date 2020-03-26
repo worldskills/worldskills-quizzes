@@ -32,6 +32,7 @@ import {HttpInterceptorService} from '../services/http-interceptor/http-intercep
 import {CkEditorDirective} from './directives/ck-editor/ck-editor.directive';
 import {WsSpinnerComponent} from './ws-spinner/ws-spinner.component';
 import {LangCodeToNamePipe} from '../pipes/lang-code-to-name/lang-code-to-name.pipe';
+import {HomeComponent} from './home/home.component';
 
 const serviceConfig = {
   appCode: 1300,
@@ -92,7 +93,8 @@ const httpConfig = {
     NotFoundComponent,
     CkEditorDirective,
     WsSpinnerComponent,
-    LangCodeToNamePipe
+    LangCodeToNamePipe,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

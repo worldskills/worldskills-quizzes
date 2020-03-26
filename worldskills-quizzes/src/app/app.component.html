@@ -4,21 +4,23 @@
   [appName]="'Quizzes'"
   (loginClick)="login()"
   (logoutClick)="logout()"
-  [isLoggedIn]="authStatus.isLoggedIn"
+  [isLoggedIn]="authStatus.user && authStatus.isLoggedIn"
   [showLoginAndLogoutButtons]="true">
 </ws-header>
 
 <div class="container">
-  <ng-container *ngIf="authStatus.isLoggedIn">
+  <ng-container *ngIf="authStatus.authenticated">
     <ws-breadcrumbs
+      *ngIf="showBreadcrumbs"
       [showHomeItem]="true"
       [homeItemText]="'Home'"
       [homeItemRoute]="'/'">
     </ws-breadcrumbs>
+    <div *ngIf="!showBreadcrumbs" style="margin-top: 60px"></div>
     <ws-alert></ws-alert>
     <router-outlet></router-outlet>
   </ng-container>
-  <ng-container *ngIf="!authStatus.isLoggedIn">
+  <ng-container *ngIf="!authStatus.authenticated">
     <div style="margin-top: 20px">
       <ws-spinner></ws-spinner>
     </div>

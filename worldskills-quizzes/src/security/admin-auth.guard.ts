@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService, UserService, WSAuthGuard} from '@worldskills/worldskills-angular-lib';
 
 @Injectable({providedIn: 'root'})
@@ -18,6 +18,6 @@ export class AdminAuthGuard extends WSAuthGuard implements CanActivate {
   }
 
   protected error(message: string) {
-    this.authService.login();
+    this.router.navigate(['/']);
   }
 }
