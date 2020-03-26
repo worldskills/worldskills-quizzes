@@ -8,7 +8,6 @@ import {AuthConfig, OAuthModule} from 'angular-oauth2-oidc';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {WorldskillsAngularLibModule, WsHttpInterceptor} from '@worldskills/worldskills-angular-lib';
 import {QuizzesComponent} from './quizzes/quizzes.component';
-import {RootComponent} from './root/root.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {QuizzesQuizComponent} from './quizzes/quizzes-quiz/quizzes-quiz.component';
@@ -74,7 +73,6 @@ const httpConfig = {
   declarations: [
     AppComponent,
     QuizzesComponent,
-    RootComponent,
     QuizzesQuizComponent,
     QuizzesQuizFormComponent,
     QuizzesQuizQuestionsComponent,

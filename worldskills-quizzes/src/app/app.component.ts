@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService, UserModel, UserService} from '@worldskills/worldskills-angular-lib';
-import {Router} from '@angular/router';
+import {AuthService, AuthStatus} from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,18 +8,14 @@ import {Router} from '@angular/router';
 })
 export class AppComponent implements OnInit {
   date;
-  user: UserModel;
-  isLoggedIn = false;
+  authStatus: AuthStatus;
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) {
+  constructor(private authService: AuthService) {
     this.date = new Date();
   }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe((user: UserModel) => {
-      this.user = user;
-      this.isLoggedIn = true;
-    });
+    this.authService.authStatus.subscribe(authStatus => (this.authStatus = authStatus));
   }
 
   login() {
@@ -28,10 +23,9 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout().subscribe({
+    this.authService.logout().subscribe({
       complete: () => {
-        this.isLoggedIn = false;
-        this.router.navigate(['/']).catch(e2 => console.error(e2));
+        window.location.reload();
       }
     });
   }
