@@ -7,23 +7,23 @@
 ```
 git clone git@github.com:worldskills/worldskills-quizzes.git
 cd worldskills-quizzes
-npm install -g grunt-cli
 npm install
-./node_modules/bower/bin/bower install
-cp app/scripts/config.js.dev app/scripts/config.js
+cp src/environments/environment.dev.ts src/environments/environment.ts
 ```
 
 ## Development
 
-Run local development server for [http://localhost:11300](http://localhost:11300/):
+Run local development server for [http://localhost:11301](http://localhost:11301/):
 
 ```
-grunt server
+ng serve --port 11301
 ```
 
 To test the build process, run 
 
 ```
-grunt build --env=dev
-php -S localhost:11300 -t dist/
+ng build -c development
+php -S localhost:11301 -t dist/worldskills-quizzes
 ```
+
+Other available configurations: `staging` `production`
