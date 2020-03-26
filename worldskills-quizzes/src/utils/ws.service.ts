@@ -137,10 +137,10 @@ abstract class WsService<T> {
       this.incrementLoader();
     }
     if (subscription && this.subscription) {
-      if (loader) {
+      if (loader && !this.subscription.closed) {
         this.decrementLoader();
+        this.subscription.unsubscribe();
       }
-      this.subscription.unsubscribe();
     }
     const s = observable.subscribe(value => {
       if (loader) {
