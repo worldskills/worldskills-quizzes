@@ -1,8 +1,9 @@
-import {Link, List, LocalizedText} from './common';
+import {Link, List} from './common';
+import {I18nModel} from '@worldskills/worldskills-angular-lib';
 
 export interface Entity {
   id: number;
-  name: LocalizedText;
+  name: I18nModel;
   links: Array<Link>;
 }
 

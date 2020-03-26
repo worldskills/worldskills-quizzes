@@ -1,5 +1,6 @@
-import {Link, List, LocalizedText} from './common';
+import {Link, List} from './common';
 import {Entity} from './entity';
+import {I18nModel} from '@worldskills/worldskills-angular-lib';
 
 export interface Event {
   id: number;
@@ -13,7 +14,7 @@ export interface Event {
   country: {
     id: number;
     code: string;
-    name: LocalizedText;
+    name: I18nModel;
   };
   utc_offset: number;
   url: string;

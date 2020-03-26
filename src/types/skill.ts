@@ -1,6 +1,7 @@
-import {Link, List, LocalizedText} from './common';
+import {Link, List} from './common';
 import {Event} from './event';
 import {Entity} from './entity';
+import {I18nModel} from '@worldskills/worldskills-angular-lib';
 
 export interface Skill {
   id: number;
@@ -11,16 +12,16 @@ export interface Skill {
   status: string;
   url_video: string;
   sort: number;
-  name: LocalizedText;
-  description: LocalizedText;
-  description_required_skills: LocalizedText;
-  description_industry_action: LocalizedText;
-  description_competition_action: LocalizedText;
-  description_facts: LocalizedText;
+  name: I18nModel;
+  description: I18nModel;
+  description_required_skills: I18nModel;
+  description_industry_action: I18nModel;
+  description_competition_action: I18nModel;
+  description_facts: I18nModel;
   group: any;
   sector: {
     id: number;
-    name: LocalizedText;
+    name: I18nModel;
     event: Event;
     base_sector_id: number;
     ws_entity: Entity;
@@ -40,7 +41,7 @@ export interface Skill {
     image_id: number;
     thumbnail_hash: string;
     thumbnail: string;
-    description: LocalizedText;
+    description: I18nModel;
     links: Array<Link>;
   }>;
   tags: Array<any>;

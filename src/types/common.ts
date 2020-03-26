@@ -31,8 +31,3 @@ export function listPageToFetchParam(listPage: ListPage): FetchParams {
     offset: listPage.pageSize * (listPage.page - 1),
   };
 }
-
-export interface LocalizedText {
-  lang_code: string;
-  text: string;
-}

@@ -1,5 +1,6 @@
-import {List, LocalizedText} from './common';
+import {List} from './common';
 import {Answer} from './answer';
+import {I18nModel} from '@worldskills/worldskills-angular-lib';
 
 export interface AnsweredQuestionWithAnswers extends QuestionWithAnswers {
   answer: Answer;
@@ -11,7 +12,7 @@ export interface QuestionWithAnswers extends Question {
 }
 
 export interface QuestionRequest {
-  text: LocalizedText;
+  text: I18nModel;
   weight?: number;
   sort?: number;
   active?: boolean;

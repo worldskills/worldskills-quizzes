@@ -1,8 +1,9 @@
-import {List, LocalizedText} from './common';
+import {List} from './common';
+import {I18nModel} from '@worldskills/worldskills-angular-lib';
 
 export interface AnswerRequest {
   id?: number;
-  text: LocalizedText;
+  text: I18nModel;
   correct: boolean;
   sort?: number;
 }
