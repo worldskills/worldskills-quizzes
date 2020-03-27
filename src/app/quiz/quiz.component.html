@@ -44,7 +44,7 @@
           style="margin-bottom: 20px;"
           [ngClass]="{card: true, 'border-default': question.correct === null, 'border-danger': question.correct === false, 'border-success': question.correct === true}">
           <div
-            [ngClass]="{'card-header': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true}">
+            [ngClass]="{'card-header': true, 'text-white bg-danger': question.correct === false, 'text-white bg-success': question.correct === true}">
             <h5>Question {{question.sort}}</h5>
           </div>
           <div class="card-body">
