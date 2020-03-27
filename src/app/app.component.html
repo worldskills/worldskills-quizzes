@@ -16,12 +16,12 @@
       [homeItemText]="'Quizzes'"
       [homeItemRoute]="'/'">
     </ws-breadcrumbs>
-    <div *ngIf="!showBreadcrumbs" style="margin-top: 60px"></div>
+    <div *ngIf="!showBreadcrumbs" class="mt-5"></div>
     <ws-alert></ws-alert>
     <router-outlet></router-outlet>
   </ng-container>
   <ng-container *ngIf="!authStatus.authenticated">
-    <div style="margin-top: 20px">
+    <div class="mt-4">
       <ws-spinner></ws-spinner>
     </div>
   </ng-container>
