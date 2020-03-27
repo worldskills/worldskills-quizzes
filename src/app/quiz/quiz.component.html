@@ -51,7 +51,11 @@
             <div class="card-title" [innerHTML]="question.text.text"></div>
             <div class="form-group">
               <div class="radio" *ngFor="let answer of question.answers">
-                <label>
+                <label [ngClass]="{
+                  'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
+                  'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
+                    || (question.answer && answer.correct === true && question.correct === false)
+                }">
                   <input
                     type="radio"
                     [ngModel]="question.answer ? question.answer.id : null"
@@ -59,16 +63,11 @@
                     [value]="answer.id"
                     [disabled]="attempt.state === 'finished'"
                   />&nbsp;
-                  <div
-                    style="display: inline-block"
-                    [ngClass]="{
-                      'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
-                      'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
-                        || (question.answer && answer.correct === true && question.correct === false)
-                    }">
+                  <div style="display: inline-block">
                     {{alphabet[answer.sort - 1]}}:&nbsp;
-                  </div>&nbsp;
+                  </div>
                   <div style="display: inline-block" [innerHTML]="answer.text.text"></div>
+                  &nbsp;
                   <span
                     class="badge badge-danger"
                     *ngIf="question.answer && question.answer.id === answer.id && question.correct === false">
