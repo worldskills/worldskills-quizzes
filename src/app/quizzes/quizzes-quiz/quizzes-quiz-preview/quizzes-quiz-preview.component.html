@@ -3,7 +3,7 @@
     <div class="offset-sm-2 col-sm-8">
       <div class="card" style="margin-bottom: 20px;" *ngFor="let question of questions.questions">
         <div class="card-header">
-          <h5 class="float-left">Question {{question.sort}}</h5>
+          <h5 class="float-left">Question {{question.sort}}  <span *ngIf="!question.active" class="badge badge-secondary">Inactive</span></h5>
           <a class="float-right"
              routerLink="/quizzes/{{quiz.id}}/questions/{{question.id}}">Edit</a>
           <div class="clearfix"></div>
