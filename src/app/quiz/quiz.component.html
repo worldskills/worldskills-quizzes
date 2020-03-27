@@ -109,9 +109,9 @@
         </div>
 
         <!--           *ngIf="quiz.url_learning && (attempt.state === 'running' || attempt.passed === false || attemptError.status == 400 || attemptError.status == 401)"-->
-        <div class="col-sm-6">
+        <div class="col-sm-6 text-right">
           <a
-            class="btn btn-link pull-right"
+            class="btn btn-link"
             *ngIf="quiz.url_learning && (attempt.state === 'running' || attempt.passed === false)"
             href="{{quiz.url_learning}}">
             « Return to learning resources
