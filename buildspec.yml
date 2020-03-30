@@ -1,0 +1,19 @@
+---
+version: 0.2
+environment_variables:
+  plaintext:
+    NG_CLI_ANALYTICS: "false"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - npm install -g @angular/cli
+      - npm ci
+  build:
+    commands:
+      - ng build --configuration=$ENV --aot --output-hashing=all
+  post_build:
+    commands:
+      - aws s3 sync dist/ s3://$BUCKET
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT --paths /index.html
