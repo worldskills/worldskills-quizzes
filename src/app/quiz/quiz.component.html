@@ -36,9 +36,6 @@
         <br/>
       </div>
 
-      <!--    <div *ngIf="quizError" class="alert alert-danger" role="alert">{{ quizError.status == 404 ? "The requested Quiz could not be found." : "The requested Quiz is unavailable." }}</div>-->
-      <!--    <div *ngIf="!quizError && attemptError.status == 401" class="alert alert-danger" role="alert">You do not have the required permissions to attempt this Quiz.</div>-->
-      <!--    <div *ngIf="attemptError.status == 400 && attemptError.data.code == '1300-403'" class="alert alert-warning" role="alert">The Quiz has been closed and is no longer active.</div>-->
       <ng-container *ngFor="let question of attempt.questions">
         <div
           style="margin-bottom: 20px;"
@@ -58,9 +55,9 @@
                 }">
                   <input
                     type="radio"
-                    [ngModel]="question.answer ? question.answer.id : null"
                     (change)="selectAnswer(question.id, answer.id)"
                     [value]="answer.id"
+                    [checked]="question.answer ? answer.id === question.answer.id : false"
                     [disabled]="attempt.state === 'finished'"
                   />&nbsp;
                   <div style="display: inline-block">
@@ -107,8 +104,7 @@
             Take Quiz again
           </button>
         </div>
-
-        <!--           *ngIf="quiz.url_learning && (attempt.state === 'running' || attempt.passed === false || attemptError.status == 400 || attemptError.status == 401)"-->
+        
         <div class="col-sm-6 text-right">
           <a
             class="btn btn-link"

@@ -50,20 +50,15 @@ export class QuizzesTranslationCreateComponent extends WsComponent implements On
         {l}
       ));
     });
-    if (observables.length > 0) {
-      const forkedJoin = forkJoin(observables);
-      forkedJoin.subscribe(() => {
+    forkJoin(observables).subscribe({
+      complete: () => {
         this.quizService.fetch(this.quiz.id).subscribe(() => {
           this.alertService.setAlert('update-translation', AlertType.success,
             null, undefined, 'The translation has been updated successfully.', true);
           this.router.navigateByUrl(`/quizzes/${this.quiz.id}/translations`).catch(e => alert(e));
         });
-      });
-    } else {
-      this.alertService.setAlert('update-question', AlertType.success,
-        null, undefined, 'The translation has been updated successfully.', true);
-      this.router.navigateByUrl(`/quizzes/${this.quiz.id}/translations`).catch(e => alert(e));
-    }
+      }
+    });
   }
 
 }

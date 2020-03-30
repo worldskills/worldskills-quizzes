@@ -61,18 +61,14 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
             question.sort = index + 1;
             observables.push(this.questionService.update(question.id, question));
           });
-          if (observables.length > 0) {
-            const forkJoined = forkJoin(observables);
-            forkJoined.subscribe(() => {
+
+          forkJoin(observables).subscribe({
+            complete: () => {
               this.alertService.setAlert('delete-question', AlertType.success,
                 null, undefined, 'The Question has been deleted successfully.', true);
               this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
-            });
-          } else {
-            this.alertService.setAlert('delete-question', AlertType.success,
-              null, undefined, 'The Question has been deleted successfully.', true);
-            this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
-          }
+            }
+          });
         });
       });
     }
@@ -109,25 +105,18 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
         }))));
       }
       if (newAnswers.length > 0) {
-        console.log(newAnswers);
         observables.push(this.answerService.createMany(this.question.id, newAnswers));
       }
       if (question.deletedAnswers.length > 0) {
-        console.log(question.deletedAnswers);
         observables.push(this.answerService.deleteMany(question.deletedAnswers.map(answer => answer.id)));
       }
-      if (observables.length > 0) {
-        const forkJoined = forkJoin(observables);
-        forkJoined.subscribe(() => {
+      forkJoin(observables).subscribe({
+        complete: () => {
           this.alertService.setAlert('update-question', AlertType.success,
             null, undefined, 'The Question has been updated successfully.', true);
           this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
-        });
-      } else {
-        this.alertService.setAlert('update-question', AlertType.success,
-          null, undefined, 'The Question has been updated successfully.', true);
-        this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
-      }
+        }
+      });
     });
   }
 

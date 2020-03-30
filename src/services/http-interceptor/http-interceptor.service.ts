@@ -21,9 +21,15 @@ export class HttpInterceptorService implements HttpInterceptor {
         } else if (event.status === 403) {
           this.authService.login();
         } else if (event.status === 400) {
-          this.alertService.setAlert('request', AlertType.error, event.error, undefined, 'user_msg' in event.error ? event.error.user_msg : event.message, false);
+          this.alertService.setAlert('request', AlertType.error, event.error, undefined,
+            'user_msg' in event.error ? event.error.user_msg : event.message, false);
         } else {
-          this.alertService.setError('request', event.error, event.statusText, event.message);
+          if (event.error && 'user_msg' in event.error) {
+            this.alertService.setAlert('request', AlertType.error, event.error, undefined,
+              'user_msg' in event.error ? event.error.user_msg : event.message, false);
+          } else {
+            this.alertService.setError('request', event.error, event.statusText, event.message);
+          }
         }
       }
     }));

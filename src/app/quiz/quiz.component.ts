@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Quiz} from '../../types/quiz';
 import {Attempt} from '../../types/attempt';
@@ -7,13 +7,14 @@ import {combineLatest} from 'rxjs';
 import WsComponent from '../../utils/ws.component';
 import {AttemptService} from '../../services/attempt/attempt.service';
 import {QuizService} from '../../services/quiz/quiz.service';
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent extends WsComponent implements OnInit {
+export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
 
   quiz: Quiz;
   attempt: Attempt;
@@ -31,6 +32,7 @@ export class QuizComponent extends WsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    AppComponent.showBreadcrumbs.next(false);
     this.locale = (window.navigator.language || (window.navigator as any).userLanguage || 'en').substring(0, 2);
     this.subscribe(
       combineLatest([this.quizService.loading, this.attemptService.loading])
@@ -52,6 +54,10 @@ export class QuizComponent extends WsComponent implements OnInit {
   }
 
   selectAnswer(questionId: number, answerId: number) {
+    const attempt = {...this.attempt};
+    const qIndex = attempt.questions.findIndex(q => q.id === questionId);
+    attempt.questions[qIndex].answer = attempt.questions[qIndex].answers.find(a => a.id === answerId);
+    this.attemptService.subject.next(attempt);
     this.attemptService.update(this.attempt.id, questionId, answerId, {}, {l: this.locale});
   }
 
@@ -61,6 +67,11 @@ export class QuizComponent extends WsComponent implements OnInit {
 
   retry() {
     window.location.reload();
+  }
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    AppComponent.showBreadcrumbs.next(true);
   }
 
 }

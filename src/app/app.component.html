@@ -11,12 +11,12 @@
 <div class="container">
   <ng-container *ngIf="authStatus.authenticated">
     <ws-breadcrumbs
-      *ngIf="showBreadcrumbs"
+      *ngIf="showBreadcrumb"
       [showHomeItem]="true"
       [homeItemText]="'Quizzes'"
       [homeItemRoute]="'/'">
     </ws-breadcrumbs>
-    <div *ngIf="!showBreadcrumbs" class="mt-5"></div>
+    <div *ngIf="!showBreadcrumb" class="mt-5"></div>
     <ws-alert></ws-alert>
     <router-outlet></router-outlet>
   </ng-container>
