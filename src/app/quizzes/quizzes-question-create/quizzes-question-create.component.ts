@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
+import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
 import {QuestionsService} from '../../../services/questions/questions.service';
 import {Quiz} from '../../../types/quiz';
 import {QuestionFormSubmitData} from '../quizzes-question-form/quizzes-question-form.component';
 import {QuestionService} from '../../../services/question/question.service';
-import WsComponent from '../../../utils/ws.component';
 import {AnswerService} from '../../../services/answer/answer.service';
 import {QuizService} from '../../../services/quiz/quiz.service';
 

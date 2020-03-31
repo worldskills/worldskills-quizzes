@@ -1,5 +1,6 @@
 import {HttpParams} from '@angular/common/http';
-import {FetchParams, Link} from '../types/common';
+import {Link} from '../types/common';
+import {FetchParams} from '@worldskills/worldskills-angular-lib';
 
 export function httpParamsFromFetchParams(fetchParams: FetchParams): HttpParams {
   let params = new HttpParams();

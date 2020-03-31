@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../../types/quiz';
 import {Attempt} from '../../../types/attempt';
 import {ActivatedRoute} from '@angular/router';
-import WsComponent from '../../../utils/ws.component';
 import {AttemptService} from '../../../services/attempt/attempt.service';
 import {QuizService} from '../../../services/quiz/quiz.service';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-attempt',

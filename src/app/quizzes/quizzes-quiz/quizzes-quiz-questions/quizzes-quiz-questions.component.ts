@@ -4,12 +4,11 @@ import {txt} from 'src/utils/txt';
 import {combineLatest, forkJoin} from 'rxjs';
 import {Question, QuestionList} from '../../../../types/question';
 import {faArrowDown, faArrowUp} from '@fortawesome/free-solid-svg-icons';
-import WsComponent from '../../../../utils/ws.component';
 import {QuestionsService} from '../../../../services/questions/questions.service';
 import {QuestionService} from '../../../../services/question/question.service';
 import {QuizService} from '../../../../services/quiz/quiz.service';
-import {LOADER_ONLY} from '../../../../utils/ws.service';
 import {map} from 'rxjs/operators';
+import {LOADER_ONLY, WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-quiz-questions',

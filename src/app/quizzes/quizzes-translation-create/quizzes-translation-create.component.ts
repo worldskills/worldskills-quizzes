@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../../types/quiz';
 import {TranslationFormSubmitData} from '../quizzes-translation-form/quizzes-translation-form.component';
-import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
+import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {QuestionService} from '../../../services/question/question.service';
-import WsComponent from '../../../utils/ws.component';
 import {AnswerService} from '../../../services/answer/answer.service';
 import {QuizService} from '../../../services/quiz/quiz.service';
 

@@ -3,7 +3,7 @@ import {QuizzesService} from '../../services/quizzes/quizzes.service';
 import {QuizList} from '../../types/quiz';
 import {ListPage, listPageToFetchParam} from '../../types/common';
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
-import WsComponent from '../../utils/ws.component';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes',

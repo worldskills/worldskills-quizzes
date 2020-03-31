@@ -1,3 +1,5 @@
+import {FetchParams} from '@worldskills/worldskills-angular-lib';
+
 interface ListCount {
   total_count: number;
 }
@@ -16,13 +18,6 @@ export interface Link<K extends string = null> {
 export interface ListPage {
   page: number;
   pageSize: number;
-}
-
-export interface FetchParams {
-  limit?: number;
-  offset?: number;
-  sort?: string;
-  l?: string;
 }
 
 export function listPageToFetchParam(listPage: ListPage): FetchParams {

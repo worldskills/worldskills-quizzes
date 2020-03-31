@@ -4,10 +4,10 @@ import {Quiz} from '../../types/quiz';
 import {Attempt} from '../../types/attempt';
 import {map} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
-import WsComponent from '../../utils/ws.component';
 import {AttemptService} from '../../services/attempt/attempt.service';
 import {QuizService} from '../../services/quiz/quiz.service';
 import {AppComponent} from '../app.component';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quiz',

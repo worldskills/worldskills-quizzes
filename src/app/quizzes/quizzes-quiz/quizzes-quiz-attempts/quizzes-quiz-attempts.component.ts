@@ -4,8 +4,8 @@ import {AttemptsList} from '../../../../types/attempt';
 import {fetchLink} from '../../../../utils/http';
 import {AttemptsService} from '../../../../services/attempts/attempts.service';
 import {ListPage, listPageToFetchParam} from '../../../../types/common';
-import WsComponent from '../../../../utils/ws.component';
 import {QuizService} from '../../../../services/quiz/quiz.service';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-quiz-attempts',

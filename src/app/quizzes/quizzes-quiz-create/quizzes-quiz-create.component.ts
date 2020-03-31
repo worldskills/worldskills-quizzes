@@ -7,8 +7,7 @@ import {EventsService} from '../../../services/events/events.service';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
-import WsComponent from '../../../utils/ws.component';
+import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {QuizService} from '../../../services/quiz/quiz.service';
 
 @Component({

@@ -7,8 +7,8 @@ import {faPlus, faRedo, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {AnswersService} from '../../../services/answers/answers.service';
 import {map} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
-import WsComponent from '../../../utils/ws.component';
 import {QuestionService} from '../../../services/question/question.service';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 export interface QuestionFormData {
   question: string;

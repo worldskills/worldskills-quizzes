@@ -3,8 +3,8 @@ import {Quiz} from '../../../../types/quiz';
 import {forkJoin, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {fetchLink} from '../../../../utils/http';
-import WsComponent from '../../../../utils/ws.component';
 import {QuizService} from '../../../../services/quiz/quiz.service';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-quiz-translations',

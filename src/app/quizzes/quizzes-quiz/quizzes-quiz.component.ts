@@ -5,8 +5,7 @@ import {EntitiesService} from '../../../services/entities/entities.service';
 import {EventsService} from '../../../services/events/events.service';
 import {EventList} from '../../../types/event';
 import {EntityList} from '../../../types/entity';
-import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
-import WsComponent from '../../../utils/ws.component';
+import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {QuizService} from '../../../services/quiz/quiz.service';
 
 @Component({

@@ -3,8 +3,8 @@ import {QuestionsService} from '../../../../services/questions/questions.service
 import {AnswersService} from '../../../../services/answers/answers.service';
 import {Quiz} from '../../../../types/quiz';
 import {QuestionList, QuestionWithAnswers} from '../../../../types/question';
-import WsComponent from '../../../../utils/ws.component';
 import {QuizService} from '../../../../services/quiz/quiz.service';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-quiz-preview',

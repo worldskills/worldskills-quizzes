@@ -8,8 +8,7 @@ import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {combineLatest, forkJoin} from 'rxjs';
 import {AnswerRequest} from '../../../types/answer';
 import {map} from 'rxjs/operators';
-import WsComponent from '../../../utils/ws.component';
-import {QuizService} from '../../../services/quiz/quiz.service';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 export interface TranslationFormData {
   locale: string;

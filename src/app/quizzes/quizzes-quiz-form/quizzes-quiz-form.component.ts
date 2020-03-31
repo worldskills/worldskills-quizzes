@@ -6,7 +6,7 @@ import {SkillList} from '../../../types/skill';
 import {EntityList} from '../../../types/entity';
 import {SkillsService} from '../../../services/skills/skills.service';
 import {QuizzesService} from '../../../services/quizzes/quizzes.service';
-import WsComponent from '../../../utils/ws.component';
+import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-quiz-form',

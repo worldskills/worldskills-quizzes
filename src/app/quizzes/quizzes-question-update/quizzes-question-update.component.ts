@@ -6,10 +6,9 @@ import {AnswerRequest, AnswersList} from '../../../types/answer';
 import {Question} from '../../../types/question';
 import {ActivatedRoute, Router} from '@angular/router';
 import {QuestionFormSubmitData} from '../quizzes-question-form/quizzes-question-form.component';
-import {AlertService, AlertType} from '@worldskills/worldskills-angular-lib';
+import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {forkJoin} from 'rxjs';
 import {QuestionService} from '../../../services/question/question.service';
-import WsComponent from '../../../utils/ws.component';
 import {AnswerService} from '../../../services/answer/answer.service';
 import {QuizService} from '../../../services/quiz/quiz.service';
 

@@ -2,10 +2,20 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {QuestionRequest, QuestionWithAnswers} from '../../types/question';
 import {HttpClient} from '@angular/common/http';
-import {FetchParams} from '../../types/common';
 import {share} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import WsService, {FULL, LOADER_ONLY, MulticastOptions, NO_SUBJECT, P1, P2, P3, RequestOptions} from '../../utils/ws.service';
+import {
+  FetchParams,
+  FULL,
+  LOADER_ONLY,
+  MulticastOptions,
+  NO_SUBJECT,
+  RequestOptions,
+  WsService,
+  WsServiceRequestP1,
+  WsServiceRequestP2,
+  WsServiceRequestP3
+} from '@worldskills/worldskills-angular-lib';
 import {httpParamsFromFetchParams} from '../../utils/http';
 
 type Many = Array<{ questionId: number, question: QuestionRequest }>;
@@ -23,8 +33,8 @@ export class QuestionService extends WsService<QuestionWithAnswers> {
   fetch(questionId: number, params: FetchParams, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
   fetch(questionId: number, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
   fetch(questionId: number, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
-  fetch(questionId: number, p1: P1, p2?: P2, p3?: P3): Observable<QuestionWithAnswers> {
-    const {fetchParams, multicastOptions, requestOptions} = WsService.resolveArgs(p1, p2, p3, FULL);
+  fetch(questionId: number, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<QuestionWithAnswers> {
+    const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<QuestionWithAnswers>(
       requestOptions.url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}`, {params}
@@ -36,8 +46,8 @@ export class QuestionService extends WsService<QuestionWithAnswers> {
   create(quizId: number, question: QuestionRequest, params: FetchParams, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
   create(quizId: number, question: QuestionRequest, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
   create(quizId: number, question: QuestionRequest, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
-  create(quizId: number, question: QuestionRequest, p1: P1, p2?: P2, p3?: P3): Observable<QuestionWithAnswers> {
-    const {fetchParams, multicastOptions, requestOptions} = WsService.resolveArgs(p1, p2, p3, FULL);
+  create(quizId: number, question: QuestionRequest, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<QuestionWithAnswers> {
+    const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.post<QuestionWithAnswers>(
       requestOptions.url ?? `${environment.worldskillsApiQuizzes}/${quizId}/questions`, question, {params}
@@ -49,8 +59,8 @@ export class QuestionService extends WsService<QuestionWithAnswers> {
   update(questionId: number, question: QuestionRequest, params: FetchParams, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
   update(questionId: number, question: QuestionRequest, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
   update(questionId: number, question: QuestionRequest, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
-  update(questionId: number, question: QuestionRequest, p1: P1, p2?: P2, p3?: P3): Observable<QuestionWithAnswers> {
-    const {fetchParams, multicastOptions, requestOptions} = WsService.resolveArgs(p1, p2, p3, FULL);
+  update(questionId: number, question: QuestionRequest, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<QuestionWithAnswers> {
+    const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.put<QuestionWithAnswers>(
       requestOptions.url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}`, question, {params}
@@ -62,8 +72,8 @@ export class QuestionService extends WsService<QuestionWithAnswers> {
   updateMany(questions: Many, params: FetchParams, rOpt?: RequestOptions): Observable<Array<QuestionWithAnswers>>;
   updateMany(questions: Many, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<Array<QuestionWithAnswers>>;
   updateMany(questions: Many, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<Array<QuestionWithAnswers>>;
-  updateMany(questions: Many, p1: P1, p2?: P2, p3?: P3): Observable<Array<QuestionWithAnswers>> {
-    const {fetchParams, multicastOptions, requestOptions} = WsService.resolveArgs(p1, p2, p3, LOADER_ONLY);
+  updateMany(questions: Many, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<Array<QuestionWithAnswers>> {
+    const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, LOADER_ONLY);
     const params = httpParamsFromFetchParams(fetchParams);
     const observables = [];
     questions.forEach(({questionId, question}) => {
@@ -78,8 +88,8 @@ export class QuestionService extends WsService<QuestionWithAnswers> {
   delete(questionId: number, params: FetchParams, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
   delete(questionId: number, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
   delete(questionId: number, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuestionWithAnswers>;
-  delete(questionId: number, p1: P1, p2?: P2, p3?: P3): Observable<QuestionWithAnswers> {
-    const {fetchParams, multicastOptions, requestOptions} = WsService.resolveArgs(p1, p2, p3, NO_SUBJECT);
+  delete(questionId: number, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<QuestionWithAnswers> {
+    const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, NO_SUBJECT);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.delete<QuestionWithAnswers>(
       requestOptions.url ?? `${environment.worldskillsApiQuizzes}/questions/${questionId}`, {params}
