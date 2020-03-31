@@ -1,12 +1,17 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AuthService } from './auth.service';
+import {AuthService} from './auth.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {WorldskillsAngularLibModule} from '@worldskills/worldskills-angular-lib';
 
 describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, WorldskillsAngularLibModule],
+      providers: [{provide: AuthService, useValue: {}}],
+    });
     service = TestBed.inject(AuthService);
   });
 

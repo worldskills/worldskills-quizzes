@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { WsSpinnerComponent } from './ws-spinner.component';
+import {WsSpinnerComponent} from './ws-spinner.component';
 
 describe('WsSpinnerComponent', () => {
   let component: WsSpinnerComponent;
@@ -8,7 +8,7 @@ describe('WsSpinnerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WsSpinnerComponent ]
+      declarations: [WsSpinnerComponent]
     })
     .compileComponents();
   }));

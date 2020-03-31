@@ -1,4 +1,4 @@
-import { LangCodeToNamePipe } from './lang-code-to-name.pipe';
+import {LangCodeToNamePipe} from './lang-code-to-name.pipe';
 
 describe('LangCodeToNamePipe', () => {
   it('create an instance', () => {

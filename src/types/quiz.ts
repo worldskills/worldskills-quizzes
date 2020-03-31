@@ -22,7 +22,7 @@ export interface Quiz extends QuizRequest {
   id: number;
   lang_code: string;
   text: string;
-  has_attempts: true;
+  has_attempts: boolean;
   created: string;
   links: Array<Link<QuizLinkType>>;
 }

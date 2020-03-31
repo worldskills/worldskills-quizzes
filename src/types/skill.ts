@@ -30,11 +30,11 @@ export interface Skill {
   min_teams: number;
   max_teams: number;
   team_size: number;
-  identify_judges: false;
-  group_competitors: false;
-  compatriot_marking: false;
-  generate_500_scale: false;
-  landscape_marking: false;
+  identify_judges: boolean;
+  group_competitors: boolean;
+  compatriot_marking: boolean;
+  generate_500_scale: boolean;
+  landscape_marking: boolean;
   competitor_max_age: number;
   photos: Array<{
     id: number;

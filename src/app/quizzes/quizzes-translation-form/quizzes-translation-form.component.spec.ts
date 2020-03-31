@@ -1,6 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { QuizzesTranslationFormComponent } from './quizzes-translation-form.component';
+import {QuizzesTranslationFormComponent} from './quizzes-translation-form.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {mockQuizFactory} from '../../../test';
 
 describe('QuizzesTranslationFormComponent', () => {
   let component: QuizzesTranslationFormComponent;
@@ -8,7 +11,8 @@ describe('QuizzesTranslationFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QuizzesTranslationFormComponent ]
+      declarations: [QuizzesTranslationFormComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule],
     })
     .compileComponents();
   }));
@@ -16,6 +20,7 @@ describe('QuizzesTranslationFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QuizzesTranslationFormComponent);
     component = fixture.componentInstance;
+    component.quiz = mockQuizFactory();
     fixture.detectChanges();
   });
 
