@@ -4,11 +4,11 @@ import {Question, QuestionRequest} from '../../../types/question';
 import {AnswerRequest, AnswersList} from '../../../types/answer';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {faPlus, faRedo, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {AnswersService} from '../../../services/answers/answers.service';
 import {map} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
 import {QuestionService} from '../../../services/question/question.service';
 import {WsComponent} from '@worldskills/worldskills-angular-lib';
+import {AnswerService} from '../../../services/answer/answer.service';
 
 export interface QuestionFormData {
   question: string;
@@ -44,7 +44,7 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
   isSubmitted = false;
   loading = false;
 
-  constructor(private questionService: QuestionService, private answersService: AnswersService) {
+  constructor(private questionService: QuestionService, private answerService: AnswerService) {
     super();
   }
 
@@ -54,7 +54,7 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
 
   ngOnInit() {
     this.subscribe(
-      combineLatest([this.questionService.loading, this.answersService.loading])
+      combineLatest([this.questionService.loading, this.answerService.loading])
       .pipe(map(([l1, l2]) => l1 || l2))
       .subscribe(loading => this.loading = loading)
     );

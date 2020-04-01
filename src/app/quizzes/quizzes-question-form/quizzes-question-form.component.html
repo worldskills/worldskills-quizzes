@@ -25,7 +25,7 @@
     <ng-container *ngFor="let control of answerControls; let index=index">
       <hr/>
       <div class="form-group row" *ngIf="!control.controls.removed.value">
-        <label class="col-sm-3 col-form-label">Answer</label>
+        <label class="col-sm-3 col-form-label">Answer {{index + 1}}</label>
         <div class="col-sm-5">
           <textarea
             class="form-control"

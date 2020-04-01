@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {FormControl} from '@angular/forms';
 import {environment} from '../../../environments/environment';
@@ -46,8 +46,10 @@ class UploadAdapter {
 @Directive({
   selector: '[appCkEditor]'
 })
-export class CkEditorDirective implements OnInit {
+export class CkEditorDirective implements OnInit, OnChanges, OnDestroy {
   @Input() formControl: FormControl;
+  private editor;
+  private subscription: Subscription;
 
   constructor(private elementRef: ElementRef, private http: HttpClient) {
   }
@@ -57,18 +59,49 @@ export class CkEditorDirective implements OnInit {
       extraPlugins: [UploadAdapter]
     }).then(
       editor => {
-        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        this.editor = editor;
+        if (this.formControl) {
+          this.subscription = this.formControl.valueChanges.subscribe(value => {
+            if (this.editor.getData() !== value) {
+              this.editor.setData(value || '');
+            }
+          });
+        }
+        this.editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
           return new UploadAdapter(loader, this.http);
         };
-        editor.model.document.on('change:data', () => {
+        this.editor.model.document.on('change:data', () => {
           if (this.formControl) {
-            this.formControl.setValue(editor.getData());
+            this.formControl.setValue(this.editor.getData());
           } else {
-            this.elementRef.nativeElement.setValue(editor.getData());
+            this.elementRef.nativeElement.setValue(this.editor.getData());
           }
         });
       }
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.formControl) {
+      if (this.editor) {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+        this.subscription = this.formControl.valueChanges.subscribe(value => {
+          if (this.editor.getData() !== value) {
+            this.editor.setData(value || '');
+          }
+        });
+        this.editor.setData(this.formControl.value);
+      }
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.editor.destroy();
   }
 
 }
