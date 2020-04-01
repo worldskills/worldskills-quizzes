@@ -6,7 +6,7 @@ export const environment = {
   worldskillsApiAuth: 'https://api.worldskills.show/auth',
   worldskillsClientId: 'e7a23a88163b',
   worldskillsAuthorizeUrl: 'https://auth.worldskills.show/oauth/authorize',
-  worldskillsAuthorizeRedirect: '???',
+  worldskillsAuthorizeRedirect: 'https://quiz.worldskills.show/',
   worldskillsAuthorizeUserinfoEndpoint: 'https://auth.worldskills.show/auth/users/loggedIn',
   worldskillsAuthUriPatterns: ['api.worldskills.show'],
   loadChildEntityRoles: true,
