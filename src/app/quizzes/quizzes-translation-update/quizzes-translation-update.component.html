@@ -1,0 +1,25 @@
+<ng-container *ngIf="translatedQuiz">
+
+  <p class="float-right">
+    <button (click)="deleteTranslation(translatedQuiz.title.lang_code)" class="btn btn-danger">
+      <ng-container *ngIf="!loading">Delete Translation</ng-container>
+      <ng-container *ngIf="loading">
+        <ws-spinner></ws-spinner>
+      </ng-container>
+    </button>
+  </p>
+
+  <h3>{{translatedQuiz.title.lang_code | langCodeToName}} translation</h3>
+
+  <hr/>
+
+  <app-quizzes-translation-form
+    [locale]="translatedQuiz.title.lang_code"
+    [quiz]="translatedQuiz"
+    (save)="save($event)">
+  </app-quizzes-translation-form>
+
+</ng-container>
+<ng-container *ngIf="!translatedQuiz">
+  <ws-spinner></ws-spinner>
+</ng-container>

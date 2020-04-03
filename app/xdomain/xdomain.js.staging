@@ -1,3 +1,0 @@
-xdomain.slaves({
-    'https://staging-api.worldskills.org': '/proxy.html'
-});

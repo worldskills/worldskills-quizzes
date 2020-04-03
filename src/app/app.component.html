@@ -1,0 +1,48 @@
+<ws-header
+  [menuItems]="[]"
+  [currentUser]="authStatus.user"
+  [appName]="'Quizzes'"
+  (loginClick)="login()"
+  (logoutClick)="logout()"
+  [isLoggedIn]="authStatus.user && authStatus.isLoggedIn"
+  [showLoginAndLogoutButtons]="true">
+</ws-header>
+
+<div class="container">
+  <ng-container *ngIf="authStatus.authenticated">
+    <ws-breadcrumbs
+      *ngIf="showBreadcrumb"
+      [showHomeItem]="true"
+      [homeItemText]="'Quizzes'"
+      [homeItemRoute]="'/quizzes'">
+    </ws-breadcrumbs>
+    <div *ngIf="!showBreadcrumb" class="mt-5"></div>
+    <ws-alert></ws-alert>
+    <router-outlet></router-outlet>
+  </ng-container>
+  <ng-container *ngIf="!authStatus.authenticated">
+    <div class="mt-4">
+      <ws-spinner></ws-spinner>
+    </div>
+  </ng-container>
+</div>
+
+<ws-footer>
+  <div left>
+    <h2>WorldSkills</h2>
+    <ul>
+      <li><a href="https://www.worldskills.org/">Home</a></li>
+      <li><a href="https://www.worldskills.org/internal/">Member Area</a></li>
+      <li><a href="http://forums.worldskills.org/">Forums</a></li>
+      <li><a href="http://glossary.worldskills.org/">Glossary</a></li>
+    </ul>
+    <br/><br/>
+    <ul class="list-inline">
+      <li class="list-inline-item">© {{date | date:'yyyy'}} WorldSkills International</li>
+      <li class="list-inline-item"><a
+        href="https://www.worldskills.org/site/privacy/">Privacy</a></li>
+      <li class="list-inline-item"><a href="https://www.worldskills.org/site/terms/">Terms</a>
+      </li>
+    </ul>
+  </div>
+</ws-footer>

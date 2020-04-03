@@ -1,0 +1,70 @@
+<p class="float-right">
+  <button routerLink="/quizzes/create" class="btn btn-primary">Add Quiz</button>
+</p>
+
+<h2>Quizzes</h2>
+
+<div class="row mt-2">
+  <div class="col-md-12">
+    <div class="table-responsive-md">
+      <table class="table table-striped border-top">
+        <colgroup>
+          <col width="5%">
+          <col width="50%">
+          <col width="5%">
+          <col width="20%">
+          <col width="20%">
+        </colgroup>
+        <thead>
+        <tr>
+          <th class="border-top-0">ID</th>
+          <th class="border-top-0">Name</th>
+          <th class="border-top-0">Active</th>
+          <th class="border-top-0">Event</th>
+          <th class="border-top-0">Created</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td colspan="5"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <ng-template [ngIf]="quizzes && !loading" [ngIfElse]="loader">
+          <tr *ngFor="let quiz of quizzes.quizzes">
+            <td><a routerLink="/quizzes/{{quiz.id}}">{{quiz.id}}</a></td>
+            <td><a routerLink="/quizzes/{{quiz.id}}"
+                   title="{{quiz.title.text}}">{{quiz.title.text}}</a></td>
+            <td>
+              <fa-icon *ngIf="quiz.active" [icon]="faCheck" class="text-success"></fa-icon>
+              <fa-icon *ngIf="!quiz.active" [icon]="faTimes" class="text-danger"></fa-icon>
+            </td>
+            <td>{{quiz.event ? quiz.event.name : ''}}</td>
+            <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
+          </tr>
+          <tr *ngIf="quizzes.quizzes.length === 0">
+            <td colspan="5">No quizzes found.</td>
+          </tr>
+        </ng-template>
+        <ng-template #loader>
+          <tr>
+            <td colspan="5">
+              <ws-spinner></ws-spinner>
+            </td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </table>
+    </div>
+    <ng-container *ngIf="quizzes">
+      <ngb-pagination
+        [collectionSize]="quizzes.total_count"
+        [(page)]="listPage.page"
+        [pageSize]="listPage.pageSize"
+        [maxSize]="10"
+        [boundaryLinks]="true"
+        (pageChange)="fetch($event)">
+      </ngb-pagination>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<ng-container *ngIf="quiz">
+  <div class="alert alert-warning" role="alert" *ngIf="quiz.has_attempts">
+    This Quiz already has attempts. Questions cannot be deleted or added.
+  </div>
+
+  <p class="float-right">
+    <button (click)="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">
+      <ng-container *ngIf="!deleteLoading">Delete Quiz</ng-container>
+      <ng-container *ngIf="deleteLoading">
+        <ws-spinner></ws-spinner>
+      </ng-container>
+    </button>
+  </p>
+
+  <h2>{{quiz.title.text}}</h2>
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/quizzes/{{quiz.id}}">Quiz</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/questions">Questions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/preview">Preview</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/translations">Translations</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/attempts">Attempts</a>
+    </li>
+  </ul>
+
+  <div id="content">
+    <router-outlet></router-outlet>
+  </div>
+</ng-container>
+<ws-spinner *ngIf="!quiz"></ws-spinner>

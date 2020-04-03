@@ -1,0 +1,59 @@
+<p *ngIf="!quiz || !quiz.has_attempts">
+  <a routerLink="/quizzes/{{quiz ? quiz.id : ''}}/questions/create" class="btn btn-success">Add
+    Question</a>
+</p>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <colgroup>
+      <col width="5%"/>
+      <col width="90%"/>
+      <col width="10%"/>
+    </colgroup>
+    <thead>
+    <tr>
+      <th>Nr.</th>
+      <th>Question</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td colspan="3"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <ng-template [ngIf]="questions &&  questions.questions && !loading" [ngIfElse]="loader">
+      <tr *ngFor="let question of questions.questions; let index=index;">
+        <td>{{index + 1}}</td>
+        <td><a routerLink="/quizzes/{{quiz ? quiz.id : ''}}/questions/{{question.id}}"
+               [innerHTML]="txt(question.text.text)"
+               [ngClass]="{'text-muted': !question.active}"></a></td>
+        <td>
+          <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary btn-sm" (click)="moveQuestionUp(question)"
+                    [disabled]="index === 0">
+              <fa-icon size="xs" [icon]="faArrowUp"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary btn-sm"
+                    (click)="moveQuestionDown(question)"
+                    [disabled]="index === questions.questions.length - 1">
+              <fa-icon size="xs" [icon]="faArrowDown"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="questions.questions.length === 0">
+        <td colspan="3">No Questions found.</td>
+      </tr>
+    </ng-template>
+    <ng-template #loader>
+      <tr>
+        <td colspan="3">
+          <ws-spinner></ws-spinner>
+        </td>
+      </tr>
+    </ng-template>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,82 @@
+<ng-container *ngIf="attempt">
+  <div class="row">
+    <div class="offset-sm-2 col-sm-8">
+
+      <div class="page-header">
+        <p class="text-muted">Started by {{attempt.user.firstName}} {{attempt.user.lastName}}
+          on {{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}
+        <p>
+      </div>
+
+      <div
+        *ngIf="attempt.state === 'finished' && attempt.passed === false"
+        class="alert alert-danger"
+        role="alert"
+      >
+        Attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong>
+        answers correct.
+      </div>
+      <div
+        *ngIf="attempt.state === 'finished' && attempt.passed === true"
+        class="alert alert-success"
+        role="alert">
+        Passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers
+        correct.
+      </div>
+      <div *ngIf="attempt.state === 'running'" class="alert alert-warning" role="alert">
+        Attempt not submitted yet.
+      </div>
+
+      <ng-container *ngFor="let question of attempt.questions">
+        <div
+          style="margin-bottom: 20px;"
+          [ngClass]="{card: true, 'border-default': question.correct === null, 'border-danger': question.correct === false, 'border-success': question.correct === true}">
+          <div
+            [ngClass]="{'card-header': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true, 'text-white': (question.correct === false || question.correct === true)}">
+            <h5>Question {{question.sort}}</h5>
+          </div>
+          <div class="card-body">
+            <div class="card-title" [innerHTML]="question.text.text"></div>
+            <div class="form-group">
+              <div class="radio" *ngFor="let answer of question.answers">
+                <label [ngClass]="{
+                  'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
+                  'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
+                    || (question.answer && answer.correct === true && question.correct === false)
+                }">
+                  <input
+                    type="radio"
+                    [ngModel]="question.answer ? question.answer.id : null"
+                    (change)="selectAnswer()"
+                    [value]="answer.id"
+                    [disabled]="true"
+                  />&nbsp;
+                  <div style="display: inline-block">
+                    {{alphabet[answer.sort - 1]}}:&nbsp;
+                  </div>
+                  <div style="display: inline-block" [innerHTML]="answer.text.text"></div>
+                  &nbsp;
+                  <span
+                    class="badge badge-danger"
+                    *ngIf="question.answer && question.answer.id === answer.id && question.correct === false">
+                    Incorrect
+                  </span>
+                  <span
+                    class="badge badge-success"
+                    *ngIf="(question.answer && question.answer.id === answer.id && question.correct === true)
+                      || (question.answer && answer.correct === true && question.correct === false)">
+                    Correct
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+</ng-container>
+<ng-container *ngIf="!attempt">
+  <ws-spinner></ws-spinner>
+</ng-container>

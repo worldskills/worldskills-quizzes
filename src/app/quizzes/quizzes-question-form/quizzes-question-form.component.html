@@ -1,0 +1,105 @@
+<form class="form-horizontal" [ngClass]="{'was-validated': isSubmitted}" [formGroup]="form"
+      novalidate (ngSubmit)="submit()">
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label">Question<span class="required">*</span></label>
+    <div class="col-sm-5">
+      <textarea
+        [formControl]="form.controls.question"
+        class="form-control"
+        rows="6"
+        tabindex="1"
+        required
+        appCkEditor>
+      </textarea>
+    </div>
+    <div class="col-sm-4">
+      <span
+        class="help-block text-danger"
+        *ngIf="!form.controls.question.valid && form.controls.question.touched">
+        Please enter a question!
+      </span>
+    </div>
+  </div>
+
+  <div formArrayName="answers">
+    <ng-container *ngFor="let control of answerControls; let index=index">
+      <hr/>
+      <div class="form-group row" *ngIf="!control.controls.removed.value">
+        <label class="col-sm-3 col-form-label">Answer {{index + 1}}</label>
+        <div class="col-sm-5">
+          <textarea
+            class="form-control"
+            [formControl]="control.controls.answer"
+            rows="2"
+            tabindex="2"
+            appCkEditor>
+          </textarea>
+          <div class="checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="correct"
+                [formControl]="control.controls.correct"
+                (change)="changeCorrect($event, control)">
+              This answer is correct
+            </label>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            (click)="removeAnswer(control.controls.removed)"
+            *ngIf="quiz ? !quiz.has_attempts : false">
+            <fa-icon [icon]="faTimes"></fa-icon>
+            Remove answer
+          </button>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="control.controls.removed.value">
+        <div class="offset-sm-8 col-sm-4">
+          <button
+            type="button"
+            class="btn btn-default btn-sm"
+            (click)="restoreAnswer(control.controls.removed)"
+            *ngIf="quiz ? !quiz.has_attempts : false">
+            <fa-icon [icon]="faRedo"></fa-icon>
+            Restore answer
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="quiz ? !quiz.has_attempts : false">
+    <hr/>
+    <div class="form-group row">
+      <div class="offset-sm-3 col-sm-5">
+        <p class="help-block">All answers will automatically be randomized for each attempt.</p>
+      </div>
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-success btn-sm" (click)="addAnswer()">
+          <fa-icon [icon]="faPlus"></fa-icon>
+          Add answer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+  <div class="form-group row">
+    <div class="offset-sm-3 col-sm-9">
+      <button type="submit" class="btn btn-success" id="saveQuiz" tabindex="3">
+        <ng-container *ngIf="!loading">Save</ng-container>
+        <ng-container *ngIf="loading">
+          <ws-spinner></ws-spinner>
+        </ng-container>
+      </button>
+      <a
+        routerLink="/quizzes/{{quiz.id}}/questions"
+        class="btn btn-default">
+        Cancel
+      </a>
+    </div>
+  </div>
+</form>

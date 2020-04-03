@@ -1,0 +1,41 @@
+<p>
+  <a routerLink="/quizzes/{{quiz.id}}/translations/create" class="btn btn-success">Add
+    Translation</a>
+</p>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <colgroup>
+      <col width="50%"/>
+      <col width="50%"/>
+    </colgroup>
+    <thead>
+    <tr>
+      <th>Language</th>
+      <th>Translated Title</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngIf="translatedQuizzes">
+      <tr *ngFor="let quiz of translatedQuizzes">
+        <td><a
+          routerLink="/quizzes/{{quiz.id}}/translations/{{quiz.title.lang_code}}">{{quiz.title.lang_code | langCodeToName}}</a>
+        </td>
+        <td><a
+          routerLink="/quizzes/{{quiz.id}}/translations/{{quiz.title.lang_code}}">{{quiz.title.text}}</a>
+        </td>
+      </tr>
+      <tr *ngIf="translatedQuizzes.length === 0">
+        <td colspan="2">No translations found.</td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="!translatedQuizzes">
+      <tr>
+        <td colspan="2">
+          <ws-spinner></ws-spinner>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
