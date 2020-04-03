@@ -2,7 +2,7 @@
     {{environmentWarning}}
 </div>
 <div style="background-color: #D51067; padding: 10px 20px; color: #fff; text-align: center;" *ngIf="authStatus.user && authStatus.user.puppeteer">
-    {{authStatus.user.puppeteer.fullname}} logged in as {{authStatus.user.fullname}}
+    {{authStatus.user.puppeteer.first_name}} {{user.puppeteer.last_name}} logged in as {{authStatus.user.fullname}}
 </div>
 
 <ws-header
