@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  environmentWarning: 'This is the local development environment. Happy coding!',
   worldskillsApiQuizzes: 'http://localhost:8080/quizzes',
   worldskillsApiImages: 'http://localhost:8080/images',
   worldskillsApiEvents: 'http://localhost:8080/events',

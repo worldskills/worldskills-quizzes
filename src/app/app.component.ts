@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService, AuthStatus} from '../services/auth/auth.service';
+import { environment } from './../environments/environment';
 import {NavigationEnd, Router} from '@angular/router';
 import {combineLatest, Subject} from 'rxjs';
 import {filter} from 'rxjs/operators';
@@ -14,6 +15,7 @@ export class AppComponent implements OnInit {
   date;
   authStatus: AuthStatus;
   showBreadcrumb = true;
+  environmentWarning = environment.environmentWarning;
 
   constructor(private authService: AuthService, private router: Router) {
     this.date = new Date();

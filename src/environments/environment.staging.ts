@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  environmentWarning: 'This is the staging environment. Changes in this environment might get overwritten.',
   worldskillsApiQuizzes: 'https://api.worldskills.show/quizzes',
   worldskillsApiImages: 'https://api.worldskills.show/images',
   worldskillsApiEvents: 'https://api.worldskills.show/events',
