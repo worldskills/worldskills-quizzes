@@ -13,7 +13,7 @@ export class AdminAuthGuard extends WSAuthGuard implements CanActivate {
     protected userService: UserService
   ) {
     super(authService, router, userService);
-    this.roles = ['Admin'];
+    this.roles = ['Admin', 'EditQuizzes'];
     this.redirectRoute = [];
   }
 
