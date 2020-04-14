@@ -34,5 +34,10 @@
   </ng-container>
 </div>
 
-<ws-footer>
+<ws-footer
+  [currentUser]="authStatus.user"
+  (loginClick)="login()"
+  (logoutClick)="logout()"
+  [isLoggedIn]="authStatus.user && authStatus.isLoggedIn"
+>
 </ws-footer>
