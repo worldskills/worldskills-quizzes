@@ -36,9 +36,7 @@ import {HomeComponent} from './home/home.component';
 
 const serviceConfig = {
   appCode: 1300,
-  userServiceEndpoint: environment.worldskillsApiAuth,
-  resourceApiPath: environment.worldskillsApiQuizzes,
-  authApiPath: environment.worldskillsApiAuth
+  apiEndpoint: environment.worldskillsApiEndpoint
 };
 
 // oauth client app configuration

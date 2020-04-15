@@ -27,7 +27,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.2",
     "@sentry/browser": "^5.15.0",
     "@worldskills/bootstrap": "^4.4.0",
-    "@worldskills/worldskills-angular-lib": "^6.0.0",
+    "@worldskills/worldskills-angular-lib": "^7.0.0",
     "angular-oauth2-oidc": "^9.1.0",
     "jquery": "^3.4.1",
     "json2typescript": "^1.2.5",
