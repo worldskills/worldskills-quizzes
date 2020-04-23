@@ -35,20 +35,20 @@ const routes: Routes = [
         pathMatch: 'full',
         canActivate: [AppAuthGuard],
         component: QuizzesComponent,
-        data: {breadcrumb: 'Quizzes', roles: ['EditQuizzes']}
+        data: {breadcrumb: 'Quizzes', roles: ['Admin', 'EditQuizzes']}
       },
       {
         path: 'quizzes/create',
         pathMatch: 'full',
         component: QuizzesQuizCreateComponent,
         canActivate: [AppAuthGuard],
-        data: {breadcrumb: 'Add quiz', roles: ['EditQuizzes']}
+        data: {breadcrumb: 'Add quiz', roles: ['Admin', 'EditQuizzes']}
       },
       {
         path: 'quizzes/:quizId',
         component: QuizzesQuizComponent,
         canActivate: [AppAuthGuard],
-        data: {breadcrumb: 'Quiz', roles: ['EditQuizzes']},
+        data: {breadcrumb: 'Quiz', roles: ['Admin', 'EditQuizzes']},
         children: [
           {
             path: '',

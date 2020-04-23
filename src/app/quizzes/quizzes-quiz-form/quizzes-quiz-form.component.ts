@@ -34,6 +34,9 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
       this.skillsService.loading.subscribe(skillsLoading => (this.skillsLoading = skillsLoading)),
       this.quizzesService.loading.subscribe(quizzesLoading => (this.quizzesLoading = quizzesLoading))
     );
+    if (this.quiz && this.quiz.event) {
+      this.skillsService.fetch(this.quiz.event.id);
+    }
   }
 
   onEventChange(): void {

@@ -16,7 +16,7 @@ export interface TranslationFormData {
   questions: Array<{
     questionId: number;
     question: string;
-    sort: string;
+    sort: number;
     answers: Array<{
       answerId: number;
       answer: string;
@@ -126,20 +126,22 @@ export class QuizzesTranslationFormComponent extends WsComponent implements OnIn
         questions: formData.questions.map(question => ({
           questionId: question.questionId,
           question: {
+            sort: question.sort,
             text: {
               lang_code: locale,
               text: question.question
             }
           },
           answers: question.answers.map(answer => ({
+            answerId: answer.answerId,
             answer: {
+              sort: answer.sort,
               correct: answer.correct,
               text: {
                 lang_code: locale,
                 text: answer.answer
               }
-            },
-            answerId: answer.answerId
+            }
           }))
         }))
       };
