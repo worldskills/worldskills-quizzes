@@ -9,6 +9,7 @@ import {combineLatest} from 'rxjs';
 import {QuestionService} from '../../../services/question/question.service';
 import {WsComponent} from '@worldskills/worldskills-angular-lib';
 import {AnswerService} from '../../../services/answer/answer.service';
+import {striptagsFromText} from '../../../utils/striptags';
 
 export interface QuestionFormData {
   question: string;
@@ -119,7 +120,7 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
         question: {
           text: {
             lang_code: 'en',
-            text: formData.question
+            text: striptagsFromText(formData.question)
           },
           active: true
         },
@@ -129,7 +130,7 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
           sort: index + 1,
           text: {
             lang_code: 'en',
-            text: answer.answer
+            text: striptagsFromText(answer.answer)
           }
         })),
         deletedAnswers: formData.answers.filter(answer => answer.removed && !!answer.id).map<AnswerRequest>(answer => ({
@@ -138,7 +139,7 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
           sort: undefined,
           text: {
             lang_code: 'en',
-            text: answer.answer
+            text: striptagsFromText(answer.answer)
           }
         }))
       };
