@@ -60,7 +60,6 @@
                   [disabled]="attempt.state === 'finished'"
                   id="answers_{{answer.id}}"
                 />
-                &nbsp;
                 <label class="form-check-label" [attr.for]="'answers_' + answer.id">
                   {{alphabet[answer.sort - 1]}}:
                   <span [innerHTML]="answer.text.text"></span>
