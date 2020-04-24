@@ -40,30 +40,30 @@
         <div
           style="margin-bottom: 20px;"
           [ngClass]="{card: true, 'border-default': question.correct === null, 'border-danger': question.correct === false, 'border-success': question.correct === true}">
-          <div
-            [ngClass]="{'card-header': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true, 'text-white': (question.correct === false || question.correct === true)}">
-            <h5>Question {{question.sort}}</h5>
-          </div>
+          <h5 [ngClass]="{'card-header': true, 'mt-0': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true, 'text-white': (question.correct === false || question.correct === true)}">
+            Question {{question.sort}}
+          </h5>
           <div class="card-body">
-            <div class="card-title" [innerHTML]="question.text.text"></div>
+            <p [innerHTML]="question.text.text"></p>
             <div class="form-group">
-              <div class="radio" *ngFor="let answer of question.answers">
-                <label [ngClass]="{
-                  'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
-                  'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
-                    || (question.answer && answer.correct === true && question.correct === false)
-                }">
-                  <input
-                    type="radio"
-                    (change)="selectAnswer(question.id, answer.id)"
-                    [value]="answer.id"
-                    [checked]="question.answer ? answer.id === question.answer.id : false"
-                    [disabled]="attempt.state === 'finished'"
-                  />&nbsp;
-                  <div style="display: inline-block">
-                    {{alphabet[answer.sort - 1]}}:&nbsp;
-                  </div>
-                  <div style="display: inline-block" [innerHTML]="answer.text.text"></div>
+              <div class="form-check" *ngFor="let answer of question.answers" [ngClass]="{
+                'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
+                'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
+                  || (question.answer && answer.correct === true && question.correct === false)
+              }">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  (change)="selectAnswer(question.id, answer.id)"
+                  [value]="answer.id"
+                  [checked]="question.answer ? answer.id === question.answer.id : false"
+                  [disabled]="attempt.state === 'finished'"
+                  id="answers_{{answer.id}}"
+                />
+                &nbsp;
+                <label class="form-check-label" [attr.for]="'answers_' + answer.id">
+                  {{alphabet[answer.sort - 1]}}:
+                  <span [innerHTML]="answer.text.text"></span>
                   &nbsp;
                   <span
                     class="badge badge-danger"

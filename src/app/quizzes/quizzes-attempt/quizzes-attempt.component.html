@@ -38,23 +38,24 @@
           <div class="card-body">
             <div class="card-title" [innerHTML]="question.text.text"></div>
             <div class="form-group">
-              <div class="radio" *ngFor="let answer of question.answers">
-                <label [ngClass]="{
-                  'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
-                  'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
-                    || (question.answer && answer.correct === true && question.correct === false)
-                }">
-                  <input
-                    type="radio"
-                    [ngModel]="question.answer ? question.answer.id : null"
-                    (change)="selectAnswer()"
-                    [value]="answer.id"
-                    [disabled]="true"
-                  />&nbsp;
-                  <div style="display: inline-block">
-                    {{alphabet[answer.sort - 1]}}:&nbsp;
-                  </div>
-                  <div style="display: inline-block" [innerHTML]="answer.text.text"></div>
+              <div class="form-check" *ngFor="let answer of question.answers" [ngClass]="{
+                'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
+                'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
+                  || (question.answer && answer.correct === true && question.correct === false)
+              }">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [ngModel]="question.answer ? question.answer.id : null"
+                  (change)="selectAnswer()"
+                  [value]="answer.id"
+                  [disabled]="true"
+                  id="answers_{{answer.id}}"
+                />
+                &nbsp;
+                <label class="form-check-label" [attr.for]="'answers_' + answer.id">
+                  {{alphabet[answer.sort - 1]}}:
+                  <span [innerHTML]="answer.text.text"></span>
                   &nbsp;
                   <span
                     class="badge badge-danger"
