@@ -84,7 +84,7 @@
                 }
               ]
             },
-            "production": {
+            "prod": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -127,8 +127,8 @@
             "staging": {
               "browserTarget": "worldskills-quizzes:build:staging"
             },
-            "production": {
-              "browserTarget": "worldskills-quizzes:build:production"
+            "prod": {
+              "browserTarget": "worldskills-quizzes:build:prod"
             }
           }
         },
@@ -180,8 +180,8 @@
             "devServerTarget": "worldskills-quizzes:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "worldskills-quizzes:serve:production"
+            "prod": {
+              "devServerTarget": "worldskills-quizzes:serve:prod"
             }
           }
         }
