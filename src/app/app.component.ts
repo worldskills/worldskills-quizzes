@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthService as LibAuthService} from '@worldskills/worldskills-angular-lib';
 import {AuthService, AuthStatus} from '../services/auth/auth.service';
 import { environment } from './../environments/environment';
 import {NavigationEnd, Router} from '@angular/router';
@@ -17,28 +18,15 @@ export class AppComponent implements OnInit {
   showBreadcrumb = true;
   environmentWarning = environment.environmentWarning;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private libAuthService: LibAuthService, private router: Router) {
     this.date = new Date();
   }
 
   ngOnInit(): void {
     AppComponent.showBreadcrumbs.subscribe(showBreadcrumb => setTimeout(() => (this.showBreadcrumb = showBreadcrumb)));
+
     this.authService.authStatus.subscribe(authStatus => (this.authStatus = authStatus));
-    combineLatest([
-      this.authService.authStatus,
-      this.router.events.pipe(filter<NavigationEnd>(event => event instanceof NavigationEnd))
-    ]).subscribe(([authStatus, routerEvent]) => {
-      const url = routerEvent.url;
-      const queryParamMap = this.router.parseUrl(url).queryParamMap;
-      const target = queryParamMap.has('returnUrl') ? queryParamMap.get('returnUrl') : undefined;
-      if (url === '/' || target) {
-        if (authStatus.authenticated) {
-          this.router.navigateByUrl(target || '/quizzes');
-        } else if (!authStatus.isLoggedIn) {
-          this.authService.login();
-        }
-      }
-    });
+    this.libAuthService.redirectOrReturn(['/quizzes']);
   }
 
   login() {
