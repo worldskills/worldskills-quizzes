@@ -65,7 +65,7 @@ import {ErrorComponent} from './error/error.component';
     OAuthModule.forRoot(),
     WorldskillsAngularLibModule.forFn(mod => {
       mod.service = new ServiceConfig({
-        appCode: 1300,
+        appCode: [1300],
         apiEndpoint: environment.worldskillsApiEndpoint
       });
       mod.auth = new AuthConfig({
