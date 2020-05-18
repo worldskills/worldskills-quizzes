@@ -10,7 +10,7 @@ export const environment = {
   worldskillsAuthorizeUrl: 'https://auth.worldskills.org/oauth/authorize',
   worldskillsAuthorizeRedirect: 'https://quiz.worldskills.org/',
   worldskillsAuthorizeUserinfoEndpoint: 'https://auth.worldskills.org/oauth/users/loggedIn',
-  worldskillsAuthUriPatterns: ['api.worldskills.show'],
+  worldskillsAuthUriPatterns: ['api.worldskills.org'],
   loadChildEntityRoles: true,
   filterAuthRoles: [1300]
 };
