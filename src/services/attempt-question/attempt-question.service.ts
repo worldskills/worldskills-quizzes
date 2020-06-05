@@ -20,4 +20,13 @@ export class AttemptQuestionService {
     );
   }
 
+  updateAttemptQuestion(attemptId: number, attemptQuestion: AnsweredQuestionWithAnswers, locale: string): Observable<AnsweredQuestionWithAnswers> {
+    var params = new HttpParams();
+    params.set('l', locale);
+    return this.http.put<AnsweredQuestionWithAnswers>(
+      `${environment.worldskillsApiQuizzes}/attempts/${attemptId}/questions/${attemptQuestion.id}`,
+      attemptQuestion, {params}
+    );
+  }
+
 }

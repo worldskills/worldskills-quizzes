@@ -33,7 +33,19 @@
           [ngClass]="{card: true, 'border-default': question.correct === null, 'border-danger': question.correct === false, 'border-success': question.correct === true}">
           <div
             [ngClass]="{'card-header': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true, 'text-white': (question.correct === false || question.correct === true)}">
-            <h5>Question {{question.sort}}</h5>
+            <strong class="float-left">Question {{question.sort}}</strong>
+            <div class="dropdown float-right" *ngIf="question.type === 'free_response'">
+              <button class="btn btn-sm dropdown-toggle" [ngClass]="{'btn-primary': question.correct === null, 'btn-danger': question.correct === false, 'btn-success': question.correct === true}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span *ngIf="question.correct === null">Not assessed</span>
+                <span *ngIf="question.correct === true">Correct</span>
+                <span *ngIf="question.correct === false">Incorrect</span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="" (click)="assessQuestion($event, question, true)">Mark as Correct</a>
+                <a class="dropdown-item" href="" (click)="assessQuestion($event, question, false)">Mark as Incorrect</a>
+              </div>
+            </div>
+            <div class="clearfix"></div>
           </div>
           <div class="card-body">
             <div class="card-title" [innerHTML]="question.text.text"></div>
