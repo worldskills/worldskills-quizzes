@@ -16,6 +16,7 @@ export interface QuestionRequest {
   weight?: number;
   sort?: number;
   active?: boolean;
+  type?: string;
 }
 
 export interface Question extends QuestionRequest {
@@ -23,6 +24,7 @@ export interface Question extends QuestionRequest {
   weight: number;
   sort: number;
   active: boolean;
+  type: string;
 }
 
 export type QuestionList<T extends Question = Question> = List<T, 'questions'>;

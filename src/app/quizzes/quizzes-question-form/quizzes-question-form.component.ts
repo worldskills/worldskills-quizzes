@@ -13,6 +13,7 @@ import {striptagsFromText} from '../../../utils/striptags';
 
 export interface QuestionFormData {
   question: string;
+  type: string;
   answers: Array<{
     id?: number;
     answer: string;
@@ -38,6 +39,7 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
   @Input() question: Question = null;
   @Input() answers: AnswersList = null;
   form: FormGroup;
+  tempAnswers: AbstractControl;
   faPlus = faPlus;
   faRedo = faRedo;
   faTimes = faTimes;
@@ -70,6 +72,7 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
     });
     this.form = new FormGroup({
       question: new FormControl(this.question ? this.question.text.text : '', Validators.required),
+      type: new FormControl(this.question ? this.question.type : 'multiple_choice', Validators.required),
       answers: new FormArray(this.answers ? this.answers.answers.map(answer => new FormGroup({
         id: new FormControl(answer.id),
         answer: new FormControl(answer.text.text),
@@ -82,6 +85,20 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
         new FormGroup(defaultAnswer())
       ])
     });
+    if (this.question) {
+      this.form.controls.type.disable();
+    }
+  }
+
+  changeType() {
+    if (this.form.controls.type.value == 'multiple_choice') {
+      this.form.controls.answers = this.tempAnswers;
+      this.form.controls.answers.enable();
+    } else {
+      this.tempAnswers = this.form.controls.answers;
+      this.tempAnswers.disable();
+      this.form.controls.answers = new FormArray([]);
+    }
   }
 
   removeAnswer(control: AbstractControl) {
@@ -116,15 +133,17 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
     this.isSubmitted = true;
     if (this.form.valid) {
       const formData: QuestionFormData = this.form.value;
+      console.log(formData.answers);
       const data: QuestionFormSubmitData = {
         question: {
           text: {
             lang_code: 'en',
             text: striptagsFromText(formData.question)
           },
+          type: formData.type ? formData.type : this.question.type,
           active: true
         },
-        answers: formData.answers.filter(answer => !answer.removed).map<AnswerRequest>((answer, index) => ({
+        answers: formData.answers ? formData.answers.filter(answer => !answer.removed).map<AnswerRequest>((answer, index) => ({
           id: answer.id,
           correct: answer.correct,
           sort: index + 1,
@@ -132,8 +151,8 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
             lang_code: 'en',
             text: striptagsFromText(answer.answer)
           }
-        })),
-        deletedAnswers: formData.answers.filter(answer => answer.removed && !!answer.id).map<AnswerRequest>(answer => ({
+        })) : [],
+        deletedAnswers: formData.answers ? formData.answers.filter(answer => answer.removed && !!answer.id).map<AnswerRequest>(answer => ({
           id: answer.id,
           correct: answer.correct,
           sort: undefined,
@@ -141,9 +160,9 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
             lang_code: 'en',
             text: striptagsFromText(answer.answer)
           }
-        }))
+        })) : []
       };
-      if (data.answers.findIndex(answer => answer.correct) < 0) {
+      if (data.question.type != 'free_response' && data.answers.findIndex(answer => answer.correct) < 0) {
         alert('Please mark at least one answer as correct!');
       } else {
         this.save.emit(data);

@@ -1,5 +1,6 @@
 <form class="form-horizontal" [ngClass]="{'was-validated': isSubmitted}" [formGroup]="form"
       novalidate (ngSubmit)="submit()">
+
   <div class="form-group row">
     <label class="col-sm-3 col-form-label">Question<span class="required">*</span></label>
     <div class="col-sm-5">
@@ -18,6 +19,34 @@
         *ngIf="!form.controls.question.valid && form.controls.question.touched">
         Please enter a question!
       </span>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label">Type<span class="required">*</span></label>
+    <div class="col-sm-5">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        value="multiple_choice"
+        [formControl]="form.controls.type"
+        (change)="changeType()"
+        id="type_multiple_choice"
+      />
+      <label class="form-check-label" for="type_multiple_choice">Multiple Choice Question</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        value="free_response"
+        [formControl]="form.controls.type"
+        (change)="changeType()"
+        id="type_free_response"
+      />
+      <label class="form-check-label" for="type_free_response">Free Response Question</label>
+    </div>
     </div>
   </div>
 
@@ -71,7 +100,7 @@
     </ng-container>
   </div>
 
-  <div *ngIf="quiz ? !quiz.has_attempts : false">
+  <div *ngIf="quiz ? (!quiz.has_attempts && form.controls.type.value == 'multiple_choice') : false">
     <hr/>
     <div class="form-group row">
       <div class="offset-sm-3 col-sm-5">
