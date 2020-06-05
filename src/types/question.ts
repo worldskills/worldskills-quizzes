@@ -5,6 +5,7 @@ import {I18nModel} from '@worldskills/worldskills-angular-lib';
 export interface AnsweredQuestionWithAnswers extends QuestionWithAnswers {
   answer: Answer;
   correct: boolean;
+  response: string;
 }
 
 export interface QuestionWithAnswers extends Question {

@@ -78,6 +78,16 @@
                 </label>
               </div>
             </div>
+            <div class="form-group" *ngIf="question.type === 'free_response'">
+              <label [attr.for]="'free_response_' + question.id">Answer:</label>
+              <textarea
+                class="form-control"
+                id="free_response_{{question.id}}"
+                rows="3"
+                [(ngModel)]="question.response"
+                (ngModelChange)="updateResponse(question)"
+              ></textarea>
+            </div>
           </div>
         </div>
       </ng-container>
