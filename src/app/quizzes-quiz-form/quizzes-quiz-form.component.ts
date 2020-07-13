@@ -3,7 +3,6 @@ import {Quiz, QuizRequest} from '../../types/quiz';
 import {NgForm} from '@angular/forms';
 import {EventList} from '../../types/event';
 import {SkillList} from '../../types/skill';
-import {EntityList} from '../../types/entity';
 import {SkillsService} from '../../services/skills/skills.service';
 import {QuizzesService} from '../../services/quizzes/quizzes.service';
 import {WsComponent} from '@worldskills/worldskills-angular-lib';
@@ -17,14 +16,16 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
 
   @Input() quiz: Quiz = null;
   @Input() events: EventList = null;
-  @Input() entities: EntityList = null;
   skills: SkillList = null;
   skillsLoading = false;
   quizzesLoading = false;
   @Output() save: EventEmitter<QuizRequest> = new EventEmitter<QuizRequest>();
   @ViewChild('form') form: NgForm;
 
-  constructor(private skillsService: SkillsService, private quizzesService: QuizzesService) {
+  constructor(
+    private skillsService: SkillsService,
+    private quizzesService: QuizzesService,
+  ) {
     super();
   }
 
@@ -40,14 +41,14 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
   }
 
   onEventChange(): void {
-    this.form.controls.skill.setValue('');
+    this.form.controls.skill.setValue(null);
     this.fetchSkills();
   }
 
   fetchSkills() {
     if (this.form) {
       const eventId = this.form.controls.event.value;
-      if (eventId !== '') {
+      if (eventId) {
         this.skillsService.fetch(parseInt(eventId));
       } else {
         this.skillsService.subject.next({skills: [], total_count: 0});
@@ -77,7 +78,7 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
         lang_code: 'en',
         text: title
       },
-      ws_entity: this.entities.ws_entity_list.find(e => parseInt(ws_entity) === e.id),
+      ws_entity: {id: ws_entity},
       event: this.events.events.find(e => parseInt(event) === e.id),
       skill: this.skills ? this.skills.skills.find(s => parseInt(skill) === s.id) : undefined,
       max_questions: !isNaN(maxQuestions) ? maxQuestions : undefined,

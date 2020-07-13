@@ -16,12 +16,13 @@
     <label for="ws_entity" class="col-sm-3 col-form-label">Entity<span
       class="required">*</span></label>
     <div class="col-sm-4">
-      <select class="form-control"
-              id="ws_entity" name="ws_entity" required
-              [ngModel]="quiz && quiz.ws_entity ? quiz.ws_entity.id : ''">
-        <option *ngFor="let entity of entities ? entities.ws_entity_list : []"
-                [value]="entity.id">{{entity.name.text}}</option>
-      </select>
+      <ws-entity-tree-select
+        id="ws_entity"
+        name="ws_entity"
+        required
+        [query]="{role: 'EditQuizzes', roleApp: 1300}"
+        [ngModel]="quiz && quiz.ws_entity ? quiz.ws_entity.id : null">
+      </ws-entity-tree-select>
     </div>
     <div class="col-sm-5">
       <span class="form-text">
@@ -35,23 +36,27 @@
   <div class="form-group row">
     <label for="event" class="col-sm-3 col-form-label">Event</label>
     <div class="col-sm-4">
-      <select class="form-control" id="event" name="event" (change)="onEventChange()"
-              [ngModel]="quiz && quiz.event ? quiz.event.id : ''">
-        <option></option>
-        <option *ngFor="let event of events ? events.events : []"
-                [value]="event.id">{{event.name}}</option>
-      </select>
+      <ng-select
+        [wsSelect]="['id', 'name']"
+        [items]="events ? events.events : []"
+        id="event"
+        name="event"
+        (change)="onEventChange()"
+        [ngModel]="quiz && quiz.event ? quiz.event.id : null"
+      ></ng-select>
     </div>
   </div>
   <div class="form-group row">
     <label for="skill" class="col-sm-3 col-form-label">Skill</label>
     <div class="col-sm-4">
-      <select [disabled]="!skills || skillsLoading" class="form-control" id="skill" name="skill"
-              [ngModel]="quiz && quiz.skill ? quiz.skill.id : ''">
-        <option></option>
-        <option *ngFor="let skill of skills ? skills.skills : []"
-                [value]="skill.id">{{skill.name.text}}</option>
-      </select>
+      <ng-select
+        [wsSelect]="['id', 'name.text']"
+        [items]="skills ? skills.skills : []"
+        [disabled]="!skills || skillsLoading"
+        id="skill"
+        name="skill"
+        [ngModel]="quiz && quiz.skill ? quiz.skill.id : null"
+      ></ng-select>
     </div>
     <div *ngIf="skillsLoading" class="col-sm-5">
       <ws-spinner></ws-spinner>

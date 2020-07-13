@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {EventList} from '../../types/event';
 import {Quiz, QuizRequest} from '../../types/quiz';
 import {SkillList} from '../../types/skill';
-import {EntityList} from '../../types/entity';
-import {EntitiesService} from '../../services/entities/entities.service';
 import {EventsService} from '../../services/events/events.service';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -21,11 +19,9 @@ export class QuizzesQuizUpdateComponent extends WsComponent implements OnInit {
   quiz: Quiz = null;
   events: EventList = null;
   skills: SkillList = null;
-  entities: EntityList = null;
   loading = true;
 
   constructor(
-    private entitiesService: EntitiesService,
     private eventsService: EventsService,
     private quizService: QuizService,
     private router: Router,
@@ -38,12 +34,11 @@ export class QuizzesQuizUpdateComponent extends WsComponent implements OnInit {
     this.subscribe(
       this.quizService.subject.subscribe(quiz => (this.quiz = quiz)),
       this.eventsService.subject.subscribe(events => (this.events = events)),
-      this.entitiesService.subject.subscribe(entities => (this.entities = entities)),
       combineLatest([
         this.quizService.loading,
         this.eventsService.loading,
-        this.entitiesService.loading,
-      ]).pipe(map(([l1, l2, l3]) => l1 || l2 || l3)).subscribe(loading => (this.loading = loading))
+      ]).pipe(map(ls => !ls.every(l => !l)))
+        .subscribe(loading => (this.loading = loading))
     );
   }
 

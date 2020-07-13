@@ -18,6 +18,15 @@ import {HomeComponent} from './home/home.component';
 import {AppAuthGuard} from '@worldskills/worldskills-angular-lib';
 import {ErrorComponent} from './error/error.component';
 
+const APP_CODE = 1300;
+
+function forAppCode(appCode: number, roles: Array<string>) {
+  return roles.map(name => ({
+    appCode,
+    name
+  }));
+}
+
 const routes: Routes = [
   {
     path: '',
@@ -28,27 +37,27 @@ const routes: Routes = [
     pathMatch: 'full',
     component: QuizComponent,
     canActivate: [AppAuthGuard],
-    data: {roles: ['AttemptQuizzes']}
+    data: {roles: forAppCode(APP_CODE, ['AttemptQuizzes'])}
   },
   {
     path: 'quizzes',
     pathMatch: 'full',
     canActivate: [AppAuthGuard],
     component: QuizzesComponent,
-    data: {breadcrumb: 'Quizzes', roles: ['Admin', 'EditQuizzes']}
+    data: {breadcrumb: 'Quizzes', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
   },
   {
     path: 'quizzes/create',
     pathMatch: 'full',
     component: QuizzesQuizCreateComponent,
     canActivate: [AppAuthGuard],
-    data: {breadcrumb: 'Add quiz', roles: ['Admin', 'EditQuizzes']}
+    data: {breadcrumb: 'Add quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
   },
   {
     path: 'quizzes/:quizId',
     component: QuizzesQuizComponent,
     canActivate: [AppAuthGuard],
-    data: {breadcrumb: 'Quiz', roles: ['Admin', 'EditQuizzes']},
+    data: {breadcrumb: 'Quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])},
     children: [
       {
         path: '',

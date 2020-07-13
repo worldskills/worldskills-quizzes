@@ -1,7 +1,6 @@
 <h2>Add quiz</h2>
 <app-quizzes-quiz-form
   *ngIf="!loading"
-  [entities]="entities"
   [events]="events"
   (save)="create($event)"
 >

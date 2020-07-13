@@ -32,6 +32,7 @@ import {WsSpinnerComponent} from './ws-spinner/ws-spinner.component';
 import {LangCodeToNamePipe} from '../pipes/lang-code-to-name/lang-code-to-name.pipe';
 import {HomeComponent} from './home/home.component';
 import {ErrorComponent} from './error/error.component';
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import {ErrorComponent} from './error/error.component';
     NgbModule,
     FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: WsHttpInterceptor, multi: true},
