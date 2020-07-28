@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService, AuthStatus} from '../services/auth/auth.service';
-import { environment } from './../environments/environment';
-import {NavigationEnd, Router} from '@angular/router';
-import {combineLatest, Subject} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {environment} from '../environments/environment';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,18 +10,15 @@ import {filter} from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   static showBreadcrumbs = new Subject<boolean>();
-  date;
   authStatus: AuthStatus;
   showBreadcrumb = true;
   environmentWarning = environment.environmentWarning;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.date = new Date();
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit(): void {
     AppComponent.showBreadcrumbs.subscribe(showBreadcrumb => setTimeout(() => (this.showBreadcrumb = showBreadcrumb)));
-
     this.authService.authStatus.subscribe(authStatus => (this.authStatus = authStatus));
   }
 

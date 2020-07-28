@@ -1,0 +1,8 @@
+<app-quizzes-quiz-form
+  *ngIf="!loading"
+  [quiz]="quiz"
+  [events]="events"
+  (save)="update($event)"
+>
+</app-quizzes-quiz-form>
+<ws-spinner *ngIf="loading"></ws-spinner>

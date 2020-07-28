@@ -1,0 +1,8 @@
+<h2>Add quiz</h2>
+<app-quizzes-quiz-form
+  *ngIf="!loading"
+  [events]="events"
+  (save)="create($event)"
+>
+</app-quizzes-quiz-form>
+<ws-spinner *ngIf="loading"></ws-spinner>

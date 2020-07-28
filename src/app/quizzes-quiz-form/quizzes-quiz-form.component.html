@@ -1,0 +1,135 @@
+<form class="form-horizontal" [ngClass]="{'was-validated': this.form.submitted}" novalidate
+      (ngSubmit)="submit()" #form="ngForm">
+  <div class="form-group row">
+    <label for="title" class="col-sm-3 col-form-label">Title<span class="required">*</span></label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="title" name="title" required
+             [ngModel]="quiz && quiz.title ? quiz.title.text : ''">
+    </div>
+    <div class="col-sm-5">
+      <span class="form-text text-danger" style="display: block"
+            *ngIf="form.submitted && this.form.controls.title.errors && this.form.controls.title.errors.required">
+      Please enter a title!</span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="ws_entity" class="col-sm-3 col-form-label">Entity<span
+      class="required">*</span></label>
+    <div class="col-sm-4">
+      <ws-entity-tree-select
+        id="ws_entity"
+        name="ws_entity"
+        required
+        [query]="{role: 'EditQuizzes', roleApp: 1300}"
+        [ngModel]="quiz && quiz.ws_entity ? quiz.ws_entity.id : null">
+      </ws-entity-tree-select>
+    </div>
+    <div class="col-sm-5">
+      <span class="form-text">
+        <span class="text-danger"
+              *ngIf="form.submitted && this.form.controls.ws_entity.errors && this.form.controls.ws_entity.errors.required">
+          Please select an entity!
+        </span>
+        Owner of the entry, select the organization you are working for.</span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="event" class="col-sm-3 col-form-label">Event</label>
+    <div class="col-sm-4">
+      <ng-select
+        [wsSelect]="['id', 'name']"
+        [items]="events ? events.events : []"
+        id="event"
+        name="event"
+        (change)="onEventChange()"
+        [ngModel]="quiz && quiz.event ? quiz.event.id : null"
+      ></ng-select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="skill" class="col-sm-3 col-form-label">Skill</label>
+    <div class="col-sm-4">
+      <ng-select
+        [wsSelect]="['id', 'name.text']"
+        [items]="skills ? skills.skills : []"
+        [disabled]="!skills || skillsLoading"
+        id="skill"
+        name="skill"
+        [ngModel]="quiz && quiz.skill ? quiz.skill.id : null"
+      ></ng-select>
+    </div>
+    <div *ngIf="skillsLoading" class="col-sm-5">
+      <ws-spinner></ws-spinner>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="max_questions" class="col-sm-3 col-form-label">Max Questions</label>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" id="max_questions" name="max_questions"
+             [ngModel]="quiz ? quiz.max_questions : ''">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="required_score_pass" class="col-sm-3 col-form-label">Required score to pass</label>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" id="required_score_pass" name="required_score_pass"
+             [ngModel]="quiz ? quiz.required_score_pass : ''">
+    </div>
+    <div class="col-sm-5 offset-sm-1">
+      <span class="form-text">Leave empty to require all answers to be correct.</span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="offset-sm-3 col-sm-9">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="random_questions" name="random_questions"
+                 [ngModel]="quiz ? quiz.random_questions : ''">
+          Show random Questions
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="reveal_correct_answers" name="reveal_correct_answers"
+                 [ngModel]="quiz ? quiz.reveal_correct_answers : ''">
+          Reveal correct answers after finishing quiz
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="active" name="active"
+                 [ngModel]="quiz ? quiz.active : ''">
+          Active (Quiz can be answered)
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="url_learning" class="col-sm-3 col-form-label">URL Learning</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="url_learning" name="url_learning"
+             [ngModel]="quiz ? quiz.url_learning : ''">
+    </div>
+    <div class="col-sm-5">
+      <span class="form-text">Address with information about the questions.</span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="url_success" class="col-sm-3 col-form-label">URL Success</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="url_success" name="url_success"
+             [ngModel]="quiz ? quiz.url_success : ''">
+    </div>
+    <div class="col-sm-5">
+      <span class="form-text">Link for the user to continue after a passed quiz.</span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="offset-sm-3 col-sm-9">
+      <button type="submit" class="btn btn-success" id="saveQuiz" [disabled]="quizzesLoading">Save
+      </button>&nbsp;
+      <a class="btn btn-secondary" routerLink="/quizzes">Cancel</a><br/>
+      <ws-spinner *ngIf="quizzesLoading"></ws-spinner>
+    </div>
+  </div>
+</form>
