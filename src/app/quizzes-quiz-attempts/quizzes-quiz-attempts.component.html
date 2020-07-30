@@ -5,15 +5,15 @@
         <colgroup>
           <col width="10%"/>
           <col width="60%"/>
-          <col width="20%"/>
-          <col width="10%"/>
+          <col width="15%"/>
+          <col width="15%"/>
         </colgroup>
         <thead>
         <tr>
-          <th>ID</th>
+          <th>Person ID</th>
           <th>User</th>
-          <th>Started</th>
-          <th>Score</th>
+          <th>Failed Attempts <fa-icon [icon]="faAngleDown"></fa-icon></th>
+          <th>Passed Attempts</th>
         </tr>
         </thead>
         <tfoot>
@@ -22,14 +22,14 @@
         </tr>
         </tfoot>
         <tbody>
-        <ng-template [ngIf]="attempts && !loading" [ngIfElse]="loader">
-          <tr *ngFor="let attempt of attempts.attempts">
-            <td><a routerLink="/quizzes/{{quiz.id}}/attempts/{{attempt.id}}">{{attempt.id}}</a></td>
-            <td>{{attempt.user.firstName}} {{attempt.user.lastName}}</td>
-            <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
-            <td><span *ngIf="attempt.score !== null">{{attempt.score}}</span></td>
+        <ng-template [ngIf]="reports && !loading" [ngIfElse]="loader">
+          <tr *ngFor="let report of reports">
+            <td>{{report.user.person_id}}</td>
+            <td><a routerLink="/quizzes/{{report.quiz.id}}/attempts/users/{{report.user.id}}">{{report.user.firstName}} {{report.user.lastName}}</a></td>
+            <td>{{report.failed_count}}</td>
+            <td>{{report.passed_count}}</td>
           </tr>
-          <tr *ngIf="attempts.attempts.length === 0">
+          <tr *ngIf="reports.length === 0">
             <td colspan="4">No attempts found.</td>
           </tr>
         </ng-template>
@@ -43,15 +43,5 @@
         </tbody>
       </table>
     </div>
-    <ng-container *ngIf="attempts">
-      <ngb-pagination
-        [collectionSize]="attempts.total_count"
-        [(page)]="listPage.page"
-        [pageSize]="listPage.pageSize"
-        [maxSize]="10"
-        [boundaryLinks]="true"
-        (pageChange)="fetch($event)">
-      </ngb-pagination>
-    </ng-container>
   </div>
 </div>

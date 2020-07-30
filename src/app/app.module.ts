@@ -16,6 +16,7 @@ import {QuizzesQuizQuestionsComponent} from './quizzes-quiz-questions/quizzes-qu
 import {QuizzesQuizPreviewComponent} from './quizzes-quiz-preview/quizzes-quiz-preview.component';
 import {QuizzesQuizTranslationsComponent} from './quizzes-quiz-translations/quizzes-quiz-translations.component';
 import {QuizzesQuizAttemptsComponent} from './quizzes-quiz-attempts/quizzes-quiz-attempts.component';
+import {QuizzesQuizAttemptsUserComponent} from './quizzes-quiz-attempts-user/quizzes-quiz-attempts-user.component';
 import {QuizzesAttemptComponent} from './quizzes-attempt/quizzes-attempt.component';
 import {QuizzesQuestionUpdateComponent} from './quizzes-question-update/quizzes-question-update.component';
 import {QuizzesQuestionFormComponent} from './quizzes-question-form/quizzes-question-form.component';
@@ -44,6 +45,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     QuizzesQuizPreviewComponent,
     QuizzesQuizTranslationsComponent,
     QuizzesQuizAttemptsComponent,
+    QuizzesQuizAttemptsUserComponent,
     QuizzesAttemptComponent,
     QuizzesQuestionUpdateComponent,
     QuizzesQuestionCreateComponent,

@@ -1,0 +1,65 @@
+<h3 *ngIf="attempts && !loading">Attempts {{attempts.attempts[0].user.firstName}} {{attempts.attempts[0].user.lastName}}</h3>
+
+<div class="row mt-2">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <colgroup>
+          <col width="10%"/>
+          <col width="30%"/>
+          <col width="30%"/>
+          <col width="15%"/>
+          <col width="15%"/>
+        </colgroup>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Started <fa-icon [icon]="faAngleDown"></fa-icon></th>
+          <th>Finished</th>
+          <th>Score</th>
+          <th>Passed</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td colspan="5"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <ng-template [ngIf]="attempts && !loading" [ngIfElse]="loader">
+          <tr *ngFor="let attempt of attempts.attempts">
+            <td><a routerLink="/quizzes/{{quiz.id}}/attempts/{{attempt.id}}">{{attempt.id}}</a></td>
+            <td>{{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}</td>
+            <td>{{attempt.finished|date:"d MMMM yyyy 'at' HH:mm"}}</td>
+            <td><span *ngIf="attempt.score !== null">{{attempt.score}}</span></td>
+            <td>
+              <span *ngIf="attempt.state === 'finished' && attempt.passed === true" class="text-success">Yes</span>
+              <span *ngIf="attempt.state === 'finished' && attempt.passed === false" class="text-danger">No</span>
+            </td>
+          </tr>
+          <tr *ngIf="attempts.attempts.length === 0">
+            <td colspan="5">No attempts found.</td>
+          </tr>
+        </ng-template>
+        <ng-template #loader>
+          <tr>
+            <td colspan="5">
+              <ws-spinner></ws-spinner>
+            </td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </table>
+    </div>
+    <ng-container *ngIf="attempts">
+      <ngb-pagination
+        [collectionSize]="attempts.total_count"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [maxSize]="10"
+        [boundaryLinks]="true"
+        (pageChange)="fetch($event)">
+      </ngb-pagination>
+    </ng-container>
+  </div>
+</div>

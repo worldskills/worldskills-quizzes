@@ -1,8 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {QuizzesQuizAttemptsComponent} from './quizzes-quiz-attempts.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from '@angular/router/testing';
+import { QuizzesQuizAttemptsComponent } from './quizzes-quiz-attempts.component';
 
 describe('QuizzesQuizAttemptsComponent', () => {
   let component: QuizzesQuizAttemptsComponent;
@@ -10,8 +8,7 @@ describe('QuizzesQuizAttemptsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [QuizzesQuizAttemptsComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [ QuizzesQuizAttemptsComponent ]
     })
     .compileComponents();
   }));

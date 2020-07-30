@@ -8,6 +8,7 @@ import {QuizzesQuizPreviewComponent} from './quizzes-quiz-preview/quizzes-quiz-p
 import {QuizzesQuizTranslationsComponent} from './quizzes-quiz-translations/quizzes-quiz-translations.component';
 import {QuizzesTranslationUpdateComponent} from './quizzes-translation-update/quizzes-translation-update.component';
 import {QuizzesQuizAttemptsComponent} from './quizzes-quiz-attempts/quizzes-quiz-attempts.component';
+import {QuizzesQuizAttemptsUserComponent} from './quizzes-quiz-attempts-user/quizzes-quiz-attempts-user.component';
 import {QuizzesAttemptComponent} from './quizzes-attempt/quizzes-attempt.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {QuizzesQuizUpdateComponent} from './quizzes-quiz-update/quizzes-quiz-update.component';
@@ -103,6 +104,11 @@ const routes: Routes = [
         path: 'attempts',
         component: QuizzesQuizAttemptsComponent,
         data: {breadcrumb: 'Attempts'}
+      },
+      {
+        path: 'attempts/users/:userId',
+        component: QuizzesQuizAttemptsUserComponent,
+        data: {breadcrumb: 'Attempt'}
       },
       {
         path: 'attempts/:attemptId',
