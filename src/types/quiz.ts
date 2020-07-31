@@ -1,6 +1,7 @@
 import {Link, List} from './common';
 import {Event} from './event';
 import {Skill} from './skill';
+import {Entity} from './entity';
 import {I18nModel} from '@worldskills/worldskills-angular-lib';
 
 export interface QuizRequest {
@@ -11,7 +12,7 @@ export interface QuizRequest {
   reveal_correct_answers: boolean;
   url_learning: string;
   url_success: string;
-  ws_entity: { id: number };
+  ws_entity: Entity;
   event: Event;
   skill: Skill;
   active: boolean;

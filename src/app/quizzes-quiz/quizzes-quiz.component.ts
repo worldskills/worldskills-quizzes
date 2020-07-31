@@ -5,7 +5,7 @@ import {EntitiesService} from '../../services/entities/entities.service';
 import {EventsService} from '../../services/events/events.service';
 import {EventList} from '../../types/event';
 import {EntityList} from '../../types/entity';
-import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
+import {AlertService, AlertType, WsComponent, UserService, UserModel} from '@worldskills/worldskills-angular-lib';
 import {QuizService} from '../../services/quiz/quiz.service';
 
 @Component({
@@ -19,6 +19,8 @@ export class QuizzesQuizComponent extends WsComponent implements OnInit {
   events: EventList = null;
   entities: EntityList = null;
   deleteLoading = false;
+  userCanEditQuizzes = false;
+  userCanViewAllAttempts = false;
 
   constructor(
     private entitiesService: EntitiesService,
@@ -26,7 +28,8 @@ export class QuizzesQuizComponent extends WsComponent implements OnInit {
     private quizService: QuizService,
     private router: Router,
     private route: ActivatedRoute,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public userService: UserService,
   ) {
     super();
   }
@@ -40,6 +43,17 @@ export class QuizzesQuizComponent extends WsComponent implements OnInit {
       this.quizService.fetch(quizId);
     });
     this.subscribe(this.quizService.loading.subscribe(loading => (this.deleteLoading = loading)));
+    this.userService.getLoggedInUser().subscribe((user: UserModel) => {
+      this.userCanEditQuizzes = this.userCan(user, ['Admin', 'EditQuizzes']);
+      this.userCanViewAllAttempts = this.userCan(user, ['Admin', 'ViewAllAttempts']);
+    });
+  }
+
+  userCan(user, roles): boolean {
+    const result = user.roles.filter(role => {
+      return roles.indexOf(role.name) > -1 && role.role_application.application_code === 1300;
+    });
+    return result.length !== 0;
   }
 
   deleteQuiz() {

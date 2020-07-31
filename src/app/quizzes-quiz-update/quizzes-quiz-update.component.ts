@@ -6,7 +6,7 @@ import {EventsService} from '../../services/events/events.service';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
+import {AlertService, AlertType, WsComponent, UserService, UserModel} from '@worldskills/worldskills-angular-lib';
 import {QuizService} from '../../services/quiz/quiz.service';
 
 @Component({
@@ -20,12 +20,14 @@ export class QuizzesQuizUpdateComponent extends WsComponent implements OnInit {
   events: EventList = null;
   skills: SkillList = null;
   loading = true;
+  userCanEditQuizzes = false;
 
   constructor(
     private eventsService: EventsService,
     private quizService: QuizService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public userService: UserService,
   ) {
     super();
   }
@@ -40,6 +42,16 @@ export class QuizzesQuizUpdateComponent extends WsComponent implements OnInit {
       ]).pipe(map(ls => !ls.every(l => !l)))
         .subscribe(loading => (this.loading = loading))
     );
+    this.userService.getLoggedInUser().subscribe((user: UserModel) => {
+      this.userCanEditQuizzes = this.userCan(user, ['Admin', 'EditQuizzes']);
+    });
+  }
+
+  userCan(user, roles): boolean {
+    const result = user.roles.filter(role => {
+      return roles.indexOf(role.name) > -1 && role.role_application.application_code === 1300;
+    });
+    return result.length !== 0;
   }
 
   update(quiz: QuizRequest) {

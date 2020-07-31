@@ -45,7 +45,7 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AppAuthGuard],
     component: QuizzesComponent,
-    data: {breadcrumb: 'Quizzes', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
+    data: {breadcrumb: 'Quizzes', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes', 'ViewAllAttempts'])}
   },
   {
     path: 'quizzes/create',
@@ -58,7 +58,7 @@ const routes: Routes = [
     path: 'quizzes/:quizId',
     component: QuizzesQuizComponent,
     canActivate: [AppAuthGuard],
-    data: {breadcrumb: 'Quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])},
+    data: {breadcrumb: 'Quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes', 'ViewAllAttempts'])},
     children: [
       {
         path: '',
@@ -68,17 +68,17 @@ const routes: Routes = [
       {
         path: 'questions',
         component: QuizzesQuizQuestionsComponent,
-        data: {breadcrumb: 'Questions'}
+        data: {breadcrumb: 'Questions', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
         path: 'questions/create',
         component: QuizzesQuestionCreateComponent,
-        data: {breadcrumb: 'Add question'}
+        data: {breadcrumb: 'Add question', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
         path: 'questions/:questionId',
         component: QuizzesQuestionUpdateComponent,
-        data: {breadcrumb: 'Edit question'}
+        data: {breadcrumb: 'Edit question', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
         path: 'preview',
@@ -88,32 +88,32 @@ const routes: Routes = [
       {
         path: 'translations',
         component: QuizzesQuizTranslationsComponent,
-        data: {breadcrumb: 'Translations'}
+        data: {breadcrumb: 'Translations', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
         path: 'translations/create',
         component: QuizzesTranslationCreateComponent,
-        data: {breadcrumb: 'Add translation'}
+        data: {breadcrumb: 'Add translation', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
         path: 'translations/:locale',
         component: QuizzesTranslationUpdateComponent,
-        data: {breadcrumb: 'Edit translation'}
+        data: {breadcrumb: 'Edit translation', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
         path: 'attempts',
         component: QuizzesQuizAttemptsComponent,
-        data: {breadcrumb: 'Attempts'}
+        data: {breadcrumb: 'Attempts', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
       },
       {
         path: 'attempts/users/:userId',
         component: QuizzesQuizAttemptsUserComponent,
-        data: {breadcrumb: 'Attempt'}
+        data: {breadcrumb: 'Attempt', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
       },
       {
         path: 'attempts/:attemptId',
         component: QuizzesAttemptComponent,
-        data: {breadcrumb: 'Attempt'}
+        data: {breadcrumb: 'Attempt', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
       },
       {
         path: '**',

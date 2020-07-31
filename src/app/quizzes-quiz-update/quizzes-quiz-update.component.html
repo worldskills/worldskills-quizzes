@@ -1,8 +1,56 @@
-<app-quizzes-quiz-form
-  *ngIf="!loading"
-  [quiz]="quiz"
-  [events]="events"
-  (save)="update($event)"
->
-</app-quizzes-quiz-form>
-<ws-spinner *ngIf="loading"></ws-spinner>
+<div *ngIf="!userCanEditQuizzes">
+  <app-quizzes-quiz-form
+    *ngIf="!loading"
+    [quiz]="quiz"
+    [events]="events"
+    (save)="update($event)"
+  >
+  </app-quizzes-quiz-form>
+  <ws-spinner *ngIf="loading"></ws-spinner>
+</div>
+<div *ngIf="userCanEditQuizzes">
+  <div class="row">
+    <div class="col-sm-3"><p>Title</p></div>
+    <div class="col-sm-9"><p>{{quiz.title.text}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>Entity</p></div>
+    <div class="col-sm-9"><p>{{quiz.ws_entity.name.text}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>Event</p></div>
+    <div class="col-sm-9"><p>{{quiz.event.name}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>Skill</p></div>
+    <div class="col-sm-9"><p>{{quiz.skill.name.text}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>Max Questions</p></div>
+    <div class="col-sm-9"><p>{{quiz.max_questions}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>Required score to pass</p></div>
+    <div class="col-sm-9"><p>{{quiz.required_score_pass}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>Show random Questions</p></div>
+    <div class="col-sm-9"><p>{{quiz.random_questions}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>Reveal correct answers after finishing quiz</p></div>
+    <div class="col-sm-9"><p>{{quiz.reveal_correct_answers}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>Active (Quiz can be answered)</p></div>
+    <div class="col-sm-9"><p>{{quiz.active}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>URL Learning</p></div>
+    <div class="col-sm-9"><p>{{quiz.url_learning}}</p></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3"><p>URL Success</p></div>
+    <div class="col-sm-9"><p>{{quiz.url_success}}</p></div>
+  </div>
+</div>

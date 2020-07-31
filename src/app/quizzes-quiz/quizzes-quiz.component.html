@@ -18,16 +18,16 @@
     <li class="nav-item">
       <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/quizzes/{{quiz.id}}">Quiz</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="userCanEditQuizzes">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/questions">Questions</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/preview">Preview</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="userCanEditQuizzes">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/translations">Translations</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="userCanViewAllAttempts">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/attempts">Attempts</a>
     </li>
   </ul>
