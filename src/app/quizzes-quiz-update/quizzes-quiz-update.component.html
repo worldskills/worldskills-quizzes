@@ -1,4 +1,4 @@
-<div *ngIf="!userCanEditQuizzes">
+<div *ngIf="userCanEditQuizzes">
   <app-quizzes-quiz-form
     *ngIf="!loading"
     [quiz]="quiz"
@@ -8,7 +8,7 @@
   </app-quizzes-quiz-form>
   <ws-spinner *ngIf="loading"></ws-spinner>
 </div>
-<div *ngIf="userCanEditQuizzes">
+<div *ngIf="!userCanEditQuizzes">
   <div class="row">
     <div class="col-sm-3"><p>Title</p></div>
     <div class="col-sm-9"><p>{{quiz.title.text}}</p></div>
