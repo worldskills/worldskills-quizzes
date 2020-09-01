@@ -35,7 +35,7 @@ export class QuizService extends WsService<Quiz> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<Quiz>(
-      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/${quizId}`, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/${quizId}`, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }
@@ -48,7 +48,7 @@ export class QuizService extends WsService<Quiz> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.post<Quiz>(
-      requestOptions.url ?? environment.worldskillsApiQuizzes, quiz, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes`, quiz, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }
@@ -61,7 +61,7 @@ export class QuizService extends WsService<Quiz> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.put<Quiz>(
-      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/${quizId}`, quiz, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/${quizId}`, quiz, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }
@@ -74,7 +74,7 @@ export class QuizService extends WsService<Quiz> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, NO_SUBJECT);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.delete<Quiz>(
-      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/${quizId}`, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/${quizId}`, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }
@@ -87,7 +87,7 @@ export class QuizService extends WsService<Quiz> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, LOADER_ONLY);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.delete<Quiz>(
-      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/${quizId}/translations/${locale}`, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/${quizId}/translations/${locale}`, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }

@@ -28,7 +28,7 @@ export class AttemptsService extends WsService<AttemptsList> {
   }
 
   fetch(quizId: number, params): Observable<AttemptsList> {
-    return this.http.get<AttemptsList>(`${environment.worldskillsApiQuizzes}/${quizId}/attempts`, {params: params});
+    return this.http.get<AttemptsList>(`${environment.worldskillsApiEndpoint}/quizzes/${quizId}/attempts`, {params: params});
   }
 
 }

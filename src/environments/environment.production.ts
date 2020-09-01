@@ -1,8 +1,7 @@
 export const environment = {
   production: true,
   environmentWarning: false,
-  worldskillsApiEndpoint: 'https://api.worldskills.org', 
-  worldskillsApiQuizzes: 'https://api.worldskills.org/quizzes',
+  worldskillsApiEndpoint: 'https://api.worldskills.org',
   worldskillsApiImages: 'https://api.worldskills.org/images',
   worldskillsApiEvents: 'https://api.worldskills.org/events',
   worldskillsApiAuth: 'https://api.worldskills.org/auth',

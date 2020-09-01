@@ -34,7 +34,7 @@ export class QuizzesService extends WsService<QuizList> {
   fetch(p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<QuizList> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL, DEFAULT_FETCH_PARAMS);
     const params = httpParamsFromFetchParams(fetchParams);
-    const observable = this.http.get<QuizList>(requestOptions.url ?? environment.worldskillsApiQuizzes, {params}).pipe(share());
+    const observable = this.http.get<QuizList>(requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes`, {params}).pipe(share());
     return this.request(observable, multicastOptions);
   }
 

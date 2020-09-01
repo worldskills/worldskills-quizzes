@@ -33,7 +33,7 @@ export class AttemptService extends WsService<Attempt> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<Attempt>(
-      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/attempts/${attemptId}`, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/attempts/${attemptId}`, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }
@@ -46,7 +46,7 @@ export class AttemptService extends WsService<Attempt> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.post<Attempt>(
-      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/${quizId}/attempts`, attempt, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/${quizId}/attempts`, attempt, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }
@@ -60,7 +60,7 @@ export class AttemptService extends WsService<Attempt> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.put<Attempt>(
-      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/attempts/${attemptId}/questions/${questionId}/answers/${answerId}`,
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/attempts/${attemptId}/questions/${questionId}/answers/${answerId}`,
       attempt, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
@@ -74,7 +74,7 @@ export class AttemptService extends WsService<Attempt> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.put<Attempt>(
-      requestOptions.url ?? `${environment.worldskillsApiQuizzes}/attempts/${attemptId}/finish`, attempt, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/attempts/${attemptId}/finish`, attempt, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }
