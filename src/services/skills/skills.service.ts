@@ -35,7 +35,7 @@ export class SkillsService extends WsService<SkillList> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL, DEFAULT_FETCH_PARAMS);
     const params = httpParamsFromFetchParams(fetchParams);
     const observable = this.http.get<SkillList>(
-      requestOptions.url ?? `${environment.worldskillsApiEvents}/${eventId}/skills`, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/events/${eventId}/skills`, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }

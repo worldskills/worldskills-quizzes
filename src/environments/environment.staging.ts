@@ -2,7 +2,6 @@ export const environment = {
   production: true,
   environmentWarning: 'This is the staging environment. Changes in this environment might get overwritten.',
   worldskillsApiEndpoint: 'https://api.worldskills.show',
-  worldskillsApiEvents: 'https://api.worldskills.show/events',
   worldskillsApiAuth: 'https://api.worldskills.show/auth',
   worldskillsClientId: 'e7a23a88163b',
   worldskillsAuthorizeUrl: 'https://auth.worldskills.show/oauth/authorize',

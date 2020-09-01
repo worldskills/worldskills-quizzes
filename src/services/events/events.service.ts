@@ -36,7 +36,7 @@ export class EventsService extends WsService<EventList> {
     let params = httpParamsFromFetchParams(fetchParams);
     params = params.set('type', 'competition');
     const observable = this.http.get<EventList>(
-      requestOptions.url ?? environment.worldskillsApiEvents, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/events`, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }
