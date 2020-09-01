@@ -39,7 +39,7 @@ export class EntitiesService extends WsService<EntityList> {
       params = params.set('roleApp', appRole.toString());
     });
     const observable = this.http.get<EntityList>(
-      requestOptions.url ?? `${environment.worldskillsApiAuth}/ws_entities`, {params}
+      requestOptions.url ?? `${environment.worldskillsApiEndpoint}/auth/ws_entities`, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
   }

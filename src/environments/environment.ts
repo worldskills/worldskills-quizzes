@@ -2,7 +2,6 @@ export const environment = {
   production: false,
   environmentWarning: 'This is the local development environment. Happy coding!',
   worldskillsApiEndpoint: 'http://localhost:8080',
-  worldskillsApiAuth: 'http://localhost:8080/auth',
   worldskillsClientId: '91c518ccad27',
   worldskillsAuthorizeUrl: 'http://worldskills-auth.localhost/oauth/authorize',
   worldskillsAuthorizeRedirect: 'http://localhost:11301/',
