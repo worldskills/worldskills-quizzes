@@ -16,7 +16,7 @@ class UploadAdapter {
     return this.loader.file.then(file => new Promise((resolve, reject) => {
       const data = new FormData();
       data.append('file', file);
-      this.httpObservable = this.http.post(environment.worldskillsApiImages, data, {
+      this.httpObservable = this.http.post(`${environment.worldskillsApiEndpoint}/images`, data, {
         reportProgress: true,
         observe: 'events'
       }).pipe(tap(event => {
