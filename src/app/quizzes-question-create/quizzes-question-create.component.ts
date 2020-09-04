@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
+import {forkJoin} from 'rxjs';
 import {QuestionsService} from '../../services/questions/questions.service';
 import {Quiz} from '../../types/quiz';
 import {QuestionFormSubmitData} from '../quizzes-question-form/quizzes-question-form.component';
@@ -36,10 +37,16 @@ export class QuizzesQuestionCreateComponent extends WsComponent implements OnIni
     this.questionsService.fetch(this.quiz.id).subscribe(list => {
       question.question.sort = list.questions.reduce((acc, q) => Math.max(acc, q.sort), 0) + 1;
       this.questionService.create(this.quiz.id, question.question).subscribe(q => {
-        this.answerService.createMany(q.id, question.answers).subscribe(() => {
-          this.alertService.setAlert('new-question', AlertType.success,
-            null, undefined, 'The Question has been added successfully.', true);
-          this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
+        const observables = [];
+        if (question.answers.length > 0) {
+          observables.push(this.answerService.createMany(q.id, question.answers));
+        }
+        forkJoin(observables).subscribe({
+          complete: () => {
+            this.alertService.setAlert('new-question', AlertType.success,
+              null, undefined, 'The Question has been added successfully.', true);
+            this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
+          }
         });
       });
     });

@@ -2,9 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Quiz} from '../../types/quiz';
 import {Attempt} from '../../types/attempt';
+import {AnsweredQuestionWithAnswers} from '../../types/question';
 import {map} from 'rxjs/operators';
 import {combineLatest} from 'rxjs';
 import {AttemptService} from '../../services/attempt/attempt.service';
+import {AttemptQuestionService} from '../../services/attempt-question/attempt-question.service';
 import {QuizService} from '../../services/quiz/quiz.service';
 import {AppComponent} from '../app.component';
 import {WsComponent} from '@worldskills/worldskills-angular-lib';
@@ -26,6 +28,7 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
   constructor(
     private quizService: QuizService,
     private attemptService: AttemptService,
+    private attemptQuestionService: AttemptQuestionService,
     private router: ActivatedRoute
   ) {
     super();
@@ -59,6 +62,10 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
     attempt.questions[qIndex].answer = attempt.questions[qIndex].answers.find(a => a.id === answerId);
     this.attemptService.subject.next(attempt);
     this.attemptService.update(this.attempt.id, questionId, answerId, {}, {l: this.locale});
+  }
+
+  updateResponse(attemptQuestion: AnsweredQuestionWithAnswers) {
+    this.attemptQuestionService.updateResponse(this.attempt.id, attemptQuestion, this.locale).subscribe();
   }
 
   finish() {

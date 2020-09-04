@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Attempt, AttemptRequest} from '../../types/attempt';
+import {AnsweredQuestionWithAnswers} from '../../types/question';
 import {HttpClient} from '@angular/common/http';
 import {httpParamsFromFetchParams} from '../../utils/http';
 import {share} from 'rxjs/operators';
@@ -64,6 +65,15 @@ export class AttemptService extends WsService<Attempt> {
       attempt, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
+  }
+
+  updateResponse(attemptId: number, questionId: number, attemptQuestion: AnsweredQuestionWithAnswers, fetchParams: FetchParams): Observable<Attempt> {
+    const params = httpParamsFromFetchParams(fetchParams);
+    const observable = this.http.put<Attempt>(
+      `${environment.worldskillsApiEndpoint}/quizzes/attempts/${attemptId}/questions/${questionId}/response`,
+      attemptQuestion, {params}
+    ).pipe(share());
+    return observable;
   }
 
   finish(attemptId: number, attempt: AttemptRequest, rOpt?: RequestOptions): Observable<Attempt>;
