@@ -66,6 +66,7 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
       required_score_pass,
       random_questions,
       reveal_correct_answers,
+      allow_multiple_attempts,
       active,
       url_learning,
       url_success
@@ -85,6 +86,7 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
       required_score_pass: !isNaN(requiredScorePass) ? requiredScorePass : undefined,
       random_questions,
       reveal_correct_answers,
+      allow_multiple_attempts,
       active,
       url_learning,
       url_success

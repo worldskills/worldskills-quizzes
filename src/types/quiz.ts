@@ -10,6 +10,7 @@ export interface QuizRequest {
   max_questions: number;
   required_score_pass: number;
   reveal_correct_answers: boolean;
+  allow_multiple_attempts: boolean;
   url_learning: string;
   url_success: string;
   ws_entity: Entity;

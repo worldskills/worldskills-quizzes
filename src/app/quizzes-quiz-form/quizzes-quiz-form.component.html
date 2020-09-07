@@ -85,6 +85,13 @@
     </div>
     <div class="checkbox">
       <label>
+        <input type="checkbox" id="allow_multiple_attempts" name="allow_multiple_attempts"
+               [ngModel]="quiz ? quiz.allow_multiple_attempts : ''">
+        Allow multiple attempts
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
         <input type="checkbox" id="active" name="active"
                [ngModel]="quiz ? quiz.active : ''">
         Active (Quiz can be answered)
