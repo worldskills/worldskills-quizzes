@@ -38,15 +38,22 @@ export class QuizzesAttemptComponent extends WsComponent implements OnInit {
       this.quizService.subject.subscribe(quiz => (this.quiz = quiz)),
       this.router.params.subscribe(value => {
         const {attemptId} = value;
-        this.attemptService.fetch(attemptId, {l: this.locale});
+        this.loadAttempt(attemptId);
       })
     );
+  }
+
+  loadAttempt(attemptId) {
+    this.attemptService.fetch(attemptId, {l: this.locale});
   }
 
   assessQuestion(e: Event, attemptQuestion: AnsweredQuestionWithAnswers, correct) {
     e.preventDefault();
     attemptQuestion.correct = correct;
-    this.attemptQuestionService.updateAttemptQuestion(this.attempt.id, attemptQuestion, this.locale).subscribe();
+    this.attemptQuestionService.updateAttemptQuestion(this.attempt.id, attemptQuestion, this.locale).subscribe(() => {
+      // reload attempt
+      this.loadAttempt(this.attempt.id)
+    });
   }
 
 }
