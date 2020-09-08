@@ -24,6 +24,13 @@
         answers correct<span *ngIf="quiz.url_success">, <a href="{{quiz.url_success}}"
                                                            class="alert-link">please continue</a></span>.
       </div>
+      <div
+        *ngIf="attempt.state === 'submitted'"
+        class="alert alert-info"
+        role="alert"
+      >
+        Your attempt has been submitted.
+      </div>
       <div *ngIf="attempt.state === 'running'">
         <p>
           Your answers are automatically saved, to finish this attempt click “Submit and finish
@@ -57,7 +64,7 @@
                   (change)="selectAnswer(question.id, answer.id)"
                   [value]="answer.id"
                   [checked]="question.answer ? answer.id === question.answer.id : false"
-                  [disabled]="attempt.state === 'finished'"
+                  [disabled]="attempt.state === 'finished' || attempt.state === 'submitted'"
                   id="answers_{{answer.id}}"
                 />
                 <label class="form-check-label" [attr.for]="'answers_' + answer.id">
@@ -86,6 +93,7 @@
                 rows="3"
                 [(ngModel)]="question.response"
                 (ngModelChange)="updateResponse(question)"
+                [disabled]="attempt.state === 'submitted'"
               ></textarea>
             </div>
           </div>
@@ -117,7 +125,7 @@
         <div class="col-sm-6 text-right">
           <a
             class="btn btn-link"
-            *ngIf="quiz.url_learning && (attempt.state === 'running' || attempt.passed === false)"
+            *ngIf="quiz.url_learning && (attempt.state === 'running' || attempt.state === 'submitted' || attempt.passed === false)"
             href="{{quiz.url_learning}}">
             « Return to learning resources
           </a>
