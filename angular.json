@@ -27,7 +27,8 @@
               "src/styles.css",
               "src/fonts.css",
               "node_modules/@worldskills/bootstrap/dist/css/bootstrap.css",
-              "node_modules/@ng-select/ng-select/themes/default.theme.css"
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "node_modules/@worldskills/worldskills-angular-lib/assets/styles/index.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.js",
@@ -154,7 +155,8 @@
               "src/styles.css",
               "src/fonts.css",
               "node_modules/@worldskills/bootstrap/dist/css/bootstrap.css",
-              "node_modules/@ng-select/ng-select/themes/default.theme.css"
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "node_modules/@worldskills/worldskills-angular-lib/assets/styles/index.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.js",
