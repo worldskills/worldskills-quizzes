@@ -5,10 +5,12 @@ import {QuestionList, QuestionRequest, QuestionWithAnswers} from '../../types/qu
 import {QuestionsService} from '../../services/questions/questions.service';
 import {AnswersService} from '../../services/answers/answers.service';
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {combineLatest, forkJoin} from 'rxjs';
+import {forkJoin} from 'rxjs';
 import {AnswerRequest} from '../../types/answer';
-import {map} from 'rxjs/operators';
-import {WsComponent} from '@worldskills/worldskills-angular-lib';
+import {RxjsUtil, WsComponent} from '@worldskills/worldskills-angular-lib';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {editorConfig, onEditorReady} from "../../utils/ckeditor";
+import {HttpClient} from "@angular/common/http";
 
 export interface TranslationFormData {
   locale: string;
@@ -56,16 +58,20 @@ export class QuizzesTranslationFormComponent extends WsComponent implements OnIn
   isSubmitted = false;
   loading = false;
   questions: QuestionList<QuestionWithAnswers>;
+  editor = ClassicEditor;
+  config = editorConfig;
+  onReady = onEditorReady;
 
-  constructor(private questionsService: QuestionsService, private answersService: AnswersService) {
+  constructor(private questionsService: QuestionsService, private answersService: AnswersService, public http: HttpClient) {
     super();
   }
 
   ngOnInit(): void {
     this.subscribe(
-      combineLatest([this.questionsService.loading, this.answersService.loading])
-      .pipe(map(([l1, l2]) => l1 || l2))
-      .subscribe(loading => this.loading = loading),
+      RxjsUtil.loaderSubscriber(
+        this.questionsService,
+        this.answersService,
+      ).subscribe(loading => this.loading = loading),
       this.questionsService.subject.subscribe(questions => {
         const questionsWithAnswers = [...questions.questions.map(qs => ({...qs, answers: []}))];
         this.questions = {...questions, questions: questionsWithAnswers};
@@ -98,7 +104,11 @@ export class QuizzesTranslationFormComponent extends WsComponent implements OnIn
         });
       })
     );
-    this.questionsService.fetch(this.quiz.id, {limit: 100, l: this.locale || this.quiz.title.lang_code, sort: 'name_asc'});
+    this.questionsService.fetch(this.quiz.id, {
+      limit: 100,
+      l: this.locale || this.quiz.title.lang_code,
+      sort: 'name_asc'
+    });
   }
 
   get questionControls() {

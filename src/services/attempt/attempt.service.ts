@@ -3,18 +3,19 @@ import {Observable} from 'rxjs';
 import {Attempt, AttemptRequest} from '../../types/attempt';
 import {AnsweredQuestionWithAnswers} from '../../types/question';
 import {HttpClient} from '@angular/common/http';
-import {httpParamsFromFetchParams} from '../../utils/http';
+
 import {share} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {
   FetchParams,
   FULL,
+  HttpUtil,
   MulticastOptions,
   RequestOptions,
   WsService,
   WsServiceRequestP1,
   WsServiceRequestP2,
-  WsServiceRequestP3
+  WsServiceRequestP3,
 } from '@worldskills/worldskills-angular-lib';
 
 @Injectable({
@@ -32,7 +33,7 @@ export class AttemptService extends WsService<Attempt> {
   fetch(attemptId: number, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<Attempt>;
   fetch(attemptId: number, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<Attempt> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
-    const params = httpParamsFromFetchParams(fetchParams);
+    const params = HttpUtil.objectToParams(fetchParams || {});
     const observable = this.http.get<Attempt>(
       requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/attempts/${attemptId}`, {params}
     ).pipe(share());
@@ -45,7 +46,7 @@ export class AttemptService extends WsService<Attempt> {
   create(quizId: number, attempt: AttemptRequest, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<Attempt>;
   create(quizId: number, attempt: AttemptRequest, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<Attempt> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
-    const params = httpParamsFromFetchParams(fetchParams);
+    const params = HttpUtil.objectToParams(fetchParams || {});
     const observable = this.http.post<Attempt>(
       requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/${quizId}/attempts`, attempt, {params}
     ).pipe(share());
@@ -59,7 +60,7 @@ export class AttemptService extends WsService<Attempt> {
   update(attemptId: number, questionId: number, answerId: number, attempt: AttemptRequest, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<Attempt>;
   update(attemptId: number, questionId: number, answerId: number, attempt: AttemptRequest, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<Attempt> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
-    const params = httpParamsFromFetchParams(fetchParams);
+    const params = HttpUtil.objectToParams(fetchParams || {});
     const observable = this.http.put<Attempt>(
       requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/attempts/${attemptId}/questions/${questionId}/answers/${answerId}`,
       attempt, {params}
@@ -68,7 +69,7 @@ export class AttemptService extends WsService<Attempt> {
   }
 
   updateResponse(attemptId: number, questionId: number, attemptQuestion: AnsweredQuestionWithAnswers, fetchParams: FetchParams): Observable<Attempt> {
-    const params = httpParamsFromFetchParams(fetchParams);
+    const params = HttpUtil.objectToParams(fetchParams || {});
     const observable = this.http.put<Attempt>(
       `${environment.worldskillsApiEndpoint}/quizzes/attempts/${attemptId}/questions/${questionId}/response`,
       attemptQuestion, {params}
@@ -82,7 +83,7 @@ export class AttemptService extends WsService<Attempt> {
   finish(attemptId: number, attempt: AttemptRequest, params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<Attempt>;
   finish(attemptId: number, attempt: AttemptRequest, p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<Attempt> {
     const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL);
-    const params = httpParamsFromFetchParams(fetchParams);
+    const params = HttpUtil.objectToParams(fetchParams || {});
     const observable = this.http.put<Attempt>(
       requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes/attempts/${attemptId}/finish`, attempt, {params}
     ).pipe(share());

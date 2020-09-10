@@ -44,7 +44,7 @@ export class QuizzesQuestionCreateComponent extends WsComponent implements OnIni
         forkJoin(observables).subscribe({
           complete: () => {
             this.alertService.setAlert('new-question', AlertType.success,
-              null, undefined, 'The Question has been added successfully.', true);
+              null, 'The Question has been added successfully.', true);
             this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
           }
         });

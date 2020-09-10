@@ -1,14 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../types/quiz';
-import {txt} from 'src/utils/txt';
-import {combineLatest, forkJoin} from 'rxjs';
+import {forkJoin} from 'rxjs';
 import {Question, QuestionList} from '../../types/question';
 import {faArrowDown, faArrowUp} from '@fortawesome/free-solid-svg-icons';
 import {QuestionsService} from '../../services/questions/questions.service';
 import {QuestionService} from '../../services/question/question.service';
 import {QuizService} from '../../services/quiz/quiz.service';
-import {map} from 'rxjs/operators';
-import {LOADER_ONLY, WsComponent} from '@worldskills/worldskills-angular-lib';
+import {HtmlUtil, LOADER_ONLY, RxjsUtil, WsComponent} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-quiz-questions',
@@ -17,8 +15,7 @@ import {LOADER_ONLY, WsComponent} from '@worldskills/worldskills-angular-lib';
 })
 export class QuizzesQuizQuestionsComponent extends WsComponent implements OnInit {
 
-
-  txt = txt;
+  txt = HtmlUtil.txt;
   faArrowUp = faArrowUp;
   faArrowDown = faArrowDown;
   quiz: Quiz = null;
@@ -39,9 +36,10 @@ export class QuizzesQuizQuestionsComponent extends WsComponent implements OnInit
         this.questionsService.fetch(this.quiz.id);
       }),
       this.questionsService.subject.subscribe(questions => (this.questions = questions)),
-      combineLatest([this.questionsService.loading, this.questionsService.loading])
-      .pipe(map(([l1, l2]) => l1 || l2))
-      .subscribe(loading => this.loading = loading)
+      RxjsUtil.loaderSubscriber(
+        this.questionsService,
+        this.questionsService,
+      ).subscribe(loading => this.loading = loading)
     );
   }
 

@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Quiz, QuizLinkType} from '../../types/quiz';
+import {Quiz} from '../../types/quiz';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
-import {fetchLink, httpParamsFromFetchParams} from '../../utils/http';
-import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
+import {AlertService, AlertType, HttpUtil, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {TranslationFormSubmitData} from '../quizzes-translation-form/quizzes-translation-form.component';
 import {forkJoin} from 'rxjs';
 import {QuestionService} from '../../services/question/question.service';
@@ -36,7 +35,7 @@ export class QuizzesTranslationUpdateComponent extends WsComponent implements On
     if (confirm('Deleting the translation will delete all translations of the questions and answers. Click OK to proceed.')) {
       this.quizService.deleteTranslations(this.quiz.id, locale).subscribe(() => {
         this.alertService.setAlert('delete-translations', AlertType.success,
-          null, undefined, 'The translation has been deleted successfully.', true);
+          null, 'The translation has been deleted successfully.', true);
         this.router.navigateByUrl(`/quizzes/${this.quiz.id}/translations`).catch(e => alert(e));
       });
     }
@@ -46,9 +45,9 @@ export class QuizzesTranslationUpdateComponent extends WsComponent implements On
     this.subscribe(
       this.quizService.subject.subscribe(quiz => {
         this.route.params.subscribe(({locale}) => {
-          const links = fetchLink<QuizLinkType>(quiz, 'self');
+          const links = quiz.links.filter(l => l.rel === 'self');
           if (links.length > 0) {
-            this.http.get<Quiz>(links[0].href, {params: httpParamsFromFetchParams({l: locale})}
+            this.http.get<Quiz>(links[0].href, {params: HttpUtil.objectToParams({l: locale})}
             ).subscribe(translatedQuiz => {
               this.translatedQuiz = translatedQuiz;
               this.quiz = quiz;
@@ -83,7 +82,7 @@ export class QuizzesTranslationUpdateComponent extends WsComponent implements On
       complete: () => {
         this.quizService.fetch(this.quiz.id).subscribe(() => {
           this.alertService.setAlert('update-translation', AlertType.success,
-            null, undefined, 'The translation has been updated successfully.', true);
+            null, 'The translation has been updated successfully.', true);
           this.router.navigateByUrl(`/quizzes/${this.quiz.id}/translations`).catch(e => alert(e));
         });
       }

@@ -1,3 +1,8 @@
-<div class="mt-4">
-  <ws-spinner></ws-spinner>
-</div>
+<ng-container *ngIf="initialized">
+  <router-outlet></router-outlet>
+</ng-container>
+<ng-container *ngIf="!initialized">
+  <div class="mt-4">
+    <ws-spinner></ws-spinner>
+  </div>
+</ng-container>

@@ -1,19 +1,7 @@
-<div style="background-color: #ff6c0d; padding: 10px 20px; color: #fff; text-align: center;" *ngIf="environmentWarning">
-    {{environmentWarning}}
-</div>
-<div style="background-color: #D51067; padding: 10px 20px; color: #fff; text-align: center;" *ngIf="authStatus.user && authStatus.user.puppeteer">
-    {{authStatus.user.puppeteer.first_name}} {{authStatus.user.puppeteer.last_name}} logged in as {{authStatus.user.fullname}}
-</div>
-
-<ws-header
-  [menuItems]="[]"
-  [currentUser]="authStatus.user"
-  [appName]="'Quizzes'"
-  (loginClick)="login()"
-  (logoutClick)="logout()"
-  [isLoggedIn]="authStatus.user && authStatus.isLoggedIn"
-  [showLoginAndLogoutButtons]="true">
-</ws-header>
+<ws-staging-banner *ngIf="isStaging"></ws-staging-banner>
+<ws-puppeteer-banner [currentUser]="currentUser"></ws-puppeteer-banner>
+<ws-auth-header [appName]="'People'" [menuItems]="[]">
+</ws-auth-header>
 
 <div class="container">
   <ws-breadcrumbs
@@ -23,14 +11,13 @@
     [homeItemRoute]="'/quizzes'">
   </ws-breadcrumbs>
   <div *ngIf="!showBreadcrumb" class="mt-5"></div>
-  <ws-alert></ws-alert>
+  <div class="clearfix"></div>
+  <ws-alerts></ws-alerts>
   <router-outlet></router-outlet>
 </div>
 
-<ws-footer
-  [currentUser]="authStatus.user"
-  (loginClick)="login()"
-  (logoutClick)="logout()"
-  [isLoggedIn]="authStatus.user && authStatus.isLoggedIn"
->
-</ws-footer>
+<ws-auth-footer
+  (languageChange)="changeLanguage($event)"
+  [languages]="languages"
+  [selectedLanguage]="language"
+></ws-auth-footer>

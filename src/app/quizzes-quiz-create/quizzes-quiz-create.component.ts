@@ -30,14 +30,13 @@ export class QuizzesQuizCreateComponent extends WsComponent implements OnInit {
       this.eventsService.subject.subscribe(events => (this.events = events)),
       this.eventsService.loading.subscribe(loading => (this.loading = loading)),
     );
-
     this.eventsService.fetch();
   }
 
   create(quiz: QuizRequest) {
     this.quizService.create(quiz).subscribe(q => {
       this.alertService.setAlert('new-alert', AlertType.success,
-        null, undefined, 'The Quiz has been added successfully. Please add now questions for the Quiz.', true);
+        null, 'The Quiz has been added successfully. Please add now questions for the Quiz.', true);
       this.router.navigateByUrl(`/quizzes/${q.id}`).catch(e => alert(e));
     });
   }

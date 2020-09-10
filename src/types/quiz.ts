@@ -2,10 +2,10 @@ import {Link, List} from './common';
 import {Event} from './event';
 import {Skill} from './skill';
 import {Entity} from './entity';
-import {I18nModel} from '@worldskills/worldskills-angular-lib';
+import {I18nText} from '@worldskills/worldskills-angular-lib';
 
 export interface QuizRequest {
-  title: I18nModel;
+  title: I18nText;
   random_questions: boolean;
   max_questions: number;
   required_score_pass: number;

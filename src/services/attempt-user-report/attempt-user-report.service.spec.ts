@@ -1,12 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AttemptUserReportService } from './attempt-user-report.service';
+import {AttemptUserReportService} from './attempt-user-report.service';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('AttemptUserReportService', () => {
   let service: AttemptUserReportService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+    });
     service = TestBed.inject(AttemptUserReportService);
   });
 

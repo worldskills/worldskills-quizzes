@@ -4,12 +4,13 @@ import {Question, QuestionRequest} from '../../types/question';
 import {AnswerRequest, AnswersList} from '../../types/answer';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {faPlus, faRedo, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {map} from 'rxjs/operators';
-import {combineLatest} from 'rxjs';
 import {QuestionService} from '../../services/question/question.service';
-import {WsComponent} from '@worldskills/worldskills-angular-lib';
+import {RxjsUtil, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {AnswerService} from '../../services/answer/answer.service';
 import {striptagsFromText} from '../../utils/striptags';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {editorConfig, onEditorReady} from "../../utils/ckeditor";
+import {HttpClient} from "@angular/common/http";
 
 export interface QuestionFormData {
   question: string;
@@ -46,8 +47,11 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
   @Output() save: EventEmitter<QuestionFormSubmitData> = new EventEmitter<QuestionFormSubmitData>();
   isSubmitted = false;
   loading = false;
+  editor = ClassicEditor;
+  config = editorConfig;
+  onReady = onEditorReady;
 
-  constructor(private questionService: QuestionService, private answerService: AnswerService) {
+  constructor(private questionService: QuestionService, private answerService: AnswerService, public http: HttpClient) {
     super();
   }
 
@@ -57,9 +61,10 @@ export class QuizzesQuestionFormComponent extends WsComponent implements OnInit,
 
   ngOnInit() {
     this.subscribe(
-      combineLatest([this.questionService.loading, this.answerService.loading])
-      .pipe(map(([l1, l2]) => l1 || l2))
-      .subscribe(loading => this.loading = loading)
+      RxjsUtil.loaderSubscriber(
+        this.questionService,
+        this.answerService,
+      ).subscribe(loading => this.loading = loading)
     );
   }
 

@@ -1,6 +1,6 @@
 import {List} from './common';
 import {Answer} from './answer';
-import {I18nModel} from '@worldskills/worldskills-angular-lib';
+import {I18nText} from '@worldskills/worldskills-angular-lib';
 
 export interface AnsweredQuestionWithAnswers extends QuestionWithAnswers {
   answer: Answer;
@@ -13,7 +13,7 @@ export interface QuestionWithAnswers extends Question {
 }
 
 export interface QuestionRequest {
-  text: I18nModel;
+  text: I18nText;
   weight?: number;
   sort?: number;
   active?: boolean;

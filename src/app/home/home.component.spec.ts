@@ -1,9 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomeComponent} from './home.component';
-import {RouterTestingModule} from "@angular/router/testing";
-import {AuthService, WorldskillsAngularLibModule} from "@worldskills/worldskills-angular-lib";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {TranslateServiceTestingProvider} from '../../test';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {NgAuthService} from '@worldskills/worldskills-angular-lib';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -11,13 +12,22 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, WorldskillsAngularLibModule, HttpClientTestingModule],
       declarations: [HomeComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
-        {provide: AuthService, useValue: {redirectOrReturn: () => undefined}},
+        {
+          provide: NgAuthService, useValue: {
+            currentUser: {
+              subscribe: () => undefined
+            },
+            isLoggedIn: () => false,
+            login: () => undefined,
+          }
+        },
+        TranslateServiceTestingProvider
       ]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

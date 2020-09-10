@@ -4,14 +4,14 @@
   <div class="form-group row">
     <label class="col-sm-3 col-form-label">Question<span class="required">*</span></label>
     <div class="col-sm-5">
-      <textarea
+      <ckeditor
+        [editor]="editor"
+        (ready)="onReady($event, http)"
+        [config]="config"
         [formControl]="form.controls.question"
-        class="form-control"
-        rows="6"
         tabindex="1"
-        required
-        appCkEditor>
-      </textarea>
+        required>
+      </ckeditor>
     </div>
     <div class="col-sm-4">
       <span
@@ -25,28 +25,28 @@
   <div class="form-group row">
     <label class="col-sm-3 col-form-label">Type<span class="required">*</span></label>
     <div class="col-sm-5">
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        value="multiple_choice"
-        [formControl]="form.controls.type"
-        (change)="changeType()"
-        id="type_multiple_choice"
-      />
-      <label class="form-check-label" for="type_multiple_choice">Multiple Choice Question</label>
-    </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        value="free_response"
-        [formControl]="form.controls.type"
-        (change)="changeType()"
-        id="type_free_response"
-      />
-      <label class="form-check-label" for="type_free_response">Free Response Question</label>
-    </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="multiple_choice"
+          [formControl]="form.controls.type"
+          (change)="changeType()"
+          id="type_multiple_choice"
+        />
+        <label class="form-check-label" for="type_multiple_choice">Multiple Choice Question</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="free_response"
+          [formControl]="form.controls.type"
+          (change)="changeType()"
+          id="type_free_response"
+        />
+        <label class="form-check-label" for="type_free_response">Free Response Question</label>
+      </div>
     </div>
   </div>
 
@@ -56,18 +56,17 @@
       <div class="form-group row" *ngIf="!control.controls.removed.value">
         <label class="col-sm-3 col-form-label">Answer {{index + 1}}</label>
         <div class="col-sm-5">
-          <textarea
-            class="form-control"
+          <ckeditor
+            [editor]="editor"
+            (ready)="onReady($event, http)"
+            [config]="config"
             [formControl]="control.controls.answer"
-            rows="2"
-            tabindex="2"
-            appCkEditor>
-          </textarea>
+            tabindex="2">
+          </ckeditor>
           <div class="checkbox">
             <label>
               <input
                 type="checkbox"
-                name="correct"
                 [formControl]="control.controls.correct"
                 (change)="changeCorrect($event, control)">
               This answer is correct

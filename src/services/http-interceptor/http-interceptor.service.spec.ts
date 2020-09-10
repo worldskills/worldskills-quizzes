@@ -3,7 +3,8 @@ import {TestBed} from '@angular/core/testing';
 import {HttpInterceptorService} from './http-interceptor.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {AuthService} from '@worldskills/worldskills-angular-lib';
+import {TranslateServiceTestingProvider} from '../../test';
+import {NgAuthService} from '@worldskills/worldskills-angular-lib';
 
 describe('HttpInterceptorService', () => {
   let service: HttpInterceptorService;
@@ -11,7 +12,10 @@ describe('HttpInterceptorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-      providers: [{provide: AuthService, useValue: {}}],
+      providers: [
+        {provide: NgAuthService, useValue: {currentUser: {subscribe: () => undefined}}},
+        TranslateServiceTestingProvider
+      ],
     });
     service = TestBed.inject(HttpInterceptorService);
   });

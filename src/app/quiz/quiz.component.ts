@@ -3,13 +3,11 @@ import {ActivatedRoute} from '@angular/router';
 import {Quiz} from '../../types/quiz';
 import {Attempt} from '../../types/attempt';
 import {AnsweredQuestionWithAnswers} from '../../types/question';
-import {map} from 'rxjs/operators';
-import {combineLatest} from 'rxjs';
 import {AttemptService} from '../../services/attempt/attempt.service';
 import {AttemptQuestionService} from '../../services/attempt-question/attempt-question.service';
 import {QuizService} from '../../services/quiz/quiz.service';
-import {AppComponent} from '../app.component';
-import {WsComponent} from '@worldskills/worldskills-angular-lib';
+import {RxjsUtil, WsComponent} from '@worldskills/worldskills-angular-lib';
+import {AppService} from "../../services/app/app.service";
 
 @Component({
   selector: 'app-quiz',
@@ -26,6 +24,7 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
   locale: string;
 
   constructor(
+    private appService: AppService,
     private quizService: QuizService,
     private attemptService: AttemptService,
     private attemptQuestionService: AttemptQuestionService,
@@ -35,12 +34,13 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    AppComponent.showBreadcrumbs.next(false);
+    this.appService.showBreadcrumbs.next(false);
     this.locale = (window.navigator.language || (window.navigator as any).userLanguage || 'en').substring(0, 2);
     this.subscribe(
-      combineLatest([this.quizService.loading, this.attemptService.loading])
-      .pipe(map(([l1, l2]) => l1 || l2))
-      .subscribe(loading => this.loading = loading),
+      RxjsUtil.loaderSubscriber(
+        this.quizService.loading,
+        this.attemptService.loading,
+      ).subscribe(loading => this.loading = loading),
       this.attemptService.subject.subscribe(attempt => (this.attempt = attempt)),
       this.quizService.subject.subscribe({
         next: quiz => {
@@ -78,7 +78,7 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     super.ngOnDestroy();
-    AppComponent.showBreadcrumbs.next(true);
+    this.appService.showBreadcrumbs.next(true);
   }
 
 }

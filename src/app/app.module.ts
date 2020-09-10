@@ -1,11 +1,10 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {environment} from '../environments/environment';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {AuthConfig, OAuthModule} from 'angular-oauth2-oidc';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AppConfig, ServiceConfig, WorldskillsAngularLibModule, WSHttpConfig, WsHttpInterceptor} from '@worldskills/worldskills-angular-lib';
+import {OAuthModule} from 'angular-oauth2-oidc';
+import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
+import {WorldskillsAngularLibModule, WsHttpInterceptor} from '@worldskills/worldskills-angular-lib';
 import {QuizzesComponent} from './quizzes/quizzes.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -28,12 +27,17 @@ import {QuizzesQuizCreateComponent} from './quizzes-quiz-create/quizzes-quiz-cre
 import {QuizzesQuestionCreateComponent} from './quizzes-question-create/quizzes-question-create.component';
 import {QuizzesTranslationCreateComponent} from './quizzes-translation-create/quizzes-translation-create.component';
 import {HttpInterceptorService} from '../services/http-interceptor/http-interceptor.service';
-import {CkEditorDirective} from '../directives/ck-editor/ck-editor.directive';
 import {WsSpinnerComponent} from './ws-spinner/ws-spinner.component';
-import {LangCodeToNamePipe} from '../pipes/lang-code-to-name/lang-code-to-name.pipe';
 import {HomeComponent} from './home/home.component';
 import {ErrorComponent} from './error/error.component';
 import {NgSelectModule} from "@ng-select/ng-select";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -56,9 +60,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     QuizComponent,
     QuizzesQuizUpdateComponent,
     QuizzesQuizCreateComponent,
-    CkEditorDirective,
     WsSpinnerComponent,
-    LangCodeToNamePipe,
     HomeComponent,
     ErrorComponent
   ],
@@ -66,32 +68,21 @@ import {NgSelectModule} from "@ng-select/ng-select";
     BrowserModule,
     AppRoutingModule,
     OAuthModule.forRoot(),
-    WorldskillsAngularLibModule.forFn(mod => {
-      mod.service = new ServiceConfig({
-        appCode: [1300],
-        apiEndpoint: environment.worldskillsApiEndpoint
-      });
-      mod.auth = new AuthConfig({
-        loginUrl: environment.worldskillsAuthorizeUrl,
-        redirectUri: environment.worldskillsAuthorizeRedirect,
-        // tslint:disable-next-line:max-line-length
-        userinfoEndpoint: `${environment.worldskillsAuthorizeUserinfoEndpoint}?show_child_roles=${environment.loadChildEntityRoles ? 'true' : 'false'}&${environment.filterAuthRoles.map(appCode => `app_code=${appCode}`).join('&')}`,
-        clientId: environment.worldskillsClientId,
-        requireHttps: environment.production,
-        oidc: false
-      });
-      mod.encoder = new WSHttpConfig({
-        encoderUriPatterns: [],
-        authUriPatterns: environment.worldskillsAuthUriPatterns
-      });
-      mod.app = new AppConfig();
-      return mod;
-    }),
+    WorldskillsAngularLibModule,
     NgbModule,
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    CKEditorModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: WsHttpInterceptor, multi: true},

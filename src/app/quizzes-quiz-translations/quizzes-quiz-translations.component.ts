@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Quiz} from '../../types/quiz';
 import {forkJoin, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {fetchLink} from '../../utils/http';
 import {QuizService} from '../../services/quiz/quiz.service';
 import {WsComponent} from '@worldskills/worldskills-angular-lib';
 
@@ -24,12 +23,14 @@ export class QuizzesQuizTranslationsComponent extends WsComponent implements OnI
     this.subscribe(
       this.quizService.subject.subscribe(quiz => {
         this.quiz = quiz;
-        const supportedLocales = fetchLink(quiz, 'i18n');
-        const requests: Array<Observable<Quiz>> = supportedLocales.map(supportedLocale => this.http.get<Quiz>(supportedLocale.href));
-        if (requests.length > 0) {
-          forkJoin(requests).subscribe(translatedQuizzes => (this.translatedQuizzes = translatedQuizzes));
-        } else {
-          this.translatedQuizzes = [];
+        const supportedLocales = quiz.links.filter(l => l.rel === 'i18n');
+        if (supportedLocales.length > 0) {
+          const requests: Array<Observable<Quiz>> = supportedLocales.map(supportedLocale => this.http.get<Quiz>(supportedLocale.href));
+          if (requests.length > 0) {
+            forkJoin(requests).subscribe(translatedQuizzes => (this.translatedQuizzes = translatedQuizzes));
+          } else {
+            this.translatedQuizzes = [];
+          }
         }
       })
     );

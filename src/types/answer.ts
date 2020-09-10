@@ -1,9 +1,9 @@
 import {List} from './common';
-import {I18nModel} from '@worldskills/worldskills-angular-lib';
+import {I18nText} from '@worldskills/worldskills-angular-lib';
 
 export interface AnswerRequest {
   id?: number;
-  text: I18nModel;
+  text: I18nText;
   correct: boolean;
   sort?: number;
 }

@@ -8,6 +8,9 @@ import {Entity} from './types/entity';
 import {Event} from './types/event';
 import * as faker from 'faker';
 import {Skill} from './types/skill';
+import {TranslateService} from "@ngx-translate/core";
+import {Pipe, PipeTransform} from "@angular/core";
+import {Observable, of} from "rxjs";
 
 declare const require: {
   context(path: string, deep?: boolean, filter?: RegExp): {
@@ -144,9 +147,30 @@ export function mockQuizFactory(): Quiz {
     random_questions: faker.random.boolean(),
     required_score_pass: faker.random.number(100),
     reveal_correct_answers: faker.random.boolean(),
+    allow_multiple_attempts: faker.random.boolean(),
     skill: mockSkillFactory(),
     text: faker.name.jobDescriptor(),
     url_learning: faker.internet.url(),
     url_success: faker.internet.url()
   };
+}
+
+export class TranslateServiceStub {
+
+  public get(key: any): any {
+    return of(key);
+  }
+
+  public use(lang: string): Observable<any> {
+    return of(lang);
+  }
+}
+
+export const TranslateServiceTestingProvider = {provide: TranslateService, useClass: TranslateServiceStub};
+
+@Pipe({name: 'translate'})
+export class TranslationMockPipe implements PipeTransform {
+  transform(value: any): any {
+    return value;
+  }
 }

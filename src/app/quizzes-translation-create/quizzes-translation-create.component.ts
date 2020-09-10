@@ -53,7 +53,7 @@ export class QuizzesTranslationCreateComponent extends WsComponent implements On
       complete: () => {
         this.quizService.fetch(this.quiz.id).subscribe(() => {
           this.alertService.setAlert('update-translation', AlertType.success,
-            null, undefined, 'The translation has been updated successfully.', true);
+            null, 'The translation has been updated successfully.', true);
           this.router.navigateByUrl(`/quizzes/${this.quiz.id}/translations`).catch(e => alert(e));
         });
       }

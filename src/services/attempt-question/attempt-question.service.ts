@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
@@ -9,7 +9,8 @@ import {AnsweredQuestionWithAnswers} from '../../types/question';
 })
 export class AttemptQuestionService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   updateResponse(attemptId: number, attemptQuestion: AnsweredQuestionWithAnswers, locale: string): Observable<AnsweredQuestionWithAnswers> {
     var params = new HttpParams();

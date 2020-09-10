@@ -64,7 +64,7 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
           forkJoin(observables).subscribe({
             complete: () => {
               this.alertService.setAlert('delete-question', AlertType.success,
-                null, undefined, 'The Question has been deleted successfully.', true);
+                null, 'The Question has been deleted successfully.', true);
               this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
             }
           });
@@ -77,7 +77,7 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
     const instance = {...this.question, active: false};
     this.questionService.update(this.question.id, instance).subscribe(() => {
       this.alertService.setAlert('activate-question', AlertType.success,
-        null, undefined, 'The Question has been deactivated successfully.', true);
+        null, 'The Question has been deactivated successfully.', true);
       this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
     });
   }
@@ -86,7 +86,7 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
     const instance = {...this.question, active: true};
     this.questionService.update(this.question.id, instance).subscribe(() => {
       this.alertService.setAlert('deactivate-question', AlertType.success,
-        null, undefined, 'The Question has been activated successfully.', true);
+        null, 'The Question has been activated successfully.', true);
       this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
     });
   }
@@ -112,7 +112,7 @@ export class QuizzesQuestionUpdateComponent extends WsComponent implements OnIni
       forkJoin(observables).subscribe({
         complete: () => {
           this.alertService.setAlert('update-question', AlertType.success,
-            null, undefined, 'The Question has been updated successfully.', true);
+            null, 'The Question has been updated successfully.', true);
           this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
         }
       });
