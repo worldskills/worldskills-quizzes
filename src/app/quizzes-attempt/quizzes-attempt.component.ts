@@ -7,6 +7,8 @@ import {AttemptService} from '../../services/attempt/attempt.service';
 import {AttemptQuestionService} from '../../services/attempt-question/attempt-question.service';
 import {QuizService} from '../../services/quiz/quiz.service';
 import {WsComponent} from '@worldskills/worldskills-angular-lib';
+import {UserRoleUtil} from '@worldskills/worldskills-angular-lib';
+import {NgAuthService} from '@worldskills/worldskills-angular-lib';
 
 @Component({
   selector: 'app-quizzes-attempt',
@@ -20,8 +22,10 @@ export class QuizzesAttemptComponent extends WsComponent implements OnInit {
   alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
   loading = true;
   locale: string;
+  canAssess = false;
 
   constructor(
+    private authService: NgAuthService,
     private quizService: QuizService,
     private attemptService: AttemptService,
     private attemptQuestionService: AttemptQuestionService,
@@ -32,6 +36,9 @@ export class QuizzesAttemptComponent extends WsComponent implements OnInit {
 
   ngOnInit(): void {
     this.locale = (window.navigator.language || (window.navigator as any).userLanguage || 'en').substring(0, 2);
+    this.authService.currentUser.subscribe(currentUser => {
+      this.canAssess = UserRoleUtil.userHasRoles(currentUser, 1300, 'Admin', 'AssessQuizzes');
+    });
     this.subscribe(
       this.attemptService.subject.subscribe(attempt => (this.attempt = attempt)),
       this.attemptService.loading.subscribe(loading => (this.loading = loading)),

@@ -34,7 +34,7 @@
           <div
             [ngClass]="{'card-header': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true, 'text-white': (question.correct === false || question.correct === true)}">
             <strong class="float-left">Question {{question.sort}}</strong>
-            <div class="dropdown float-right" *ngIf="question.type === 'free_response'">
+            <div class="dropdown float-right" *ngIf="question.type === 'free_response' && canAssess">
               <button class="btn btn-sm dropdown-toggle" [ngClass]="{'btn-primary': question.correct === null, 'btn-danger': question.correct === false, 'btn-success': question.correct === true}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span *ngIf="question.correct === null">Not assessed</span>
                 <span *ngIf="question.correct === true">Correct</span>
