@@ -126,7 +126,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "worldskills-quizzes:build",
-            "port": 11301
+            "port": 11300
           },
           "configurations": {
             "development": {
