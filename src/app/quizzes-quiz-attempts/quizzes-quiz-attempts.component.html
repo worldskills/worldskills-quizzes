@@ -4,7 +4,8 @@
       <table class="table table-striped">
         <colgroup>
           <col width="10%"/>
-          <col width="45%"/>
+          <col width="25%"/>
+          <col width="20%"/>
           <col width="15%"/>
           <col width="15%"/>
           <col width="15%"/>
@@ -13,32 +14,42 @@
         <tr>
           <th>Person ID</th>
           <th>User</th>
+          <th>Member</th>
           <th>Total Attempts</th>
           <th>Failed Attempts <fa-icon [icon]="faAngleDown"></fa-icon></th>
           <th>Passed Attempts</th>
         </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><input type="text" class="form-control form-control-sm" [(ngModel)]="filterMember" placeholder="Filter by Member"></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
         </thead>
         <tfoot>
         <tr>
-          <td colspan="5"></td>
+          <td colspan="6"></td>
         </tr>
         </tfoot>
         <tbody>
         <ng-template [ngIf]="reports && !loading" [ngIfElse]="loader">
-          <tr *ngFor="let report of reports">
-            <td>{{report.user.person_id}}</td>
+          <tr *ngFor="let report of reports | attemptsFilter:filterMember">
+            <td>{{report.user.person_id || '-'}}</td>
             <td><a routerLink="/quizzes/{{report.quiz.id}}/attempts/users/{{report.user.id}}">{{report.user.firstName}} {{report.user.lastName}}</a></td>
+            <td>{{report.member?.name.text || '-'}}</td>
             <td>{{report.attempts_count}}</td>
             <td>{{report.failed_count}}</td>
             <td>{{report.passed_count}}</td>
           </tr>
           <tr *ngIf="reports.length === 0">
-            <td colspan="5">No attempts found.</td>
+            <td colspan="6">No attempts found.</td>
           </tr>
         </ng-template>
         <ng-template #loader>
           <tr>
-            <td colspan="5">
+            <td colspan="6">
               <ws-spinner></ws-spinner>
             </td>
           </tr>

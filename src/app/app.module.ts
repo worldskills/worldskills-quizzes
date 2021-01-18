@@ -15,6 +15,7 @@ import {QuizzesQuizQuestionsComponent} from './quizzes-quiz-questions/quizzes-qu
 import {QuizzesQuizPreviewComponent} from './quizzes-quiz-preview/quizzes-quiz-preview.component';
 import {QuizzesQuizTranslationsComponent} from './quizzes-quiz-translations/quizzes-quiz-translations.component';
 import {QuizzesQuizAttemptsComponent} from './quizzes-quiz-attempts/quizzes-quiz-attempts.component';
+import {QuizzesQuizAttemptsFilterPipePipe} from './quizzes-quiz-attempts/quizzes-quiz-attempts-filter-pipe.pipe';
 import {QuizzesQuizAttemptsUserComponent} from './quizzes-quiz-attempts-user/quizzes-quiz-attempts-user.component';
 import {QuizzesAttemptComponent} from './quizzes-attempt/quizzes-attempt.component';
 import {QuizzesQuestionUpdateComponent} from './quizzes-question-update/quizzes-question-update.component';
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     QuizzesQuizPreviewComponent,
     QuizzesQuizTranslationsComponent,
     QuizzesQuizAttemptsComponent,
+    QuizzesQuizAttemptsFilterPipePipe,
     QuizzesQuizAttemptsUserComponent,
     QuizzesAttemptComponent,
     QuizzesQuestionUpdateComponent,

@@ -15,6 +15,7 @@ import {AttemptReport} from '../../types/attempt-report';
 export class QuizzesQuizAttemptsComponent implements OnInit {
 
   reports: AttemptReport[] = [];
+  filterMember: string;
   faAngleDown = faAngleDown;
   loading = false;
 
