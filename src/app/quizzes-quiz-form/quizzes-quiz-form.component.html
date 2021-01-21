@@ -8,6 +8,19 @@
           *ngIf="form.submitted && this.form.controls.title.errors && this.form.controls.title.errors.required">
     Please enter a title!</small>
   </div>
+  <div class="form-row">
+  <div class="form-group col-md-8">
+    <label for="description">Description</label>
+    <ckeditor
+      [editor]="editor"
+      (ready)="onReady($event, http)"
+      [config]="config"
+      name="description"
+      id="description"
+      [ngModel]="quiz && quiz.description ? quiz.description.text : ''">
+    </ckeditor>
+  </div>
+  </div>
   <div class="form-group">
     <label for="ws_entity">Entity<span
       class="required">*</span></label>

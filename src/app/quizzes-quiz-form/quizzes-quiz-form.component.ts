@@ -1,11 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Quiz, QuizRequest} from '../../types/quiz';
-import {NgForm} from '@angular/forms';
+import {NgForm, FormControl} from '@angular/forms';
 import {EventList} from '../../types/event';
 import {SkillList} from '../../types/skill';
 import {SkillsService} from '../../services/skills/skills.service';
 import {QuizzesService} from '../../services/quizzes/quizzes.service';
 import {WsComponent} from '@worldskills/worldskills-angular-lib';
+import {striptagsFromText} from '../../utils/striptags';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {editorConfig, onEditorReady} from "../../utils/ckeditor";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-quizzes-quiz-form',
@@ -21,10 +25,14 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
   quizzesLoading = false;
   @Output() save: EventEmitter<QuizRequest> = new EventEmitter<QuizRequest>();
   @ViewChild('form') form: NgForm;
+  editor = ClassicEditor;
+  config = editorConfig;
+  onReady = onEditorReady;
 
   constructor(
     private skillsService: SkillsService,
     private quizzesService: QuizzesService,
+    public http: HttpClient,
   ) {
     super();
   }
@@ -59,6 +67,7 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
   submit() {
     const {
       title,
+      description,
       ws_entity,
       event,
       skill,
@@ -78,6 +87,10 @@ export class QuizzesQuizFormComponent extends WsComponent implements OnInit {
       title: {
         lang_code: 'en',
         text: title
+      },
+      description: {
+        lang_code: 'en',
+        text: striptagsFromText(description)
       },
       ws_entity: {id: ws_entity},
       event: this.events.events.find(e => parseInt(event) === e.id),

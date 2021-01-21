@@ -6,6 +6,7 @@ import {I18nText} from '@worldskills/worldskills-angular-lib';
 
 export interface QuizRequest {
   title: I18nText;
+  description: I18nText;
   random_questions: boolean;
   max_questions: number;
   required_score_pass: number;

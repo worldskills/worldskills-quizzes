@@ -36,9 +36,11 @@
           <span
             *ngIf="quiz.required_score_pass !== null">You need to answer <strong>{{quiz.required_score_pass}}</strong> questions correctly to pass.</span>
         </p>
-        <br/>
       </div>
 
+      <p [innerHTML]="quiz.description.text"></p>
+
+      <div class="mt-4">
       <ng-container *ngFor="let question of attempt.questions">
         <div
           style="margin-bottom: 20px;"
@@ -95,6 +97,7 @@
           </div>
         </div>
       </ng-container>
+      </div>
 
       <div class="row">
         <div class="col-sm-6">

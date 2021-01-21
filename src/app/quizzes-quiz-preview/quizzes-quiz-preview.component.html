@@ -1,6 +1,8 @@
-<ng-container *ngIf="quiz && questions">
-  <div class="row">
-    <div class="offset-sm-2 col-sm-8">
+<div class="row">
+  <div class="offset-sm-2 col-sm-8">
+    <p [innerHTML]="quiz.description.text"></p>
+
+    <ng-container *ngIf="quiz && questions">
       <div class="card" style="margin-bottom: 20px;" *ngFor="let question of questions.questions">
         <div class="card-header">
           <strong class="float-left">Question {{question.sort}}  <span *ngIf="!question.active" class="badge badge-secondary">Inactive</span></strong>
@@ -30,9 +32,9 @@
           </div>
         </div>
       </div>
-    </div>
+      <div class="alert alert-warning" *ngIf="questions && questions.questions.length === 0">No
+        Questions found.
+      </div>
+    </ng-container>
   </div>
-  <div class="alert alert-warning" *ngIf="questions && questions.questions.length === 0">No
-    Questions found.
-  </div>
-</ng-container>
+</div>
