@@ -2,11 +2,9 @@
   <div class="row">
     <div class="offset-sm-2 col-sm-8">
 
-      <div class="page-header">
-        <p class="text-muted">Started by <a routerLink="/quizzes/{{attempt.quiz.id}}/attempts/users/{{attempt.user.id}}">{{attempt.user.firstName}} {{attempt.user.lastName}}</a>
-          on {{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}
-        <p>
-      </div>
+      <p class="text-muted">Started by <a routerLink="/quizzes/{{attempt.quiz.id}}/attempts/users/{{attempt.user.id}}">{{attempt.user.firstName}} {{attempt.user.lastName}}</a>
+        on {{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}
+      <p>
 
       <div
         *ngIf="attempt.state === 'finished' && attempt.passed === false"
