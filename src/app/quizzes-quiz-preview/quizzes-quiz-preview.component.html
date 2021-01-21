@@ -20,7 +20,7 @@
               </div>
             </ng-container>
             <div class="form-group" *ngIf="question.type === 'free_response'">
-              <label [attr.for]="'free_response_' + question.id">Answer:</label>
+              <label [attr.for]="'free_response_' + question.id">Your answer:</label>
               <textarea
                 class="form-control"
                 id="free_response_{{question.id}}"
