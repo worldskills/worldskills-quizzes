@@ -34,8 +34,6 @@
           Your answers are automatically saved, to finish this attempt click “Submit and finish
           Quiz” at the end of the page.
           <span
-            *ngIf="quiz.required_score_pass === null">All answers must be correct to pass.</span>
-          <span
             *ngIf="quiz.required_score_pass !== null">You need to answer <strong>{{quiz.required_score_pass}}</strong> questions correctly to pass.</span>
         </p>
         <br/>
