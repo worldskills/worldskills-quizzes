@@ -1,0 +1,71 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Setup
+      run: |
+        npm install -g @angular/cli
+        npm ci
+      env:
+        CI: true
+
+    - name: Build for staging
+      if: github.ref == 'refs/heads/master'
+      run: ng build --configuration=staging
+    - name: Configure AWS credentials for staging
+      if: github.ref == 'refs/heads/master'
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: Deploy to staging
+      if: github.ref == 'refs/heads/master'
+      run: |
+        aws s3 sync dist/ s3://quiz.worldskills.show --exclude index.html --cache-control max-age=31536000
+        aws s3 cp dist/index.html s3://quiz.worldskills.show/index.html --metadata-directive REPLACE --cache-control max-age=60
+    - name: Invalidate staging
+      if: github.ref == 'refs/heads/master'
+      run: aws cloudfront create-invalidation --distribution-id E2CJ0MXW402QLP --paths /index.html
+
+    - name: Build for production
+      if: github.ref == 'refs/heads/prod'
+      run: ng build --configuration=prod
+    - name: Configure AWS credentials for production
+      if: github.ref == 'refs/heads/prod'
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: Deploy to production
+      if: github.ref == 'refs/heads/prod'
+      run: |
+        aws s3 sync dist/ s3://quiz.worldskills.org --exclude index.html --cache-control max-age=31536000
+        aws s3 cp dist/index.html s3://quiz.worldskills.org/index.html --metadata-directive REPLACE --cache-control max-age=60
+    - name: Invalidate production
+      if: github.ref == 'refs/heads/prod'
+      run: aws cloudfront create-invalidation --distribution-id E1XRMZNWQPBED7 --paths /index.html
+
+    - uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,commit,action,eventName,ref,workflow
+        author_name: ''
+        username: Github Actions
+        icon_emoji: ':octocat:'
+        channel: '#code'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: always()
