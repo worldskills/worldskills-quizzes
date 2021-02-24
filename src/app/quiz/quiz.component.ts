@@ -70,6 +70,7 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
 
   finish() {
     this.attemptService.finish(this.attempt.id, {}, {l: this.locale});
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
   retry() {
