@@ -10,7 +10,7 @@
         role="alert"
       >
         Your attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong>
-        answers correct. <a href="" class="alert-link" (click)="retry()">Please take the quiz
+        answers correct. <a [routerLink]="" class="alert-link" (click)="retry()">Please take the quiz
         again</a>.
       </div>
       <div

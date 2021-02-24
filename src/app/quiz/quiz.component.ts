@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Quiz} from '../../types/quiz';
 import {Attempt} from '../../types/attempt';
 import {AnsweredQuestionWithAnswers} from '../../types/question';
@@ -28,7 +29,8 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
     private quizService: QuizService,
     private attemptService: AttemptService,
     private attemptQuestionService: AttemptQuestionService,
-    private router: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     super();
   }
@@ -50,7 +52,7 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
         error: error => (this.error = error)
       })
     );
-    this.router.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       const {quizId} = params;
       this.quizService.fetch(quizId, {l: this.locale});
     });
