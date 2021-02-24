@@ -21,6 +21,7 @@
         You have passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong>
         answers correct<span *ngIf="quiz.url_success">, <a href="{{quiz.url_success}}"
                                                            class="alert-link">please continue</a></span>.
+        <span *ngIf="!quiz.url_success">You can close this window now.</span>
       </div>
       <div
         *ngIf="attempt.state === 'submitted'"
