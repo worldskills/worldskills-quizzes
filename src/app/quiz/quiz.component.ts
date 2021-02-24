@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Router} from '@angular/router';
 import {Quiz} from '../../types/quiz';
 import {Attempt} from '../../types/attempt';
 import {AnsweredQuestionWithAnswers} from '../../types/question';
