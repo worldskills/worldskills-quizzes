@@ -124,13 +124,6 @@
 
         <div class="col-sm-6 text-right">
           <a
-            class="btn btn-link"
-            *ngIf="quiz.url_learning && (attempt.state === 'running' || attempt.state === 'submitted' || attempt.passed === false)"
-            href="{{quiz.url_learning}}">
-            « Return to learning resources
-          </a>
-
-          <a
             class="btn btn-success pull-right"
             *ngIf="attempt.state === 'finished' && attempt.passed === true && quiz.url_success"
             href="{{quiz.url_success}}">
