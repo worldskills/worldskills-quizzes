@@ -19,9 +19,7 @@
         role="alert"
       >
         You have passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong>
-        answers correct<span *ngIf="quiz.url_success">, <a href="{{quiz.url_success}}"
-                                                           class="alert-link">please continue</a></span>.
-        <span *ngIf="!quiz.url_success">You can close this window now.</span>
+        answers correct. You can close this window now.
       </div>
       <div
         *ngIf="attempt.state === 'submitted'"
@@ -120,15 +118,6 @@
             (click)="retry()">
             Take Quiz again
           </button>
-        </div>
-
-        <div class="col-sm-6 text-right">
-          <a
-            class="btn btn-success pull-right"
-            *ngIf="attempt.state === 'finished' && attempt.passed === true && quiz.url_success"
-            href="{{quiz.url_success}}">
-            Continue »
-          </a>
         </div>
       </div>
     </div>
