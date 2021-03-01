@@ -7,6 +7,7 @@ export const environment = {
   worldskillsAuthorizeRedirect: 'http://localhost:11300/',
   worldskillsAuthorizeUserinfoEndpoint: 'http://localhost:50300/oauth/users/loggedIn',
   worldskillsAuthUriPatterns: ['localhost:8080'],
+  sentryEnvironment: null,
   loadChildEntityRoles: true,
   filterAuthRoles: [1300]
 };
