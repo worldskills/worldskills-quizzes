@@ -33,6 +33,7 @@
     "@worldskills/bootstrap": "^4.4.1",
     "@worldskills/worldskills-angular-lib": "^10.10.3",
     "angular-oauth2-oidc": "^9.1.0",
+    "core-js": "^2.6.12",
     "jquery": "^3.4.1",
     "json2typescript": "^1.2.5",
     "popper.js": "^1.16.1",
