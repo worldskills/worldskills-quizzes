@@ -21,22 +21,22 @@ jobs:
         CI: true
 
     - name: Build for staging
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/staging'
       run: ng build --configuration=staging
     - name: Configure AWS credentials for staging
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/staging'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
     - name: Deploy to staging
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/staging'
       run: |
         aws s3 sync dist/ s3://quiz.worldskills.show --exclude index.html --cache-control max-age=31536000
         aws s3 cp dist/index.html s3://quiz.worldskills.show/index.html --metadata-directive REPLACE --cache-control max-age=60
     - name: Invalidate staging
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/staging'
       run: aws cloudfront create-invalidation --distribution-id E2CJ0MXW402QLP --paths /index.html
 
     - name: Build for production
