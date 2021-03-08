@@ -1,6 +1,8 @@
 <ng-container *ngIf="quiz">
   <div class="alert alert-warning" role="alert" *ngIf="quiz.has_attempts">
-    This Quiz already has attempts. Careful with changes to questions.
+    <b>This Quiz already has attempts!</b>
+    <br>
+    New questions will not appear for already started attempts. Deactivating a question will not remove it from already started attempts.
   </div>
 
   <p class="float-right">
