@@ -31,10 +31,10 @@ import {HttpInterceptorService} from '../services/http-interceptor/http-intercep
 import {WsSpinnerComponent} from './ws-spinner/ws-spinner.component';
 import {HomeComponent} from './home/home.component';
 import {ErrorComponent} from './error/error.component';
-import {NgSelectModule} from "@ng-select/ng-select";
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {NgSelectModule} from '@ng-select/ng-select';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
