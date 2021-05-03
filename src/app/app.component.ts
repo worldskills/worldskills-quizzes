@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     private localeContextService: LocaleContextService,
     private wsi: WorldskillsAngularLibService,
   ) {
-    this.breadcrumb.homeItemRoute = '/competitions';
+    this.breadcrumb.homeItemRoute = '/quizzes';
     this.breadcrumb.targetOutlet = 'primary';
     this.breadcrumb.build(this.route.root);
   }
