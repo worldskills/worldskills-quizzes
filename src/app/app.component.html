@@ -1,6 +1,17 @@
+<ng-template #appNameTemplate>
+  <span class="navbar-brand" *ngIf="!showBreadcrumb">
+      <ws-wordmark></ws-wordmark>
+      <span class="ml-1 text-white">Quizzes</span>
+  </span>
+  <a class="navbar-brand" routerLink="/quizzes" *ngIf="showBreadcrumb">
+      <ws-wordmark></ws-wordmark>
+      <span class="ml-1 text-white">Quizzes</span>
+  </a>
+</ng-template>
+
 <ws-staging-banner [message]="environmentWarning" *ngIf="environmentWarning"></ws-staging-banner>
 <ws-puppeteer-banner [currentUser]="currentUser"></ws-puppeteer-banner>
-<ws-auth-header [appName]="'Quizzes'" [menuItems]="[]">
+<ws-auth-header [appName]="'Quizzes'" [menuItems]="[]" [appNameTemplate]="appNameTemplate">
 </ws-auth-header>
 
 <div class="container">
