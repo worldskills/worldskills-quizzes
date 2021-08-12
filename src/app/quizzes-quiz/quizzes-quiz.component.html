@@ -5,14 +5,15 @@
     New questions will not appear for already started attempts. Deactivating a question will not remove it from already started attempts.
   </div>
 
-  <p class="float-right">
+  <div class="btn-toolbar float-right">
+    <button (click)="shareQuiz()" class="btn btn-primary mr-2">Share Quiz</button>
     <button (click)="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">
       <ng-container *ngIf="!deleteLoading">Delete Quiz</ng-container>
       <ng-container *ngIf="deleteLoading">
         <ws-spinner></ws-spinner>
       </ng-container>
     </button>
-  </p>
+  </div>
 
   <h2>{{quiz.title.text}}</h2>
 

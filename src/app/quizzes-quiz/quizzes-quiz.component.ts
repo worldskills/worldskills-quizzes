@@ -42,6 +42,10 @@ export class QuizzesQuizComponent extends WsComponent implements OnInit {
     this.subscribe(this.quizService.loading.subscribe(loading => (this.deleteLoading = loading)));
   }
 
+  shareQuiz() {
+    prompt('Quiz link:', window.location.origin + this.router.createUrlTree(['/quiz', this.quiz.id]));
+  }
+
   deleteQuiz() {
     if (confirm('Deleting the Quiz will also delete all questions and attempts. Click OK to proceed.')) {
       this.quizService.delete(this.quiz.id).subscribe(() => {
