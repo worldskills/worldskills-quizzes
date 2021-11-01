@@ -89,7 +89,7 @@
                 id="free_response_{{question.id}}"
                 rows="3"
                 [(ngModel)]="question.response"
-                (ngModelChange)="updateResponse(question)"
+                (ngModelChange)="updateResponse($event, question)"
                 [disabled]="attempt.state === 'submitted'"
               ></textarea>
             </div>

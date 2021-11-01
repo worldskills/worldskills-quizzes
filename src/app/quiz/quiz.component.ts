@@ -1,5 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {Quiz} from '../../types/quiz';
 import {Attempt} from '../../types/attempt';
 import {AnsweredQuestionWithAnswers} from '../../types/question';
@@ -22,6 +24,7 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
   loading = true;
   error = null;
   locale: string;
+  responseChanged: Subject<string>[] = [];
 
   constructor(
     private appService: AppService,
@@ -42,7 +45,17 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
         this.quizService.loading,
         this.attemptService.loading,
       ).subscribe(loading => this.loading = loading),
-      this.attemptService.subject.subscribe(attempt => (this.attempt = attempt)),
+      this.attemptService.subject.subscribe(attempt => {
+        for (const question of attempt.questions) {
+          const responseChanged = new Subject<string>();
+          responseChanged.pipe(debounceTime(1000), distinctUntilChanged())
+            .subscribe(() => {
+              this.attemptQuestionService.updateResponse(attempt.id, question, this.locale).subscribe();
+            });
+          this.responseChanged[question.id] = responseChanged;
+        }
+        this.attempt = attempt;
+      }),
       this.quizService.subject.subscribe({
         next: quiz => {
           this.quiz = quiz;
@@ -65,8 +78,8 @@ export class QuizComponent extends WsComponent implements OnInit, OnDestroy {
     this.attemptService.update(this.attempt.id, questionId, answerId, {}, {l: this.locale});
   }
 
-  updateResponse(attemptQuestion: AnsweredQuestionWithAnswers) {
-    this.attemptQuestionService.updateResponse(this.attempt.id, attemptQuestion, this.locale).subscribe();
+  updateResponse(response: string, attemptQuestion: AnsweredQuestionWithAnswers) {
+    this.responseChanged[attemptQuestion.id].next(response);
   }
 
   finish() {
