@@ -7,6 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/en.json --clean --sort --format json --format-indentation '  '",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -47,6 +48,7 @@
     "@angular/cli": "^10.2.3",
     "@angular/compiler-cli": "^10.2.4",
     "@angular/language-service": "^10.2.4",
+    "@biesbjerg/ngx-translate-extract": "^7.0.4",
     "@types/faker": "^4.1.11",
     "@types/jasmine": "^3.5.10",
     "@types/jasminewd2": "~2.0.3",
