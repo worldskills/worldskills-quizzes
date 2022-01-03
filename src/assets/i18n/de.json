@@ -1,1 +1,17 @@
-{}
+{
+  "add_quiz": "Quiz hinzufügen",
+  "attempt_submitted": "Dein Versuch wurde übermittelt.",
+  "correct": "Korrekt",
+  "incorrect": "Falsch",
+  "message_attempt_failed_with_score": "Dein Versuch ist mit <strong>{{score}} von {{count}}</strong> korrekten Antworten fehlgeschlagen.",
+  "message_attempt_passed_with_score": "Du hast mit <strong>{{score}} von {{count}}</strong> korrekten Antworten bestanden. Du kannst diese Fenster nun schliessen.",
+  "message_attempt_saved": "Deine Antworten werden automatisch gespeichert, um abzugeben, klicke auf “Quiz abschliessen und übermitteln” am Ende der Seite.",
+  "message_attempt_score_needed": "Du musst <strong>{{required_score}}</strong> Fragen korrekt beantworten um zu bestehen.",
+  "please_take_the_quiz_again": "Bitte Quiz nochmals neu versuchen",
+  "question_index": "Frage {{index}}",
+  "quiz_not_found": "Quiz nicht gefunden",
+  "quizzes": "Quizze",
+  "submit_finish_quiz": "Quiz abschliessen und übermitteln",
+  "take_quiz_again": "Quiz erneut versuchen",
+  "your_answer": "Deine Antwort:"
+}
