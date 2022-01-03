@@ -35,9 +35,10 @@ jobs:
       run: |
         aws s3 sync dist/ s3://quiz.worldskills.show --exclude index.html --cache-control max-age=31536000
         aws s3 cp dist/index.html s3://quiz.worldskills.show/index.html --metadata-directive REPLACE --cache-control max-age=60
+        aws s3 cp dist/assets/i18n/ s3://quiz.worldskills.show/assets/i18n/ --recursive --metadata-directive REPLACE --cache-control max-age=3600
     - name: Invalidate staging
       if: github.ref == 'refs/heads/staging'
-      run: aws cloudfront create-invalidation --distribution-id E2CJ0MXW402QLP --paths /index.html
+      run: aws cloudfront create-invalidation --distribution-id E2CJ0MXW402QLP --paths /index.html /assets/i18n/*
 
     - name: Build for production
       if: github.ref == 'refs/heads/prod'
@@ -54,9 +55,10 @@ jobs:
       run: |
         aws s3 sync dist/ s3://quiz.worldskills.org --exclude index.html --cache-control max-age=31536000
         aws s3 cp dist/index.html s3://quiz.worldskills.org/index.html --metadata-directive REPLACE --cache-control max-age=60
+        aws s3 cp dist/assets/i18n/ s3://quiz.worldskills.org/assets/i18n/ --recursive --metadata-directive REPLACE --cache-control max-age=3600
     - name: Invalidate production
       if: github.ref == 'refs/heads/prod'
-      run: aws cloudfront create-invalidation --distribution-id E1XRMZNWQPBED7 --paths /index.html
+      run: aws cloudfront create-invalidation --distribution-id E1XRMZNWQPBED7 --paths /index.html /assets/i18n/*
 
     - uses: 8398a7/action-slack@v3
       with:
