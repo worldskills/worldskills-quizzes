@@ -9,31 +9,27 @@
         class="alert alert-danger"
         role="alert"
       >
-        Your attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong>
-        answers correct. <a [routerLink]="" class="alert-link" (click)="retry()">Please take the quiz
-        again</a>.
+        {{'message_attempt_failed_with_score' | translate:{score: attempt.score, count: attempt.questions_count} }}
+        <a [routerLink]="" class="alert-link" (click)="retry()">{{'please_take_the_quiz_again' | translate}}</a>.
       </div>
       <div
         *ngIf="attempt.state === 'finished' && attempt.passed === true"
         class="alert alert-success"
         role="alert"
       >
-        You have passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong>
-        answers correct. You can close this window now.
+        {{'message_attempt_passed_with_score' | translate:{score: attempt.score, count: attempt.questions_count} }}
       </div>
       <div
         *ngIf="attempt.state === 'submitted'"
         class="alert alert-info"
         role="alert"
       >
-        Your attempt has been submitted.
+        {{'attempt_submitted' | translate}}
       </div>
       <div *ngIf="attempt.state === 'running'">
         <p>
-          Your answers are automatically saved, to finish this attempt click “Submit and finish
-          Quiz” at the end of the page.
-          <span
-            *ngIf="quiz.required_score_pass !== null">You need to answer <strong>{{quiz.required_score_pass}}</strong> questions correctly to pass.</span>
+          {{'message_attempt_saved' | translate}}
+          <span *ngIf="quiz.required_score_pass !== null">{{'message_attempt_score_needed' | translate:{required_score: quiz.required_score_pass} }}</span>
         </p>
       </div>
 
@@ -45,7 +41,7 @@
           style="margin-bottom: 20px;"
           [ngClass]="{card: true, 'border-default': question.correct === null, 'border-danger': question.correct === false, 'border-success': question.correct === true}">
           <h5 [ngClass]="{'card-header': true, 'mt-0': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true, 'text-white': (question.correct === false || question.correct === true)}">
-            Question {{question.sort}}
+            {{'question_index' | translate:{index: question.sort} }}
           </h5>
           <div class="card-body">
             <p [innerHTML]="question.text.text"></p>
@@ -71,19 +67,19 @@
                   <span
                     class="badge badge-danger"
                     *ngIf="question.answer && question.answer.id === answer.id && question.correct === false">
-                    Incorrect
+                    {{'incorrect' | translate}}
                   </span>
                   <span
                     class="badge badge-success"
                     *ngIf="(question.answer && question.answer.id === answer.id && question.correct === true)
                       || (question.answer && answer.correct === true && question.correct === false)">
-                    Correct
+                    {{'correct' | translate}}
                   </span>
                 </label>
               </div>
             </div>
             <div class="form-group" *ngIf="question.type === 'free_response'">
-              <label [attr.for]="'free_response_' + question.id">Your answer:</label>
+              <label [attr.for]="'free_response_' + question.id">{{'your_answer' | translate}}</label>
               <textarea
                 class="form-control"
                 id="free_response_{{question.id}}"
@@ -105,7 +101,7 @@
             class="btn btn-primary"
             *ngIf="attempt.state === 'running'"
             (click)="finish()">
-            <ng-container *ngIf="!loading">Submit and finish Quiz</ng-container>
+            <ng-container *ngIf="!loading">{{'submit_finish_quiz' | translate}}</ng-container>
             <ng-container *ngIf="loading">
               <ws-spinner></ws-spinner>
             </ng-container>
@@ -116,7 +112,7 @@
             class="btn btn-primary"
             *ngIf="attempt.state === 'finished'"
             (click)="retry()">
-            Take Quiz again
+            {{'take_quiz_again' | translate}}
           </button>
         </div>
       </div>
@@ -131,7 +127,7 @@
 <ng-container *ngIf="error">
   <div class="row">
     <div class="offset-sm-2 col-sm-8">
-      <h2>Quiz not found</h2>
+      <h2>{{'quiz_not_found' | translate}}</h2>
     </div>
   </div>
 </ng-container>
