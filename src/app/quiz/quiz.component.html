@@ -10,7 +10,7 @@
         role="alert"
       >
         <span [innerHTML]="'message_attempt_failed_with_score' | translate:{score: attempt.score, count: attempt.questions_count}"></span>
-        <span> </span>
+        &nbsp;
         <a [routerLink]="" class="alert-link" (click)="retry()">{{'please_take_the_quiz_again' | translate}}</a>.
       </div>
       <div
@@ -30,7 +30,7 @@
       <div *ngIf="attempt.state === 'running'">
         <p>
           <span [innerHTML]="'message_attempt_saved' | translate"></span>
-          <span> </span>
+          &nbsp;
           <span *ngIf="quiz.required_score_pass !== null" [innerHTML]="'message_attempt_score_needed' | translate:{required_score: quiz.required_score_pass}"></span>
         </p>
       </div>
