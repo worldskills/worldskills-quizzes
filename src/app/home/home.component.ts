@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.handler.redirectOrReturn({url: ['/quizzes']})
+    this.handler.redirectOrReturn({url: ['/quizzes'], onlyIfExact: this.route})
     .subscribe(() => (this.initialized = true));
   }
 
