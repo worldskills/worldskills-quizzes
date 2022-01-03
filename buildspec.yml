@@ -17,4 +17,5 @@ phases:
     commands:
       - aws s3 sync dist/ s3://$BUCKET --exclude index.html --cache-control max-age=31536000
       - aws s3 cp dist/index.html s3://$BUCKET/index.html --metadata-directive REPLACE --cache-control max-age=60
-      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT --paths /index.html
+      - aws s3 cp dist/assets/i18n/ s3://$BUCKET/assets/i18n/ --recursive --metadata-directive REPLACE --cache-control max-age=3600
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT --paths /index.html /assets/i18n/*
