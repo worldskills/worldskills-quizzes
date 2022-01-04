@@ -2,8 +2,8 @@
   <div class="row">
     <div class="offset-sm-2 col-sm-8">
 
-      <p class="text-muted">Started by <a routerLink="/quizzes/{{attempt.quiz.id}}/attempts/users/{{attempt.user.id}}">{{attempt.user.firstName}} {{attempt.user.lastName}}</a>
-        on {{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}
+      <p class="text-muted">{{ 'started_by' | translate }} <a routerLink="/quizzes/{{attempt.quiz.id}}/attempts/users/{{attempt.user.id}}">{{attempt.user.firstName}} {{attempt.user.lastName}}</a>
+        {{ 'on' | translate }} {{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}
       <p>
 
       <div
@@ -11,18 +11,16 @@
         class="alert alert-danger"
         role="alert"
       >
-        Attempt failed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong>
-        answers correct.
+        {{ 'message_attempt_failed_with_score_formal' | translate:{score: attempt.score, count: attempt.questions_count} }}
       </div>
       <div
         *ngIf="attempt.state === 'finished' && attempt.passed === true"
         class="alert alert-success"
         role="alert">
-        Passed with <strong>{{attempt.score}} of {{attempt.questions_count}}</strong> answers
-        correct.
+        {{ 'message_attempt_passed_with_score_formal' | translate:{score: attempt.score, count: attempt.questions_count} }}
       </div>
       <div *ngIf="attempt.state === 'running'" class="alert alert-warning" role="alert">
-        Attempt not submitted yet.
+        {{ 'message_attempt_not_submitted' | translate }}
       </div>
 
       <ng-container *ngFor="let question of attempt.questions">
@@ -31,7 +29,7 @@
           [ngClass]="{card: true, 'border-default': question.correct === null, 'border-danger': question.correct === false, 'border-success': question.correct === true}">
           <div
             [ngClass]="{'card-header': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true, 'text-white': (question.correct === false || question.correct === true)}">
-            <strong class="float-left">Question {{question.sort}}</strong>
+            <strong class="float-left">{{'question_index' | translate:{index: question.sort} }}</strong>
             <div class="dropdown float-right" *ngIf="question.type === 'free_response' && canAssess">
               <button class="btn btn-sm dropdown-toggle" [ngClass]="{'btn-primary': question.correct === null, 'btn-danger': question.correct === false, 'btn-success': question.correct === true}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span *ngIf="question.correct === null">Not assessed</span>
@@ -68,13 +66,13 @@
                   <span
                     class="badge badge-danger"
                     *ngIf="question.answer && question.answer.id === answer.id && question.correct === false">
-                    Incorrect
+                    {{ 'incorrect' | translate }}
                   </span>
                   <span
                     class="badge badge-success"
                     *ngIf="(question.answer && question.answer.id === answer.id && question.correct === true)
                       || (question.answer && answer.correct === true && question.correct === false)">
-                    Correct
+                    {{ 'correct' | translate }}
                   </span>
                 </label>
               </div>

@@ -7,11 +7,22 @@
   "message_attempt_passed_with_score": "You have passed with <strong>{{score}} of {{count}}</strong> answers correct. You can close this window now.",
   "message_attempt_saved": "Your answers are automatically saved, to finish this attempt click “Submit and finish Quiz” at the end of the page.",
   "message_attempt_score_needed": "You need to answer <strong>{{required_score}}</strong> questions correctly to pass.",
+  "no_quizzes_found": "No quizzes found.",
   "please_take_the_quiz_again": "Please take the quiz again",
   "question_index": "Question {{index}}",
   "quiz_not_found": "Quiz not found",
   "quizzes": "Quizzes",
   "submit_finish_quiz": "Submit and finish Quiz",
   "take_quiz_again": "Take Quiz again",
-  "your_answer": "Your answer:"
+  "th_active": "Active",
+  "th_created": "Created",
+  "th_event": "Event",
+  "th_id": "ID",
+  "th_name": "Name",
+  "your_answer": "Your answer:",
+  "message_attempt_not_submitted": "Attempt not submitted yet.",
+  "message_attempt_passed_with_score_formal": "Passed with <strong>{{score}} of {{count}}</strong> answers correct.",
+  "message_attempt_failed_with_score_formal": "Attempt failed with <strong>{{score}} of {{count}}</strong> answers correct.",
+  "started_by": "Started by",
+  "on": "on"
 }

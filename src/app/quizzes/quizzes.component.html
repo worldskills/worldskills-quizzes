@@ -17,11 +17,11 @@
         </colgroup>
         <thead>
         <tr>
-          <th class="border-top-0">ID</th>
-          <th class="border-top-0">Name</th>
-          <th class="border-top-0">Active</th>
-          <th class="border-top-0">Event</th>
-          <th class="border-top-0">Created</th>
+          <th class="border-top-0">{{'th_id' | translate}}</th>
+          <th class="border-top-0">{{'th_name' | translate}}</th>
+          <th class="border-top-0">{{'th_active' | translate}}</th>
+          <th class="border-top-0">{{'th_event' | translate}}</th>
+          <th class="border-top-0">{{'th_created' | translate}}</th>
         </tr>
         </thead>
         <tfoot>
@@ -43,7 +43,7 @@
             <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
           </tr>
           <tr *ngIf="quizzes.quizzes.length === 0">
-            <td colspan="5">No quizzes found.</td>
+            <td colspan="5">{{'no_quizzes_found' | translate}}</td>
           </tr>
         </ng-template>
         <ng-template #loader>
