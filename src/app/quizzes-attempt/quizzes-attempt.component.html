@@ -11,13 +11,13 @@
         class="alert alert-danger"
         role="alert"
       >
-        {{ 'message_attempt_failed_with_score_formal' | translate:{score: attempt.score, count: attempt.questions_count} }}
+      <span [innerHTML]="'message_attempt_failed_with_score_formal' | translate:{score: attempt.score, count: attempt.questions_count}"></span>
       </div>
       <div
         *ngIf="attempt.state === 'finished' && attempt.passed === true"
         class="alert alert-success"
         role="alert">
-        {{ 'message_attempt_passed_with_score_formal' | translate:{score: attempt.score, count: attempt.questions_count} }}
+        <span [innerHTML]="'message_attempt_passed_with_score_formal' | translate:{score: attempt.score, count: attempt.questions_count}"></span>
       </div>
       <div *ngIf="attempt.state === 'running'" class="alert alert-warning" role="alert">
         {{ 'message_attempt_not_submitted' | translate }}
