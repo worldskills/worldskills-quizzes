@@ -4,6 +4,7 @@ import {Quiz, QuizRequest} from '../../types/quiz';
 import {SkillList} from '../../types/skill';
 import {EventsService} from '../../services/events/events.service';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 import {AlertService, AlertType, RxjsUtil, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {QuizService} from '../../services/quiz/quiz.service';
 
@@ -24,6 +25,7 @@ export class QuizzesQuizUpdateComponent extends WsComponent implements OnInit {
     private quizService: QuizService,
     private router: Router,
     private alertService: AlertService,
+    private translateService: TranslateService,
   ) {
     super();
   }
@@ -41,9 +43,12 @@ export class QuizzesQuizUpdateComponent extends WsComponent implements OnInit {
 
   update(quiz: QuizRequest) {
     this.quizService.update(this.quiz.id, quiz).subscribe(() => {
-        this.alertService.setAlert('new-alert', AlertType.success,
-          null, 'The Quiz has been saved successfully.', true);
-        this.router.navigateByUrl('/quizzes').catch(e => alert(e));
+
+        this.translateService.get('message_quiz_saved').subscribe(t => {
+          this.alertService.setAlert('new-alert', AlertType.success, null, t, true);
+          this.router.navigateByUrl('/quizzes').catch(e => alert(e));
+        });
+
       }
     );
   }

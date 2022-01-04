@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 import {QuestionsService} from '../../services/questions/questions.service';
 import {Quiz} from '../../types/quiz';
 import {QuestionFormSubmitData} from '../quizzes-question-form/quizzes-question-form.component';
@@ -24,7 +25,8 @@ export class QuizzesQuestionCreateComponent extends WsComponent implements OnIni
     private questionsService: QuestionsService,
     private answerService: AnswerService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private translateService: TranslateService
   ) {
     super();
   }
@@ -43,9 +45,10 @@ export class QuizzesQuestionCreateComponent extends WsComponent implements OnIni
         }
         forkJoin(observables).subscribe({
           complete: () => {
-            this.alertService.setAlert('new-question', AlertType.success,
-              null, 'The Question has been added successfully.', true);
-            this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
+            this.translateService.get('message_question_added').subscribe(t => {
+              this.alertService.setAlert('new-question', AlertType.success, null, t, true);
+              this.router.navigateByUrl(`/quizzes/${this.quiz.id}/questions`).catch(e => alert(e));
+            });
           }
         });
       });
