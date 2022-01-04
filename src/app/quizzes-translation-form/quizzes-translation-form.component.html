@@ -2,23 +2,23 @@
   <form class="form-horizontal" [ngClass]="{'was-validated': isSubmitted}" name="form" novalidate
         focus-error (submit)="submit()">
     <div class="form-group row" *ngIf="!locale">
-      <label class="col-sm-3 col-form-label">Language <span
+      <label class="col-sm-3 col-form-label">{{ 'language' | translate }} <span
         class="required">*</span></label>
       <div class="col-sm-4">
         <select class="form-control" [formControl]="form.controls.locale">
           <option></option>
-          <option value="de">{{'German'}}</option>
-          <option value="fr">{{'French'}}</option>
-          <option value="pt_BR">{{'Portuguese'}}</option>
+          <option value="de">{{ 'de' | translate }}</option>
+          <option value="fr">{{ 'fr' | translate }}</option>
+          <option value="pt_BR">{{ 'pt_BR' | translate }}</option>
         </select>
       </div>
       <div class="col-sm-5">
         <span class="help-block text-danger"
-              *ngIf="!form.controls.locale.valid && form.controls.locale.touched">Please select a language!</span>
+              *ngIf="!form.controls.locale.valid && form.controls.locale.touched">{{ 'please_select_language' | translate }}</span>
       </div>
     </div>
     <div class="form-group row">
-      <label for="title" class="col-sm-3 col-form-label">Title <span
+      <label for="title" class="col-sm-3 col-form-label">{{ 'title' | translate }} <span
         class="required">*</span></label>
       <div class="col-sm-4">
         <input type="text" class="form-control" id="title" required
@@ -26,13 +26,13 @@
       </div>
       <div class="col-sm-5">
         <span class="help-block"
-              *ngIf="form.get('locale').errors && form.get('locale').errors.required && form.get('locale').touched">Please enter a title!</span>
+              *ngIf="form.get('locale').errors && form.get('locale').errors.required && form.get('locale').touched">{{ 'please_enter_title' | translate }}</span>
       </div>
     </div>
     <div *ngFor="let questionControl of questionControls">
       <hr/>
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Question {{questionControl.controls.sort.value}}
+        <label class="col-sm-3 col-form-label">{{'question_index' | translate:{index: questionControl.controls.sort.value} }}
           <span
             class="required">*</span></label>
         <div class="col-sm-8 col-lg-5">
@@ -47,10 +47,10 @@
       <div class="form-group row" *ngFor="let answerControl of getAnswerControls(questionControl)">
         <div class="col-sm-3 col-form-label">
           <fa-icon *ngIf="answerControl.controls.correct.value" [icon]="faCheck"
-                   title="Answer is correct" class="text-success"></fa-icon>
+                   title="{{ 'answer_is_correct' | translate }}" class="text-success"></fa-icon>
           <fa-icon *ngIf="!answerControl.controls.correct.value" [icon]="faTimes"
-                   title="Answer is not correct" class="text-danger"></fa-icon>
-          Answer {{answerControl.get('sort').value}} <span class="required">*</span>
+                   title="{{ 'answer_is_not_correct' | translate }}" class="text-danger"></fa-icon>
+          {{'answer_index' | translate:{index: answerControl.get('sort').value} }} <span class="required">*</span>
         </div>
         <div class="col-sm-8 col-lg-5">
           <ckeditor
@@ -66,12 +66,12 @@
     <div class="form-group row">
       <div class="offset-sm-3 col-sm-9">
         <button type="submit" class="btn btn-success">
-          <ng-container *ngIf="!loading">Save Translation</ng-container>
+          <ng-container *ngIf="!loading">{{ 'save_translation' | translate }}</ng-container>
           <ng-container *ngIf="loading">
             <ws-spinner></ws-spinner>
           </ng-container>
         </button>
-        <a routerLink="/quizzes/{{quiz.id}}/translations" class="btn btn-default">Cancel</a>
+        <a routerLink="/quizzes/{{quiz.id}}/translations" class="btn btn-default">{{ 'cancel' | translate }}</a>
       </div>
     </div>
   </form>

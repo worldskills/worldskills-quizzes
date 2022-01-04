@@ -10,47 +10,47 @@
 </div>
 <div *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300; negate: true">
   <div class="row">
-    <div class="col-sm-3"><p>Title</p></div>
+    <div class="col-sm-3"><p>{{ 'title' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.title.text}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>Entity</p></div>
+    <div class="col-sm-3"><p>{{ 'entity' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.ws_entity.name.text}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>Event</p></div>
+    <div class="col-sm-3"><p>{{ 'event' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.event.name}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>Skill</p></div>
+    <div class="col-sm-3"><p>{{ 'skill' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.skill?.name.text}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>Max Questions</p></div>
+    <div class="col-sm-3"><p>{{ 'max_questions' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.max_questions}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>Required score to pass</p></div>
+    <div class="col-sm-3"><p>{{ 'required_score_to_pass' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.required_score_pass}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>Show random Questions</p></div>
+    <div class="col-sm-3"><p>{{ 'show_random_questions' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.random_questions}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>Reveal correct answers after finishing quiz</p></div>
+    <div class="col-sm-3"><p>{{ 'reveal_correct_answers' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.reveal_correct_answers}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>Active (Quiz can be answered)</p></div>
+    <div class="col-sm-3"><p>{{ 'quiz_active_label' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.active}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>URL Learning</p></div>
+    <div class="col-sm-3"><p>{{ 'url_learning' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.url_learning}}</p></div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><p>URL Success</p></div>
+    <div class="col-sm-3"><p>{{ 'url_success' | translate }}</p></div>
     <div class="col-sm-9"><p>{{quiz.url_success}}</p></div>
   </div>
 </div>

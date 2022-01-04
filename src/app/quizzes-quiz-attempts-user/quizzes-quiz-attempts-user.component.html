@@ -1,4 +1,4 @@
-<h3 *ngIf="attempts && !loading">Attempts {{attempts.attempts[0].user.firstName}} {{attempts.attempts[0].user.lastName}}</h3>
+<h3 *ngIf="attempts && !loading">{{ 'attempts' | translate }} {{attempts.attempts[0].user.firstName}} {{attempts.attempts[0].user.lastName}}</h3>
 
 <div class="row mt-2">
   <div class="col-md-12">
@@ -13,11 +13,11 @@
         </colgroup>
         <thead>
         <tr>
-          <th>ID</th>
-          <th>Started <fa-icon [icon]="faAngleDown"></fa-icon></th>
-          <th>Finished</th>
-          <th>Score</th>
-          <th>Passed</th>
+          <th>{{ 'th_id' | translate }}</th>
+          <th>{{ 'th_started' | translate }} <fa-icon [icon]="faAngleDown"></fa-icon></th>
+          <th>{{ 'th_finished' | translate }}</th>
+          <th>{{ 'th_score' | translate }}</th>
+          <th>{{ 'th_passed' | translate }}</th>
         </tr>
         </thead>
         <tfoot>
@@ -33,12 +33,12 @@
             <td>{{attempt.finished|date:"d MMMM yyyy 'at' HH:mm"}}</td>
             <td><span *ngIf="attempt.score !== null">{{attempt.score}}</span></td>
             <td>
-              <span *ngIf="attempt.state === 'finished' && attempt.passed === true" class="text-success">Yes</span>
-              <span *ngIf="attempt.state === 'finished' && attempt.passed === false" class="text-danger">No</span>
+              <span *ngIf="attempt.state === 'finished' && attempt.passed === true" class="text-success">{{ 'yes' | translate }}</span>
+              <span *ngIf="attempt.state === 'finished' && attempt.passed === false" class="text-danger">{{ 'no' | translate }}</span>
             </td>
           </tr>
           <tr *ngIf="attempts.attempts.length === 0">
-            <td colspan="5">No attempts found.</td>
+            <td colspan="5">{{ 'no_attempts_found' | translate }}</td>
           </tr>
         </ng-template>
         <ng-template #loader>

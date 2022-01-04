@@ -2,7 +2,7 @@
       novalidate (ngSubmit)="submit()">
 
   <div class="form-group row">
-    <label class="col-sm-3 col-form-label">Question<span class="required">*</span></label>
+    <label class="col-sm-3 col-form-label">{{ 'question' | translate }}<span class="required">*</span></label>
     <div class="col-sm-5">
       <ckeditor
         [editor]="editor"
@@ -17,13 +17,13 @@
       <span
         class="help-block text-danger"
         *ngIf="!form.controls.question.valid && form.controls.question.touched">
-        Please enter a question!
+        {{ 'please_enter_question' | translate }}
       </span>
     </div>
   </div>
 
   <div class="form-group row">
-    <label class="col-sm-3 col-form-label">Type<span class="required">*</span></label>
+    <label class="col-sm-3 col-form-label">{{ 'type' | translate }}<span class="required">*</span></label>
     <div class="col-sm-5">
       <div class="form-check">
         <input
@@ -34,7 +34,7 @@
           (change)="changeType()"
           id="type_multiple_choice"
         />
-        <label class="form-check-label" for="type_multiple_choice">Multiple Choice Question</label>
+        <label class="form-check-label" for="type_multiple_choice">{{ 'multiple_choice_question' | translate }}</label>
       </div>
       <div class="form-check">
         <input
@@ -45,7 +45,7 @@
           (change)="changeType()"
           id="type_free_response"
         />
-        <label class="form-check-label" for="type_free_response">Free Response Question</label>
+        <label class="form-check-label" for="type_free_response">{{ 'free_response_question' | translate }}</label>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@
     <ng-container *ngFor="let control of answerControls; let index=index">
       <hr/>
       <div class="form-group row" *ngIf="!control.controls.removed.value">
-        <label class="col-sm-3 col-form-label">Answer {{index + 1}}</label>
+        <label class="col-sm-3 col-form-label">{{'answer_index' | translate:{index: index + 1} }}</label>
         <div class="col-sm-5">
           <ckeditor
             [editor]="editor"
@@ -69,7 +69,7 @@
                 type="checkbox"
                 [formControl]="control.controls.correct"
                 (change)="changeCorrect($event, control)">
-              This answer is correct
+              {{ 'this_answer_is_correct' | translate }}
             </label>
           </div>
         </div>
@@ -80,7 +80,7 @@
             (click)="removeAnswer(control.controls.removed)"
             *ngIf="quiz ? !quiz.has_attempts : false">
             <fa-icon [icon]="faTimes"></fa-icon>
-            Remove answer
+            {{ 'remove_answer' | translate }}
           </button>
         </div>
       </div>
@@ -92,7 +92,7 @@
             (click)="restoreAnswer(control.controls.removed)"
             *ngIf="quiz ? !quiz.has_attempts : false">
             <fa-icon [icon]="faRedo"></fa-icon>
-            Restore answer
+            {{ 'restore_answer' | translate }}
           </button>
         </div>
       </div>
@@ -103,12 +103,12 @@
     <hr/>
     <div class="form-group row">
       <div class="offset-sm-3 col-sm-5">
-        <p class="help-block">All answers will automatically be randomized for each attempt.</p>
+        <p class="help-block">{{ 'help_answers_randomized' | translate }}</p>
       </div>
       <div class="col-sm-4">
         <button type="button" class="btn btn-success btn-sm" (click)="addAnswer()">
           <fa-icon [icon]="faPlus"></fa-icon>
-          Add answer
+          {{ 'add_answer' | translate }}
         </button>
       </div>
     </div>
@@ -118,7 +118,7 @@
   <div class="form-group row">
     <div class="offset-sm-3 col-sm-9">
       <button type="submit" class="btn btn-success" id="saveQuiz" tabindex="3">
-        <ng-container *ngIf="!loading">Save</ng-container>
+        <ng-container *ngIf="!loading">{{ 'save' | translate }}</ng-container>
         <ng-container *ngIf="loading">
           <ws-spinner></ws-spinner>
         </ng-container>
@@ -126,7 +126,7 @@
       <a
         routerLink="/quizzes/{{quiz.id}}/questions"
         class="btn btn-default">
-        Cancel
+        {{ 'cancel' | translate }}
       </a>
     </div>
   </div>

@@ -2,14 +2,14 @@
 
   <p class="float-right">
     <button (click)="deleteTranslation(translatedQuiz.title.lang_code)" class="btn btn-danger">
-      <ng-container *ngIf="!loading">Delete Translation</ng-container>
+      <ng-container *ngIf="!loading">{{ 'delete_translation' | translate }}</ng-container>
       <ng-container *ngIf="loading">
         <ws-spinner></ws-spinner>
       </ng-container>
     </button>
   </p>
 
-  <h3>{{translatedQuiz.title.lang_code}} translation</h3>
+  <h3>{{translatedQuiz.title.lang_code}} {{ 'translation' | translate }}</h3>
 
   <hr/>
 

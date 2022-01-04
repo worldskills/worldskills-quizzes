@@ -1,16 +1,16 @@
 <form [ngClass]="{'was-validated': this.form.submitted}" novalidate
       (ngSubmit)="submit()" #form="ngForm">
   <div class="form-group">
-    <label for="title">Title<span class="required">*</span></label>
+    <label for="title">{{ 'title' | translate }}<span class="required">*</span></label>
     <input type="text" class="form-control" id="title" name="title" required
            [ngModel]="quiz && quiz.title ? quiz.title.text : ''">
     <small class="form-text text-danger" style="display: block"
           *ngIf="form.submitted && this.form.controls.title.errors && this.form.controls.title.errors.required">
-    Please enter a title!</small>
+    {{ 'please_enter_title' | translate }}</small>
   </div>
   <div class="form-row">
   <div class="form-group col-md-8">
-    <label for="description">Description</label>
+    <label for="description">{{ 'description' | translate }}</label>
     <ckeditor
       [editor]="editor"
       (ready)="onReady($event, http)"
@@ -22,7 +22,7 @@
   </div>
   </div>
   <div class="form-group">
-    <label for="ws_entity">Entity<span
+    <label for="ws_entity">{{ 'entity' | translate }}<span
       class="required">*</span></label>
     <ws-entity-tree-select
       id="ws_entity"
@@ -34,13 +34,13 @@
     <small class="form-text text-muted">
       <span class="text-danger"
             *ngIf="form.submitted && this.form.controls.ws_entity.errors && this.form.controls.ws_entity.errors.required">
-        Please select an entity!
+        {{ 'please_select_entity' | translate }}
       </span>
-      Permission object of the quiz, select the organization you are working for or the skill it belongs to.
+      {{ 'message_quiz_entity_explanation' | translate }}
     </small>
   </div>
   <div class="form-group">
-    <label for="event">Event</label>
+    <label for="event">{{ 'event' | translate }}</label>
     <ng-select
       [wsSelect]="['id', 'name']"
       [items]="events ? events.events : []"
@@ -52,9 +52,9 @@
   </div>
   <div class="form-group">
     <label for="skill">
-      Skill
+      {{ 'skill' | translate }}
       <span *ngIf="skillsLoading">
-        (loading…)
+        ({{ 'loading_indicator' | translate }})
       </span>
     </label>
     <ng-select
@@ -68,17 +68,17 @@
   </div>
   <div class="form-row">
   <div class="form-group col-md-4">
-    <label for="max_questions">Max Questions</label>
+    <label for="max_questions">{{ 'max_questions' | translate }}</label>
     <input type="text" class="form-control" id="max_questions" name="max_questions"
            [ngModel]="quiz ? quiz.max_questions : ''">
   </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-4">
-    <label for="required_score_pass">Required score to pass</label>
+    <label for="required_score_pass">{{ 'required_score_to_pass' | translate }}</label>
     <input type="text" class="form-control" id="required_score_pass" name="required_score_pass"
            [ngModel]="quiz ? quiz.required_score_pass : ''">
-    <small class="form-text text-muted">Leave empty to require all answers to be correct.</small>
+    <small class="form-text text-muted">{{ 'message_required_score_pass_explanation' | translate }}</small>
   </div>
   </div>
   <div class="form-group">
@@ -86,47 +86,47 @@
       <label>
         <input type="checkbox" id="random_questions" name="random_questions"
                [ngModel]="quiz ? quiz.random_questions : ''">
-        Show random Questions
+        {{ 'show_random_questions' | translate }}
       </label>
     </div>
     <div class="checkbox">
       <label>
         <input type="checkbox" id="reveal_correct_answers" name="reveal_correct_answers"
                [ngModel]="quiz ? quiz.reveal_correct_answers : ''">
-        Reveal correct answers after finishing quiz
+        {{ 'reveal_correct_answers' | translate }}
       </label>
     </div>
     <div class="checkbox">
       <label>
         <input type="checkbox" id="allow_multiple_attempts" name="allow_multiple_attempts"
                [ngModel]="quiz ? quiz.allow_multiple_attempts : ''">
-        Allow multiple attempts
+        {{ 'allow_multiple_attempts' | translate }}
       </label>
     </div>
     <div class="checkbox">
       <label>
         <input type="checkbox" id="active" name="active"
                [ngModel]="quiz ? quiz.active : ''">
-        Active (Quiz can be answered)
+        {{ 'quiz_active_label' | translate }}
       </label>
     </div>
   </div>
   <div class="form-group">
-    <label for="url_learning">URL Learning</label>
+    <label for="url_learning">{{ 'url_learning' | translate }}</label>
     <input type="text" class="form-control" id="url_learning" name="url_learning"
            [ngModel]="quiz ? quiz.url_learning : ''">
-    <small class="form-text text-muted">Address with information about the questions.</small>
+    <small class="form-text text-muted">{{ 'help_url_learning' | translate }}</small>
   </div>
   <div class="form-group">
-    <label for="url_success">URL Success</label>
+    <label for="url_success">{{ 'url_success' | translate }}</label>
     <input type="text" class="form-control" id="url_success" name="url_success"
            [ngModel]="quiz ? quiz.url_success : ''">
-    <small class="form-text text-muted">Link for the user to continue after a passed quiz.</small>
+    <small class="form-text text-muted">{{ 'help_url_success' | translate }}</small>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-success" id="saveQuiz" [disabled]="quizzesLoading">Save
+    <button type="submit" class="btn btn-success" id="saveQuiz" [disabled]="quizzesLoading">{{ 'save' | translate }}
     </button>&nbsp;
-    <a class="btn btn-secondary" routerLink="/quizzes">Cancel</a><br/>
+    <a class="btn btn-secondary" routerLink="/quizzes">{{ 'cancel' | translate }}</a><br/>
     <ws-spinner *ngIf="quizzesLoading"></ws-spinner>
   </div>
 </form>

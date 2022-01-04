@@ -3,28 +3,28 @@
     <p class="float-right">
       <button (click)="deleteQuestion()" class="btn btn-danger"
               *ngIf="!quiz.has_attempts">
-        <ng-container *ngIf="!loading">Delete Question</ng-container>
+        <ng-container *ngIf="!loading">{{ 'delete_question' | translate }}</ng-container>
         <ng-container *ngIf="loading">
           <ws-spinner></ws-spinner>
         </ng-container>
       </button>
       <button (click)="deactivateQuestion()" class="btn btn-danger"
               *ngIf="quiz.has_attempts && question.active">
-        <ng-container *ngIf="!loading">Deactivate Question</ng-container>
+        <ng-container *ngIf="!loading">{{ 'deactivate_question' | translate }}</ng-container>
         <ng-container *ngIf="loading">
           <ws-spinner></ws-spinner>
         </ng-container>
       </button>
       <button (click)="activateQuestion()" class="btn btn-success"
               *ngIf="quiz.has_attempts && !question.active">
-        <ng-container *ngIf="!loading">Activate Question</ng-container>
+        <ng-container *ngIf="!loading">{{ 'activate_question' | translate }}</ng-container>
         <ng-container *ngIf="loading">
           <ws-spinner></ws-spinner>
         </ng-container>
       </button>
     </p>
 
-    <h3>Question {{question.sort}} <span *ngIf="!question.active" class="badge badge-secondary">Inactive</span></h3>
+    <h3>{{'question_index' | translate:{index: question.sort} }} <span *ngIf="!question.active" class="badge badge-secondary">{{ 'inactive' | translate }}</span></h3>
   </div>
 
   <hr/>

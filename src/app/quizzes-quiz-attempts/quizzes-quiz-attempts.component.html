@@ -12,17 +12,17 @@
         </colgroup>
         <thead>
         <tr>
-          <th>Person ID</th>
-          <th>User</th>
-          <th>Member</th>
-          <th>Total Attempts</th>
-          <th>Failed Attempts <fa-icon [icon]="faAngleDown"></fa-icon></th>
-          <th>Passed Attempts</th>
+          <th>{{ 'th_person_id' | translate }}</th>
+          <th>{{ 'th_user' | translate }}</th>
+          <th>{{ 'th_member' | translate }}</th>
+          <th>{{ 'th_total_attempts' | translate }}</th>
+          <th>{{ 'th_failed_attempts' | translate }} <fa-icon [icon]="faAngleDown"></fa-icon></th>
+          <th>{{ 'th_passed_attempts' | translate }}</th>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><input type="text" class="form-control form-control-sm" [(ngModel)]="filterMember" placeholder="Filter by Member"></td>
+          <td><input type="text" class="form-control form-control-sm" [(ngModel)]="filterMember" placeholder="{{ 'filter_by_member' | translate }}"></td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
@@ -44,7 +44,7 @@
             <td>{{report.passed_count}}</td>
           </tr>
           <tr *ngIf="reports.length === 0">
-            <td colspan="6">No attempts found.</td>
+            <td colspan="6">{{ 'no_attempts_found' | translate }}</td>
           </tr>
         </ng-template>
         <ng-template #loader>

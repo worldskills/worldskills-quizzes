@@ -1,6 +1,5 @@
 <p>
-  <a routerLink="/quizzes/{{quiz ? quiz.id : ''}}/questions/create" class="btn btn-success">Add
-    Question</a>
+  <a routerLink="/quizzes/{{quiz ? quiz.id : ''}}/questions/create" class="btn btn-success">{{ 'add_question' | translate }}</a>
 </p>
 
 <div class="table-responsive">
@@ -12,8 +11,8 @@
     </colgroup>
     <thead>
     <tr>
-      <th>Nr.</th>
-      <th>Question</th>
+      <th>{{ 'th_nr' | translate }}</th>
+      <th>{{ 'th_question' | translate }}</th>
       <th></th>
     </tr>
     </thead>
@@ -44,7 +43,7 @@
         </td>
       </tr>
       <tr *ngIf="questions.questions.length === 0">
-        <td colspan="3">No Questions found.</td>
+        <td colspan="3">{{ 'no_questions_found' | translate }}</td>
       </tr>
     </ng-template>
     <ng-template #loader>
