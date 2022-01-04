@@ -5,9 +5,9 @@
     <ng-container *ngIf="quiz && questions">
       <div class="card" style="margin-bottom: 20px;" *ngFor="let question of questions.questions">
         <div class="card-header">
-          <strong class="float-left">Question {{question.sort}}  <span *ngIf="!question.active" class="badge badge-secondary">Inactive</span></strong>
+          <strong class="float-left">{{'question_index' | translate:{index: question.sort} }} <span *ngIf="!question.active" class="badge badge-secondary">{{ 'inactive' | translate }}</span></strong>
           <a class="float-right"
-             routerLink="/quizzes/{{quiz.id}}/questions/{{question.id}}">Edit</a>
+             routerLink="/quizzes/{{quiz.id}}/questions/{{question.id}}">{{ 'edit' | translate }}</a>
           <div class="clearfix"></div>
         </div>
         <div class="card-body">
@@ -22,7 +22,7 @@
               </div>
             </ng-container>
             <div class="form-group" *ngIf="question.type === 'free_response'">
-              <label [attr.for]="'free_response_' + question.id">Your answer:</label>
+              <label [attr.for]="'free_response_' + question.id">{{ 'your_answer' | translate }}:</label>
               <textarea
                 class="form-control"
                 id="free_response_{{question.id}}"
@@ -32,9 +32,7 @@
           </div>
         </div>
       </div>
-      <div class="alert alert-warning" *ngIf="questions && questions.questions.length === 0">No
-        Questions found.
-      </div>
+      <div class="alert alert-warning" *ngIf="questions && questions.questions.length === 0">{{ 'no_questions_found' | translate }}</div>
     </ng-container>
   </div>
 </div>

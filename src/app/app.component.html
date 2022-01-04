@@ -1,24 +1,24 @@
 <ng-template #appNameTemplate>
   <span class="navbar-brand" *ngIf="!showBreadcrumb">
       <ws-wordmark></ws-wordmark>
-      <span class="ml-1 text-white">Quizzes</span>
+      <span class="ml-1 text-white">{{ 'quizzes' | translate }}</span>
   </span>
   <a class="navbar-brand" routerLink="/quizzes" *ngIf="showBreadcrumb">
       <ws-wordmark></ws-wordmark>
-      <span class="ml-1 text-white">Quizzes</span>
+      <span class="ml-1 text-white">{{ 'quizzes' | translate }}</span>
   </a>
 </ng-template>
 
 <ws-staging-banner [message]="environmentWarning" *ngIf="environmentWarning"></ws-staging-banner>
 <ws-puppeteer-banner [currentUser]="currentUser"></ws-puppeteer-banner>
-<ws-auth-header [appName]="'Quizzes'" [menuItems]="[]" [appNameTemplate]="appNameTemplate">
+<ws-auth-header [appName]="'quizzes' | translate" [menuItems]="[]" [appNameTemplate]="appNameTemplate">
 </ws-auth-header>
 
 <div class="container">
   <ws-breadcrumbs
     *ngIf="showBreadcrumb"
     [showHomeItem]="true"
-    [homeItemText]="'Quizzes'"
+    [homeItemText]="'quizzes' | translate"
     [homeItemRoute]="'/quizzes'">
   </ws-breadcrumbs>
   <div *ngIf="!showBreadcrumb" class="mt-5"></div>

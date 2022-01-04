@@ -1,14 +1,14 @@
 <ng-container *ngIf="quiz">
   <div class="alert alert-warning" role="alert" *ngIf="quiz.has_attempts">
-    <b>This Quiz already has attempts!</b>
+    <b>{{ 'quiz_already_has_attempts' | translate }}</b>
     <br>
-    New questions will not appear for already started attempts. Deactivating a question will not remove it from already started attempts.
+    {{ 'message_quiz_with_attempts_warning' | translate }}
   </div>
 
   <div class="btn-toolbar float-right">
-    <button (click)="shareQuiz()" class="btn btn-primary mr-2">Share Quiz</button>
+    <button (click)="shareQuiz()" class="btn btn-primary mr-2">{{ 'share_quiz' | translate }}</button>
     <button (click)="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">
-      <ng-container *ngIf="!deleteLoading">Delete Quiz</ng-container>
+      <ng-container *ngIf="!deleteLoading">{{ 'delete_quiz' | translate }}</ng-container>
       <ng-container *ngIf="deleteLoading">
         <ws-spinner></ws-spinner>
       </ng-container>
@@ -19,19 +19,19 @@
 
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/quizzes/{{quiz.id}}">Quiz</a>
+      <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/quizzes/{{quiz.id}}">{{ 'quiz' | translate }}</a>
     </li>
     <li class="nav-item" *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300">
-      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/questions">Questions</a>
+      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/questions">{{ 'questions' | translate }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/preview">Preview</a>
+      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/preview">{{ 'preview' | translate }}</a>
     </li>
     <li class="nav-item" *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300">
-      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/translations">Translations</a>
+      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/translations">{{ 'translations' | translate }}</a>
     </li>
     <li class="nav-item" *wsUserRole="['Admin', 'ViewAllAttempts']">
-      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/attempts">Attempts</a>
+      <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/attempts">{{ 'attempts' | translate }}</a>
     </li>
   </ul>
 
