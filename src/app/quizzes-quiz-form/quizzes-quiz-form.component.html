@@ -1,7 +1,7 @@
 <form [ngClass]="{'was-validated': this.form.submitted}" novalidate
       (ngSubmit)="submit()" #form="ngForm">
   <div class="form-group">
-    <label for="title">{{ 'title' | translate }}<span class="required">*</span></label>
+    <label for="title">{{ 'quiz_title' | translate }}<span class="required">*</span></label>
     <input type="text" class="form-control" id="title" name="title" required
            [ngModel]="quiz && quiz.title ? quiz.title.text : ''">
     <small class="form-text text-danger" style="display: block"
