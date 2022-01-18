@@ -1,1 +1,14 @@
-{}
+{
+  "activate_question": "Aktivoi kysymys",
+  "add_answer": "Lisää vastaus",
+  "add_question": "Lisää kysymys",
+  "add_quiz": "Lisää tietovisa",
+  "add_translation": "Lisää käännös",
+  "allow_multiple_attempts": "Salli monta yritystä",
+  "answer": "Vastaus",
+  "answer_index": "Vastaus {{index}}",
+  "answer_is_correct": "Vastaus on oikein",
+  "answer_is_not_correct": "Vastaus on väärin",
+  "attempt_submitted": "Yrityksesi on lähetetty.",
+  "attempts": "Yritykset"
+}
