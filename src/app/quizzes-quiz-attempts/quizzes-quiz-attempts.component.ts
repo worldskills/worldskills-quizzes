@@ -35,7 +35,7 @@ export class QuizzesQuizAttemptsComponent implements OnInit {
           this.loading = false;
           this.reports = reports;
           this.reports.sort(function (a, b) {
-            return (b.attempts_count - b.passed_count) - (a.attempts_count - a.passed_count);
+            return b.attempts_count - a.attempts_count;
           });
         });
     }
