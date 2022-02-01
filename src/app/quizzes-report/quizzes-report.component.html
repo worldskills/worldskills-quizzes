@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>{{ 'quiz_member_report' | translate }}</h2>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <colgroup>
+          <col width="10%"/>
+          <col width="25%"/>
+          <col *ngFor="let quiz of quizzes" />
+        </colgroup>
+        <thead>
+        <tr>
+          <th>{{ 'th_person_id' | translate }}</th>
+          <th>{{ 'th_user' | translate }}</th>
+          <th *ngFor="let quiz of quizzes; index as i" title="{{ quiz.title.text }}">{{ i + 1 }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-template [ngIf]="reports && !loading" [ngIfElse]="loader">
+          <tr *ngFor="let report of reports">
+            <td>{{report.user.person_id || '-'}}</td>
+            <td>{{report.user.firstName}} {{report.user.lastName}}</td>
+            <td *ngFor="let quiz of quizzes">
+              <fa-icon *ngIf="report.quizzes[quiz.id] > 0" [icon]="faCheck" title="{{ report.quizzes[quiz.id] }}" class="text-success"></fa-icon>
+              <fa-icon *ngIf="!(report.quizzes[quiz.id] > 0)" [icon]="faTimes" class="text-danger"></fa-icon>
+            </td>
+          </tr>
+          <tr *ngIf="reports.length === 0">
+            <td colspan="2">{{ 'no_attempts_found' | translate }}</td>
+          </tr>
+        </ng-template>
+        <ng-template #loader>
+          <tr>
+            <td colspan="2">
+              <ws-spinner></ws-spinner>
+            </td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </table>
+    </div>
+  
+  
+    <h3>Quiz Legend</h3>
+    <div class="table-responsive">
+      <table class="table">
+        <colgroup>
+          <col width="10%"/>
+          <col width="90%"/>
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let quiz of quizzes; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ quiz.title.text }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

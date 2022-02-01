@@ -6,8 +6,8 @@
   </div>
 
   <div class="btn-toolbar float-right">
-    <button (click)="shareQuiz()" class="btn btn-primary mr-2">{{ 'share_quiz' | translate }}</button>
-    <button (click)="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">
+    <button *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300" (click)="shareQuiz()" class="btn btn-primary mr-2">{{ 'share_quiz' | translate }}</button>
+    <button *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300" (click)="deleteQuiz()" class="btn btn-danger" id="deleteQuiz">
       <ng-container *ngIf="!deleteLoading">{{ 'delete_quiz' | translate }}</ng-container>
       <ng-container *ngIf="deleteLoading">
         <ws-spinner></ws-spinner>
@@ -24,13 +24,13 @@
     <li class="nav-item" *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/questions">{{ 'questions' | translate }}</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/preview">{{ 'preview' | translate }}</a>
     </li>
     <li class="nav-item" *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/translations">{{ 'translations' | translate }}</a>
     </li>
-    <li class="nav-item" *wsUserRole="['Admin', 'ViewAllAttempts']">
+    <li class="nav-item" *wsUserRole="['Admin', 'ViewAllAttempts']; appId: 1300">
       <a class="nav-link" routerLinkActive="active" routerLink="/quizzes/{{quiz.id}}/attempts">{{ 'attempts' | translate }}</a>
     </li>
   </ul>

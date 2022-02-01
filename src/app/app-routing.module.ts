@@ -15,6 +15,7 @@ import {QuizzesQuizUpdateComponent} from './quizzes-quiz-update/quizzes-quiz-upd
 import {QuizzesQuizCreateComponent} from './quizzes-quiz-create/quizzes-quiz-create.component';
 import {QuizzesQuestionCreateComponent} from './quizzes-question-create/quizzes-question-create.component';
 import {QuizzesTranslationCreateComponent} from './quizzes-translation-create/quizzes-translation-create.component';
+import {QuizzesReportComponent} from './quizzes-report/quizzes-report.component';
 import {HomeComponent} from './home/home.component';
 import {GuardService} from '@worldskills/worldskills-angular-lib';
 import {ErrorComponent} from './error/error.component';
@@ -53,6 +54,13 @@ const routes: Routes = [
         component: QuizzesQuizCreateComponent,
         canActivate: [GuardService],
         data: {breadcrumb: 'Add quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
+      },
+      {
+        path: 'quizzes/report/:eventId',
+        pathMatch: 'full',
+        component: QuizzesReportComponent,
+        canActivate: [GuardService],
+        data: {breadcrumb: 'Report', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts', 'ViewMemberAttempts'])}
       },
       {
         path: 'quizzes/:quizId',

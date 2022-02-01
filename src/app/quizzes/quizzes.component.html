@@ -1,5 +1,5 @@
 <p class="float-right">
-  <button routerLink="/quizzes/create" class="btn btn-primary">{{'add_quiz' | translate}}</button>
+  <button *wsUserRole="['Admin', 'EditQuizzes']; appId: 1300" routerLink="/quizzes/create" class="btn btn-primary">{{'add_quiz' | translate}}</button>
 </p>
 
 <h2>{{'quizzes' | translate}}</h2>

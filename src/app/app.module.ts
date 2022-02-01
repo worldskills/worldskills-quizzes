@@ -35,6 +35,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { QuizzesReportComponent } from './quizzes-report/quizzes-report.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json?v=20220120132207');
@@ -64,7 +65,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     QuizzesQuizCreateComponent,
     WsSpinnerComponent,
     HomeComponent,
-    ErrorComponent
+    ErrorComponent,
+    QuizzesReportComponent
   ],
   imports: [
     BrowserModule,
