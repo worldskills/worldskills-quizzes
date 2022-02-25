@@ -25,5 +25,20 @@
   "filter_by_member": "Suodata jäsenen mukaan",
   "fr": "Ranska",
   "free_response_question": "Avoin kysymys",
-  "help_answers_randomized": "Kaikki vastausvaihtoehdot sekoitetaan joka yrityksellä."
+  "help_answers_randomized": "Kaikki vastausvaihtoehdot sekoitetaan joka yrityksellä.",
+  "help_url_learning": "Verkko-osoite, jossa tietoa näihin kysymyksiin.",
+  "help_url_success": "Verkko-osoite, jolla käyttäjä voi jatkaa suoritetun tietovisan jälkeen.",
+  "inactive": "Ei toiminnassa",
+  "incorrect": "Virheellinen",
+  "language": "Kieli",
+  "loading_indicator": "Ladataan...",
+  "mark_as_correct": "Merkitse virheettömäksi",
+  "mark_as_incorrect": "Merkitse virheelliseksi",
+  "max_questions": "Kysymysten enimmäismäärä",
+  "message_attempt_failed_with_score": "Yrityksesi epäonnistui, ja sait <strong>{{score}} vastausta oikein {{count}}</strong> kysymyksestä.",
+  "message_attempt_failed_with_score_formal": "Yritys epäonnistui, ja sait <strong>{{score}} vastausta oikein {{count}}</strong> kysymyksestä.",
+  "message_attempt_not_submitted": "Yritystä ei ole lähetetty vielä.",
+  "message_attempt_passed_with_score": "Olet läpäissyt, ja sait <strong>{{score}} oikeaa vastausta {{count}}</strong> kysymyksestä. Voit sulkea tämän ikkunan nyt.",
+  "message_attempt_passed_with_score_formal": "Läpäisty tuloksella <strong>{{score}} oikeaa vastausta {{count}}</strong> kysymyksestä.",
+  "message_attempt_saved": "Vastauksesi tallennetaan automaattisesti. Lopettaaksesi yrityksesi, paina \"Lähetä ja lopeta tietovisa\" -painiketta sivun lopussa."
 }
