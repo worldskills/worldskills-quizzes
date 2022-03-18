@@ -32,6 +32,7 @@ export class LocaleContextService {
       {code: 'en', name: 'English'},
       {code: 'de', name: 'German'},
       {code: 'fr', name: 'French'},
+      {code: 'fi', name: 'Finnish'},
       {code: 'pt_BR', name: 'Brazilian'},
       {code: 'ar_AE', name: 'Arabic'},
       {code: 'ru_RU', name: 'Russian'},
