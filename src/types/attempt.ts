@@ -1,4 +1,4 @@
-import {User} from './user';
+import {Person} from './person';
 import {AnsweredQuestionWithAnswers} from './question';
 import {Quiz} from './quiz';
 import {Link, List} from './common';
@@ -18,7 +18,7 @@ export interface Attempt extends AttemptRequest {
   score: number;
   passed: boolean;
   questions: Array<AnsweredQuestionWithAnswers>;
-  user: User;
+  person: Person;
   links: Array<Link>;
 }
 

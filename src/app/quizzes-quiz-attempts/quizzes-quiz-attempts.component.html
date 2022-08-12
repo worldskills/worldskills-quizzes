@@ -13,7 +13,7 @@
         <thead>
         <tr>
           <th>{{ 'th_person_id' | translate }}</th>
-          <th>{{ 'th_user' | translate }}</th>
+          <th>{{ 'th_person' | translate }}</th>
           <th>{{ 'th_member' | translate }}</th>
           <th>{{ 'th_total_attempts' | translate }} <fa-icon [icon]="faAngleDown"></fa-icon></th>
           <th>{{ 'th_failed_attempts' | translate }}</th>
@@ -36,8 +36,8 @@
         <tbody>
         <ng-template [ngIf]="reports && !loading" [ngIfElse]="loader">
           <tr *ngFor="let report of reports | attemptsFilter:filterMember">
-            <td>{{report.user.person_id || '-'}}</td>
-            <td><a routerLink="/quizzes/{{report.quiz.id}}/attempts/users/{{report.user.id}}">{{report.user.firstName}} {{report.user.lastName}}</a></td>
+            <td>{{report.person.id || '-'}}</td>
+            <td><a routerLink="/quizzes/{{report.quiz.id}}/attempts/people/{{report.person.id}}">{{report.person.firstName}} {{report.person.lastName}}</a></td>
             <td>{{report.member?.name.text || '-'}}</td>
             <td>{{report.attempts_count}}</td>
             <td>{{report.failed_count}}</td>

@@ -12,15 +12,15 @@
         <thead>
         <tr>
           <th>{{ 'th_person_id' | translate }}</th>
-          <th>{{ 'th_user' | translate }}</th>
+          <th>{{ 'th_person' | translate }}</th>
           <th *ngFor="let quiz of quizzes; index as i" title="{{ quiz.title.text }}">{{ i + 1 }}</th>
         </tr>
         </thead>
         <tbody>
         <ng-template [ngIf]="reports && !loading" [ngIfElse]="loader">
           <tr *ngFor="let report of reports">
-            <td>{{report.user.person_id || '-'}}</td>
-            <td>{{report.user.firstName}} {{report.user.lastName}}</td>
+            <td>{{report.person.id || '-'}}</td>
+            <td>{{report.person.firstName}} {{report.person.lastName}}</td>
             <td *ngFor="let quiz of quizzes">
               <fa-icon *ngIf="report.quizzes[quiz.id] > 0" [icon]="faCheck" title="{{ report.quizzes[quiz.id] }}" class="text-success"></fa-icon>
               <fa-icon *ngIf="!(report.quizzes[quiz.id] > 0)" [icon]="faTimes" class="text-danger"></fa-icon>

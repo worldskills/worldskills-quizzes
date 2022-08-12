@@ -114,7 +114,7 @@ const routes: Routes = [
             data: {breadcrumb: 'Attempts', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
           },
           {
-            path: 'attempts/users/:userId',
+            path: 'attempts/people/:personId',
             component: QuizzesQuizAttemptsUserComponent,
             data: {breadcrumb: 'Attempt', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
           },
