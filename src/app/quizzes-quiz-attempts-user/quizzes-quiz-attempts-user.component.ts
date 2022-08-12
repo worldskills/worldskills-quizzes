@@ -16,7 +16,7 @@ export class QuizzesQuizAttemptsUserComponent extends WsComponent implements OnI
 
   faAngleDown = faAngleDown;
   quizId: number;
-  userId: number;
+  personId: number;
   quiz: Quiz = null;
   attempts: AttemptsList = null;
   loading = true;
@@ -34,7 +34,7 @@ export class QuizzesQuizAttemptsUserComponent extends WsComponent implements OnI
 
   ngOnInit(): void {
     if (this.route.snapshot) {
-      this.userId = +this.route.snapshot.paramMap.get('userId');
+      this.personId = +this.route.snapshot.paramMap.get('personId');
       if (this.route.snapshot.parent) {
         this.quizId = +this.route.snapshot.parent.paramMap.get('quizId');
       }
@@ -54,7 +54,7 @@ export class QuizzesQuizAttemptsUserComponent extends WsComponent implements OnI
       sort: 'started_desc',
       offset: (this.page - 1) * this.pageSize,
       limit: this.pageSize,
-      user: this.userId,
+      person: this.personId,
     };
     this.attemptsService.fetch(this.quizId, params).subscribe(attempts => {
       this.loading = false;

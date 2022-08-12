@@ -1,6 +1,6 @@
-import {User} from './user';
+import {Person} from './person';
 
 export interface AttemptMemberReport {
-  user: User;
+  person: Person;
   attempts;
 }

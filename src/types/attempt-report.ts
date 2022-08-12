@@ -1,7 +1,7 @@
-import {User} from './user';
+import {Person} from './person';
 
 export interface AttemptReport {
-  user: User;
+  person: Person;
   member;
   attempts_count: number;
   passed_count: number;
