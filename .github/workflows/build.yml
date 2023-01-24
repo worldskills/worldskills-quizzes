@@ -59,15 +59,3 @@ jobs:
     - name: Invalidate production
       if: github.ref == 'refs/heads/prod'
       run: aws cloudfront create-invalidation --distribution-id E1XRMZNWQPBED7 --paths /index.html /assets/i18n/*
-
-    - uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        fields: repo,commit,action,eventName,ref,workflow
-        author_name: ''
-        username: Github Actions
-        icon_emoji: ':octocat:'
-        channel: '#code'
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      if: always()
