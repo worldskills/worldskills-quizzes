@@ -35,7 +35,7 @@
     "@worldskills/worldskills-angular-lib": "^10.18.0",
     "angular-oauth2-oidc": "^9.1.0",
     "core-js": "^2.6.12",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "json2typescript": "^1.2.5",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",
