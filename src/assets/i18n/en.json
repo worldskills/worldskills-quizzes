@@ -9,7 +9,7 @@
   "answer_index": "Answer {{index}}",
   "answer_is_correct": "Answer is correct",
   "answer_is_not_correct": "Answer is not correct",
-  "attempt_submitted": "Your attempt has been submitted.",
+  "attempt_submitted": "Quiz has been successfully submitted.",
   "attempts": "Attempts",
   "cancel": "Cancel",
   "correct": "Correct",
