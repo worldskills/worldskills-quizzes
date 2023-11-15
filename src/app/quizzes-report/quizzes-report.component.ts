@@ -5,7 +5,6 @@ import {Quiz} from '../../types/quiz';
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 import {AppService} from "../../services/app/app.service";
-import {EventsService} from '../../services/events/events.service';
 import {QuizService} from '../../services/quiz/quiz.service';
 import {AttemptMemberReportService} from '../../services/attempt-member-report/attempt-member-report.service';
 
@@ -19,26 +18,26 @@ export class QuizzesReportComponent implements OnInit {
   faCheck = faCheck;
   faTimes = faTimes;
   loading = false;
+  eventId: number;
   quizzes: Quiz[] = [];
   reports = [];
 
   constructor(
     private appService: AppService,
-    private eventsService: EventsService,
     private quizService: QuizService,
     private attemptMemberReportService: AttemptMemberReportService,
-    private router: Router,
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    const eventId = this.route.snapshot.params.eventId;
+    this.eventId = this.route.snapshot.params.eventId;
+
     const quizIds = this.route.snapshot.queryParams.quiz;
 
     this.appService.showBreadcrumbs.next(false);
 
     this.loading = true;
-    this.attemptMemberReportService.getAttemptMemberReport(eventId, quizIds)
+    this.attemptMemberReportService.getAttemptMemberReport(this.eventId, quizIds)
       .subscribe(reports => {
         this.loading = false;
         this.reports = reports;

@@ -36,6 +36,7 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { QuizzesReportComponent } from './quizzes-report/quizzes-report.component';
+import { QuizzesReportAttemptComponent } from './quizzes-report-attempt/quizzes-report-attempt.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json?v=20220120132207');
@@ -66,7 +67,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WsSpinnerComponent,
     HomeComponent,
     ErrorComponent,
-    QuizzesReportComponent
+    QuizzesReportComponent,
+    QuizzesReportAttemptComponent
   ],
   imports: [
     BrowserModule,
