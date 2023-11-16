@@ -11,22 +11,15 @@
       </div>
 
       <ng-container *ngFor="let question of attempt.questions">
-        <div
-          style="margin-bottom: 20px;"
-          [ngClass]="{card: true, 'border-default': question.correct === null, 'border-danger': question.correct === false, 'border-success': question.correct === true}">
-          <div
-            [ngClass]="{'card-header': true, 'bg-danger': question.correct === false, 'bg-success': question.correct === true, 'text-white': (question.correct === false || question.correct === true)}">
+        <div style="margin-bottom: 20px;" class="card border-default">
+          <div class="card-header">
             <strong class="float-left">{{'question_index' | translate:{index: question.sort} }}</strong>
             <div class="clearfix"></div>
           </div>
           <div class="card-body">
             <div class="card-title" [innerHTML]="question.text.text"></div>
             <div class="form-group">
-              <div class="form-check" *ngFor="let answer of question.answers" [ngClass]="{
-                'text-danger': question.answer && question.answer.id === answer.id && question.correct === false,
-                'text-success': (question.answer && question.answer.id === answer.id && question.correct === true)
-                  || (question.answer && answer.correct === true && question.correct === false)
-              }">
+              <div class="form-check" *ngFor="let answer of question.answers">
                 <input
                   class="form-check-input"
                   type="radio"
@@ -38,18 +31,6 @@
                 <label class="form-check-label" [attr.for]="'answers_' + answer.id">
                   {{alphabet[answer.sort - 1]}}:
                   <span [innerHTML]="answer.text.text"></span>
-                  &nbsp;
-                  <span
-                    class="badge badge-danger"
-                    *ngIf="question.answer && question.answer.id === answer.id && question.correct === false">
-                    {{ 'incorrect' | translate }}
-                  </span>
-                  <span
-                    class="badge badge-success"
-                    *ngIf="(question.answer && question.answer.id === answer.id && question.correct === true)
-                      || (question.answer && answer.correct === true && question.correct === false)">
-                    {{ 'correct' | translate }}
-                  </span>
                 </label>
               </div>
             </div>
