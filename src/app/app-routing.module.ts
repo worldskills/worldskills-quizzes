@@ -33,123 +33,122 @@ function forAppCode(appCode: number, roles: Array<string>) {
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: HomeComponent,
+  },
+  {
+    path: 'quiz/:quizId',
+    pathMatch: 'full',
+    component: QuizComponent,
+    canActivate: [GuardService],
+    data: {roles: forAppCode(APP_CODE, ['AttemptQuizzes'])}
+  },
+  {
+    path: 'quizzes',
+    pathMatch: 'full',
+    canActivate: [GuardService],
+    component: QuizzesComponent,
+    data: {breadcrumb: 'Quizzes', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes', 'ViewAllAttempts'])}
+  },
+  {
+    path: 'quizzes/create',
+    pathMatch: 'full',
+    component: QuizzesQuizCreateComponent,
+    canActivate: [GuardService],
+    data: {breadcrumb: 'Add quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
+  },
+  {
+    path: 'quizzes/report/:eventId',
+    pathMatch: 'full',
+    component: QuizzesReportComponent,
+    canActivate: [GuardService],
+    data: {breadcrumb: 'Report', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts', 'ViewMemberAttempts'])}
+  },
+  {
+    path: 'quizzes/report/:eventId/quiz/:quizId/attempts/:attemptId',
+    pathMatch: 'full',
+    component: QuizzesReportAttemptComponent,
+    canActivate: [GuardService],
+    data: {breadcrumb: 'Report', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts', 'ViewMemberAttempts'])}
+  },
+  {
+    path: 'quizzes/:quizId',
+    component: QuizzesQuizComponent,
+    canActivate: [GuardService],
+    data: {breadcrumb: 'Quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes', 'ViewAllAttempts'])},
     children: [
       {
-        path: 'quiz/:quizId',
-        pathMatch: 'full',
-        component: QuizComponent,
-        canActivate: [GuardService],
-        data: {roles: forAppCode(APP_CODE, ['AttemptQuizzes'])}
+        path: '',
+        component: QuizzesQuizUpdateComponent,
+        data: {breadcrumb: 'Quiz'}
       },
       {
-        path: 'quizzes',
-        pathMatch: 'full',
-        canActivate: [GuardService],
-        component: QuizzesComponent,
-        data: {breadcrumb: 'Quizzes', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes', 'ViewAllAttempts'])}
+        path: 'questions',
+        component: QuizzesQuizQuestionsComponent,
+        data: {breadcrumb: 'Questions', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
-        path: 'quizzes/create',
-        pathMatch: 'full',
-        component: QuizzesQuizCreateComponent,
-        canActivate: [GuardService],
-        data: {breadcrumb: 'Add quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
+        path: 'questions/create',
+        component: QuizzesQuestionCreateComponent,
+        data: {breadcrumb: 'Add question', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
-        path: 'quizzes/report/:eventId',
-        pathMatch: 'full',
-        component: QuizzesReportComponent,
-        canActivate: [GuardService],
-        data: {breadcrumb: 'Report', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts', 'ViewMemberAttempts'])}
+        path: 'questions/:questionId',
+        component: QuizzesQuestionUpdateComponent,
+        data: {breadcrumb: 'Edit question', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
-        path: 'quizzes/report/:eventId/quiz/:quizId/attempts/:attemptId',
-        pathMatch: 'full',
-        component: QuizzesReportAttemptComponent,
-        canActivate: [GuardService],
-        data: {breadcrumb: 'Report', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts', 'ViewMemberAttempts'])}
+        path: 'preview',
+        component: QuizzesQuizPreviewComponent,
+        data: {breadcrumb: 'Preview'}
       },
       {
-        path: 'quizzes/:quizId',
-        component: QuizzesQuizComponent,
-        canActivate: [GuardService],
-        data: {breadcrumb: 'Quiz', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes', 'ViewAllAttempts'])},
-        children: [
-          {
-            path: '',
-            component: QuizzesQuizUpdateComponent,
-            data: {breadcrumb: 'Quiz'}
-          },
-          {
-            path: 'questions',
-            component: QuizzesQuizQuestionsComponent,
-            data: {breadcrumb: 'Questions', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
-          },
-          {
-            path: 'questions/create',
-            component: QuizzesQuestionCreateComponent,
-            data: {breadcrumb: 'Add question', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
-          },
-          {
-            path: 'questions/:questionId',
-            component: QuizzesQuestionUpdateComponent,
-            data: {breadcrumb: 'Edit question', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
-          },
-          {
-            path: 'preview',
-            component: QuizzesQuizPreviewComponent,
-            data: {breadcrumb: 'Preview'}
-          },
-          {
-            path: 'translations',
-            component: QuizzesQuizTranslationsComponent,
-            data: {breadcrumb: 'Translations', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
-          },
-          {
-            path: 'translations/create',
-            component: QuizzesTranslationCreateComponent,
-            data: {breadcrumb: 'Add translation', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
-          },
-          {
-            path: 'translations/:locale',
-            component: QuizzesTranslationUpdateComponent,
-            data: {breadcrumb: 'Edit translation', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
-          },
-          {
-            path: 'attempts',
-            component: QuizzesQuizAttemptsComponent,
-            data: {breadcrumb: 'Attempts', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
-          },
-          {
-            path: 'attempts/people/:personId',
-            component: QuizzesQuizAttemptsUserComponent,
-            data: {breadcrumb: 'Attempt', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
-          },
-          {
-            path: 'attempts/:attemptId',
-            component: QuizzesAttemptComponent,
-            data: {breadcrumb: 'Attempt', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
-          },
-          {
-            path: '**',
-            component: ErrorComponent,
-            data: {breadcrumb: 'Not found'}
-          }
-        ]
+        path: 'translations',
+        component: QuizzesQuizTranslationsComponent,
+        data: {breadcrumb: 'Translations', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
       },
       {
-        path: 'not-authorized',
-        component: ErrorComponent,
-        data: {breadcrumb: 'Not found', error: 'Not authorized'}
+        path: 'translations/create',
+        component: QuizzesTranslationCreateComponent,
+        data: {breadcrumb: 'Add translation', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
+      },
+      {
+        path: 'translations/:locale',
+        component: QuizzesTranslationUpdateComponent,
+        data: {breadcrumb: 'Edit translation', roles: forAppCode(APP_CODE, ['Admin', 'EditQuizzes'])}
+      },
+      {
+        path: 'attempts',
+        component: QuizzesQuizAttemptsComponent,
+        data: {breadcrumb: 'Attempts', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
+      },
+      {
+        path: 'attempts/people/:personId',
+        component: QuizzesQuizAttemptsUserComponent,
+        data: {breadcrumb: 'Attempt', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
+      },
+      {
+        path: 'attempts/:attemptId',
+        component: QuizzesAttemptComponent,
+        data: {breadcrumb: 'Attempt', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts'])}
       },
       {
         path: '**',
         component: ErrorComponent,
         data: {breadcrumb: 'Not found'}
-      },
-    ],
+      }
+    ]
   },
+  {
+    path: 'not-authorized',
+    component: ErrorComponent,
+    data: {breadcrumb: 'Not found', error: 'Not authorized'}
+  },
+  {
+    path: '**',
+    component: ErrorComponent,
+    data: {breadcrumb: 'Not found'}
+  }
 ];
 
 @NgModule({
