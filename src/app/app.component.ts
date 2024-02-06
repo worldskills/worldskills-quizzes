@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
       userinfoEndpoint: `${environment.worldskillsAuthorizeUserinfoEndpoint}?show_child_roles=${environment.loadChildEntityRoles ? 'true' : 'false'}&${environment.filterAuthRoles.map(appCode => `app_code=${appCode}`).join('&')}`,
       clientId: environment.worldskillsClientId,
       requireHttps: environment.production,
+      clearHashAfterLogin: false,
       oidc: false
     });
 
