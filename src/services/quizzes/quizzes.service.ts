@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {QuizList} from '../../types/quiz';
+import {QuizList, QuizzesFetchParams} from '../../types/quiz';
 
 import {share} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
@@ -10,6 +10,7 @@ import {
   FULL,
   HttpUtil,
   MulticastOptions,
+  ObjectUtil,
   RequestOptions,
   WsService,
   WsServiceRequestP1,
@@ -28,15 +29,9 @@ export class QuizzesService extends WsService<QuizList> {
     super();
   }
 
-  fetch(rOpt?: RequestOptions): Observable<QuizList>;
-  fetch(params: FetchParams, rOpt?: RequestOptions): Observable<QuizList>;
-  fetch(mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuizList>;
-  fetch(params: FetchParams, mOpt: MulticastOptions, rOpt?: RequestOptions): Observable<QuizList>;
-  fetch(p1: WsServiceRequestP1, p2?: WsServiceRequestP2, p3?: WsServiceRequestP3): Observable<QuizList> {
-    const {fetchParams, multicastOptions, requestOptions} = this.resolveArgs(p1, p2, p3, FULL, DEFAULT_FETCH_PARAMS);
-    const params = HttpUtil.objectToParams(fetchParams || {});
-    const observable = this.http.get<QuizList>(requestOptions.url ?? `${environment.worldskillsApiEndpoint}/quizzes`, {params}).pipe(share());
-    return this.request(observable, multicastOptions);
+  fetch(params: QuizzesFetchParams): Observable<QuizList> {
+    let httpParams = HttpUtil.objectToParams(ObjectUtil.stripNullOrUndefined(params || {}));
+    return this.http.get<QuizList>(`${environment.worldskillsApiEndpoint}/quizzes`, {params: httpParams}).pipe(share());
   }
 
 }

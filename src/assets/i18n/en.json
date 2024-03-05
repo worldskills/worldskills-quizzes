@@ -1,4 +1,8 @@
 {
+  "clear": "Clear",
+  "search": "Search",
+  "title": "Title",
+  "th_title": "Title",
   "submitted_by": "Submitted by",
   "activate_question": "Activate Question",
   "add_answer": "Add answer",
@@ -23,6 +27,7 @@
   "edit": "Edit",
   "entity": "Entity",
   "event": "Event",
+  "filter": "Filter",
   "filter_by_member": "Filter by Member",
   "fr": "French",
   "free_response_question": "Free Response Question",

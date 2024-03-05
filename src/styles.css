@@ -3,3 +3,16 @@
   vertical-align: top;
   max-width: 100%;
 }
+
+@media (min-width: 768px) {
+
+  .table {
+    table-layout: fixed;
+  }
+
+  .table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

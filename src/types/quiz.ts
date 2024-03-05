@@ -2,7 +2,7 @@ import {Link, List} from './common';
 import {Event} from './event';
 import {Skill} from './skill';
 import {Entity} from './entity';
-import {I18nText} from '@worldskills/worldskills-angular-lib';
+import {FetchParams, I18nText} from '@worldskills/worldskills-angular-lib';
 
 export interface QuizRequest {
   title: I18nText;
@@ -32,3 +32,8 @@ export interface Quiz extends QuizRequest {
 export type QuizLinkType = 'questions' | 'attempts' | 'i18n';
 
 export type QuizList = List<Quiz, 'quizzes'>;
+
+export interface QuizzesFetchParams extends FetchParams {
+  title?: string;
+  ws_entity?: number;
+}

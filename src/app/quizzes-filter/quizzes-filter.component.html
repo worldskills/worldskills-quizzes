@@ -1,0 +1,47 @@
+<div class="card">
+    <h5 class="card-header m-0">
+        {{'filter' | translate}}
+        <span class="float-right">
+          <button class="btn btn-link btn-sm py-0" (click)="clearFilter()">{{'clear' | translate}}</button>
+        </span>
+    </h5>
+    <div class="card-body">
+      <form class="form-horizontal" novalidate (ngSubmit)="submit()" #form="ngForm">
+        <fieldset>
+          <div class="form-group row">
+            <div class="col-12">
+              <label class="small text-muted font-weight-bold my-0 py-0">{{'title' | translate}}</label>
+              <input
+                type="text"
+                class="form-control"
+                name="title"
+                [(ngModel)]="fetchParams.title"
+              >
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-12">
+              <label class="small text-muted font-weight-bold my-0 py-0">{{'entity' | translate}}</label>
+              <ws-entity-tree-select
+                id="ws_entity"
+                name="ws_entity"
+                [showControls]="false"
+                [showFullPath]="false"
+                [query]="{role: 'EditQuizzes', roleApp: 1300}"
+                [(ngModel)]="fetchParams.ws_entity">
+              </ws-entity-tree-select>
+            </div>
+          </div>
+  
+          <div class="form-group row mb-0">
+            <div class="col-12 text-right">
+              <button type="submit" class="btn btn-primary btn-sm">{{'search' | translate}}</button>&nbsp;
+            </div>
+          </div>
+  
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  

@@ -5,34 +5,29 @@
 <h2>{{'quizzes' | translate}}</h2>
 
 <div class="row mt-2">
-  <div class="col-md-12">
+  <div class="col-md-9">
     <div class="table-responsive-md">
       <table class="table table-striped border-top">
         <colgroup>
-          <col width="5%">
-          <col width="50%">
-          <col width="5%">
-          <col width="20%">
-          <col width="20%">
+          <col width="60%">
+          <col width="10%">
+          <col width="30%">
         </colgroup>
         <thead>
         <tr>
-          <th class="border-top-0">{{'th_id' | translate}}</th>
-          <th class="border-top-0">{{'th_name' | translate}}</th>
+          <th class="border-top-0">{{'th_title' | translate}}</th>
           <th class="border-top-0">{{'th_active' | translate}}</th>
           <th class="border-top-0">{{'th_event' | translate}}</th>
-          <th class="border-top-0">{{'th_created' | translate}}</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
-          <td colspan="5"></td>
+          <td colspan="3"></td>
         </tr>
         </tfoot>
         <tbody>
         <ng-template [ngIf]="quizzes && !loading" [ngIfElse]="loader">
           <tr *ngFor="let quiz of quizzes.quizzes">
-            <td><a routerLink="/quizzes/{{quiz.id}}">{{quiz.id}}</a></td>
             <td><a routerLink="/quizzes/{{quiz.id}}"
                    title="{{quiz.title.text}}">{{quiz.title.text}}</a></td>
             <td>
@@ -40,15 +35,14 @@
               <fa-icon *ngIf="!quiz.active" [icon]="faTimes" class="text-danger"></fa-icon>
             </td>
             <td>{{quiz.event ? quiz.event.name : ''}}</td>
-            <td>{{quiz.created|date:'d MMMM yyyy'}}</td>
           </tr>
           <tr *ngIf="quizzes.quizzes.length === 0">
-            <td colspan="5">{{'no_quizzes_found' | translate}}</td>
+            <td colspan="3">{{'no_quizzes_found' | translate}}</td>
           </tr>
         </ng-template>
         <ng-template #loader>
           <tr>
-            <td colspan="5">
+            <td colspan="3">
               <ws-spinner></ws-spinner>
             </td>
           </tr>
@@ -59,12 +53,15 @@
     <ng-container *ngIf="quizzes">
       <ngb-pagination
         [collectionSize]="quizzes.total_count"
-        [(page)]="listPage.page"
-        [pageSize]="listPage.pageSize"
+        [page]="(fetchParams.offset / fetchParams.limit) + 1"
+        [pageSize]="fetchParams.limit"
         [maxSize]="10"
         [boundaryLinks]="true"
-        (pageChange)="fetch($event)">
+        (pageChange)="changePage($event)">
       </ngb-pagination>
     </ng-container>
+  </div>
+  <div class="col-3">
+    <app-quizzes-filter [fetchParams]="fetchParams" (filter)="filter($event)" (clear)="clear()"></app-quizzes-filter>
   </div>
 </div>
