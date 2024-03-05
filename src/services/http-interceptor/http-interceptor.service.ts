@@ -53,8 +53,7 @@ export class HttpInterceptorService implements HttpInterceptor {
         if (req.url.includes('users/loggedIn')) {
           // when not logged in or stale token
           if (this.isNotLoggedIn(event) || this.hasStaleToken(event)) {
-            sessionStorage.clear();
-            this.ngAuthService.login();
+            window.location.reload();
             return;
           }
         }
