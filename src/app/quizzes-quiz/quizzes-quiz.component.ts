@@ -7,6 +7,7 @@ import {EventList} from '../../types/event';
 import {EntityList} from '../../types/entity';
 import {AlertService, AlertType, WsComponent} from '@worldskills/worldskills-angular-lib';
 import {QuizService} from '../../services/quiz/quiz.service';
+import { AppService } from 'src/services/app/app.service';
 
 @Component({
   selector: 'app-quizzes-quiz',
@@ -21,6 +22,7 @@ export class QuizzesQuizComponent extends WsComponent implements OnInit {
   deleteLoading = false;
 
   constructor(
+    private appService: AppService,
     private entitiesService: EntitiesService,
     private eventsService: EventsService,
     private quizService: QuizService,
@@ -32,6 +34,7 @@ export class QuizzesQuizComponent extends WsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.appService.showBreadcrumbs.next(true);
     this.route.params.subscribe(value => {
       const {quizId} = value;
       this.subscribe(this.quizService.subject.subscribe(quiz => (this.quiz = quiz)));

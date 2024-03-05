@@ -4,6 +4,7 @@ import {QuizList, QuizzesFetchParams} from '../../types/quiz';
 import {ListPage, listPageToFetchParam} from '../../types/common';
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {WsComponent} from '@worldskills/worldskills-angular-lib';
+import { AppService } from 'src/services/app/app.service';
 
 @Component({
   selector: 'app-quizzes',
@@ -18,11 +19,15 @@ export class QuizzesComponent extends WsComponent implements OnInit {
   loading = true;
   fetchParams: QuizzesFetchParams;
 
-  constructor(private quizzesService: QuizzesService) {
+  constructor(  
+    private appService: AppService,
+    private quizzesService: QuizzesService,
+  ) {
     super();
   }
 
   ngOnInit(): void {
+    this.appService.showBreadcrumbs.next(false);
     this.clear();
   }
 
