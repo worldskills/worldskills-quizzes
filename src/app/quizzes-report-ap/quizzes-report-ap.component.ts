@@ -69,12 +69,10 @@ export class QuizzesReportApComponent implements OnInit {
 
     this.appService.showBreadcrumbs.next(false);
 
-    this.eventId = this.route.snapshot.params.eventId;
-    this.eventService.getEvent(this.eventId).subscribe(event => {
-      this.event = event;
-    });
-
     this.loading = true;
+
+    this.eventId = this.route.snapshot.params.eventId;
+    const eventObservable = this.eventService.getEvent(this.eventId);
 
     const membersObservable = this.orgService.getMembers({
       limit: 100,
@@ -83,7 +81,9 @@ export class QuizzesReportApComponent implements OnInit {
       l: 'en',
     });
     const attemptMemberReportObservable = this.attemptMemberReportService.getAttemptMemberReport(this.eventId, this.QUIZ_ACCESS_PROGRAMME_IDS.map(String));
-    combineLatest([membersObservable, attemptMemberReportObservable, this.authService.currentUser]).subscribe(([members, reports, currentUser]) => {
+    combineLatest([eventObservable, membersObservable, attemptMemberReportObservable, this.authService.currentUser]).subscribe(([event, members, reports, currentUser]) => {
+
+      this.event = event;
 
       this.reports = reports;
       this.reports.sort(function (a, b) {
@@ -91,8 +91,8 @@ export class QuizzesReportApComponent implements OnInit {
       });
 
       if (currentUser && currentUser.roles) {
-        const isAdmin = UserRoleUtil.userHasRoles(currentUser, this.QUIZZES_APP_ID, 'Admin');
-        if (isAdmin) {
+        const canViewAllMembers = UserRoleUtil.userHasRolesOfEntity(currentUser, this.QUIZZES_APP_ID, event.ws_entity.id, 'Admin', 'ViewAllAttempts');
+        if (canViewAllMembers) {
           this.members = members.members;
         } else {
           const wsEntityIds = currentUser.roles.filter(role => role.name === 'ViewMemberAttempts' && role.role_application.application_code === this.QUIZZES_APP_ID).map(role => role.ws_entity.id);
