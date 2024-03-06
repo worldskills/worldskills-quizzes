@@ -5,12 +5,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class QuizzesQuizAttemptsFilterPipePipe implements PipeTransform {
 
-  transform(reports: any[], filterMember: string): unknown {
-    if (!reports || !filterMember) {
+  transform(reports: any[], filterPerson: string, filterMember: string): unknown {
+    if (!reports || (!filterPerson && !filterMember)) {
       return reports;
     }
 
-    return reports.filter(report => report.member?.name.text.toLowerCase().indexOf(filterMember.toLowerCase()) > -1);
+    filterPerson = filterPerson || '';
+    filterMember = filterMember || '';
+
+    return reports
+      .filter(report => (report.person.firstName + ' ' + report.person.lastName).toLowerCase().indexOf(filterPerson.toLowerCase()) > -1)
+      .filter(report => report.member?.name.text.toLowerCase().indexOf(filterMember.toLowerCase()) > -1);
   }
 
 }

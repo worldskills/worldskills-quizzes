@@ -16,6 +16,7 @@ export class QuizzesQuizAttemptsComponent implements OnInit {
 
   reports: AttemptReport[] = [];
   filterMember: string;
+  filterPerson: string;
   faAngleDown = faAngleDown;
   loading = false;
 
