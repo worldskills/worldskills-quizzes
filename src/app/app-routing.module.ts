@@ -16,6 +16,7 @@ import {QuizzesQuizCreateComponent} from './quizzes-quiz-create/quizzes-quiz-cre
 import {QuizzesQuestionCreateComponent} from './quizzes-question-create/quizzes-question-create.component';
 import {QuizzesTranslationCreateComponent} from './quizzes-translation-create/quizzes-translation-create.component';
 import {QuizzesReportComponent} from './quizzes-report/quizzes-report.component';
+import {QuizzesReportApComponent} from './quizzes-report-ap/quizzes-report-ap.component';
 import {QuizzesReportAttemptComponent} from './quizzes-report-attempt/quizzes-report-attempt.component';
 import {HomeComponent} from './home/home.component';
 import {GuardService} from '@worldskills/worldskills-angular-lib';
@@ -61,6 +62,13 @@ const routes: Routes = [
     path: 'quizzes/report/:eventId',
     pathMatch: 'full',
     component: QuizzesReportComponent,
+    canActivate: [GuardService],
+    data: {breadcrumb: 'Report', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts', 'ViewMemberAttempts'])}
+  },
+  {
+    path: 'quizzes/report/access-programme/:eventId',
+    pathMatch: 'full',
+    component: QuizzesReportApComponent,
     canActivate: [GuardService],
     data: {breadcrumb: 'Report', roles: forAppCode(APP_CODE, ['Admin', 'ViewAllAttempts', 'ViewMemberAttempts'])}
   },

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {EventList} from '../../types/event';
+import {EventList, Event} from '../../types/event';
 
 import {share} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
@@ -41,6 +41,10 @@ export class EventsService extends WsService<EventList> {
       requestOptions.url ?? `${environment.worldskillsApiEndpoint}/events`, {params}
     ).pipe(share());
     return this.request(observable, multicastOptions);
+  }
+
+  getEvent(eventId: number): Observable<Event> {
+    return this.http.get<Event>(`${environment.worldskillsApiEndpoint}/events/${eventId}`).pipe(share());
   }
 
 }

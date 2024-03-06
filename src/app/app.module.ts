@@ -38,6 +38,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { QuizzesReportComponent } from './quizzes-report/quizzes-report.component';
 import { QuizzesReportAttemptComponent } from './quizzes-report-attempt/quizzes-report-attempt.component';
 import { QuizzesFilterComponent } from './quizzes-filter/quizzes-filter.component';
+import { QuizzesReportApComponent } from './quizzes-report-ap/quizzes-report-ap.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json?v=20220120132207');
@@ -69,6 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     ErrorComponent,
     QuizzesReportComponent,
+    QuizzesReportApComponent,
     QuizzesReportAttemptComponent,
     QuizzesFilterComponent
   ],

@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="float-right">
+      <select name="member" class="form-control mt-4" [(ngModel)]="memberId" (ngModelChange)="changeMember()" [disabled]="members.length <= 1">
+        <option *ngFor="let member of members" [ngValue]="member.id">{{ member.name.text }}</option>
+      </select>
+    </div>
+    <h2 class="mb-0">{{ 'ap_report' | translate }}</h2>
+    <p class="text-muted">{{event.name}}</p>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <colgroup>
+          <col width="20%"/>
+          <col />
+          <col *ngFor="let quiz of quizzes" />
+        </colgroup>
+        <thead>
+        <tr>
+          <th>{{ 'th_expert' | translate }}</th>
+          <th>{{ 'th_ap' | translate }}</th>
+          <th *ngFor="let quiz of quizzes; index as i" title="{{ quiz.title.text }}">{{ i + 1 }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-template [ngIf]="people && !loading" [ngIfElse]="loader">
+          <tr *ngFor="let person of people">
+            <td>{{person.first_name}} {{person.last_name}}</td>
+            <td>
+              <fa-icon *ngIf="person.training?.passed" [icon]="faCheck" class="text-success"></fa-icon>
+              <fa-icon *ngIf="!person.training?.passed" [icon]="faTimes" class="text-danger"></fa-icon>
+            </td>
+            <td *ngFor="let quiz of quizzes">
+              <ng-template #reportQuiz>
+                <div><small>{{quiz.title.text}}</small></div>
+                <div *ngFor="let attempt of person.report.quizzes[quiz.id]">
+                  <small><a [routerLink]="['/quizzes/report', eventId, 'quiz', quiz.id, 'attempts', attempt.id]" target="_blank">{{attempt.finished|date:"dd.MM.yyyy 'at' HH:mm"}}</a></small>
+                </div>
+              </ng-template>
+              <fa-icon *ngIf="person.report?.quizzes[quiz.id]?.length > 0" [icon]="faCheck" class="text-success"  [ngbPopover]="reportQuiz" style="cursor: pointer"></fa-icon>
+              <fa-icon *ngIf="!person.training?.passed && !(person.report?.quizzes[quiz.id]?.length > 0)" [icon]="faTimes" class="text-danger"></fa-icon>
+            </td>
+          </tr>
+          <tr *ngIf="people.length === 0">
+            <td>{{ 'no_experts_found' | translate }}</td>
+          </tr>
+        </ng-template>
+        <ng-template #loader>
+          <tr>
+            <td>
+              <ws-spinner></ws-spinner>
+            </td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </table>
+    </div>
+  
+  
+    <h3>Quiz Legend</h3>
+    <div class="table-responsive">
+      <table class="table">
+        <colgroup>
+          <col width="10%"/>
+          <col width="90%"/>
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>{{ 'th_ap' | translate }}</td>
+            <td>{{ 'access_programme' | translate }}</td>
+          </tr>
+          <tr *ngFor="let quiz of quizzes; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ quiz.title.text }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
