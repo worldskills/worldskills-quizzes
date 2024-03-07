@@ -26,6 +26,8 @@ export class QuizzesReportApComponent implements OnInit {
 
   readonly MEMBER_ID_WSI = 1;
 
+  readonly WS_ENTITY_ID_WSI = 1;
+
   readonly QUIZZES_APP_ID = 1300;
 
   readonly TRAINING_ACCESS_PROGRAMME_ID = 1;
@@ -86,7 +88,7 @@ export class QuizzesReportApComponent implements OnInit {
       this.event = event;
 
       if (currentUser && currentUser.roles) {
-        const canViewAllMembers = UserRoleUtil.userHasRolesOfEntity(currentUser, this.QUIZZES_APP_ID, event.ws_entity.id, 'Admin', 'ViewAllAttempts');
+        const canViewAllMembers = UserRoleUtil.userHasRolesOfEntity(currentUser, this.QUIZZES_APP_ID, this.WS_ENTITY_ID_WSI, 'Admin', 'ViewAllAttempts');
         if (canViewAllMembers) {
           this.members = members.members;
         } else {
