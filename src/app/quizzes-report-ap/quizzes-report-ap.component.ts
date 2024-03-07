@@ -48,7 +48,7 @@ export class QuizzesReportApComponent implements OnInit {
   loading = false;
   eventId: number;
   event: Event;
-  memberId: number;
+  selectedMember?: Member;
   members: Member[] = [];
   quizzes: Quiz[] = [];
   people: PersonSearch[] = [];
@@ -80,15 +80,10 @@ export class QuizzesReportApComponent implements OnInit {
       sort: '1058',
       l: 'en',
     });
-    const attemptMemberReportObservable = this.attemptMemberReportService.getAttemptMemberReport(this.eventId, this.QUIZ_ACCESS_PROGRAMME_IDS.map(String));
-    combineLatest([eventObservable, membersObservable, attemptMemberReportObservable, this.authService.currentUser]).subscribe(([event, members, reports, currentUser]) => {
+
+    combineLatest([eventObservable, membersObservable, this.authService.currentUser]).subscribe(([event, members, currentUser]) => {
 
       this.event = event;
-
-      this.reports = reports;
-      this.reports.sort(function (a, b) {
-        return b.attempts_count - a.attempts_count;
-      });
 
       if (currentUser && currentUser.roles) {
         const canViewAllMembers = UserRoleUtil.userHasRolesOfEntity(currentUser, this.QUIZZES_APP_ID, event.ws_entity.id, 'Admin', 'ViewAllAttempts');
@@ -100,7 +95,7 @@ export class QuizzesReportApComponent implements OnInit {
         }
 
         if (this.members.length > 0) {
-          this.memberId = this.members[0].id;
+          this.selectedMember = this.members[0];
         }
 
         this.loadMemberReport();
@@ -124,18 +119,30 @@ export class QuizzesReportApComponent implements OnInit {
     this.loadMemberReport();
   }
 
+  compareMember(a: Member, b: Member) {
+    return a && b ? a.id === b.id : a === b;
+  }
+
   loadMemberReport() {
     this.loading = true;
-    this.peopleService.getPeoplePublic({
+    const peopleObservable = this.peopleService.getPeoplePublic({
       base_position: this.BASE_POSITION_ID_EXPERT,
-      member_id: this.memberId,
+      member_id: this.selectedMember.id,
       show_inactive: 0,
       include_history: 0,
       limit: 1000,
       event: this.eventId,
-    }).subscribe(people => {
+    })
+    const reportObservable = this.attemptMemberReportService.getAttemptMemberReport(this.eventId, this.QUIZ_ACCESS_PROGRAMME_IDS.map(String), [this.selectedMember.ws_entity.id + '']);
+    combineLatest([peopleObservable, reportObservable]).subscribe(([people, reports]) => {
+
       this.loading = false;
       this.people = people.people;
+
+      this.reports = reports;
+      this.reports.sort(function (a, b) {
+        return b.attempts_count - a.attempts_count;
+      });
 
       // find reports for each person
       for (let person of this.people) {

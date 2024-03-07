@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
 
@@ -15,8 +15,8 @@ export class AttemptMemberReportService {
     private http: HttpClient,
   ) { }
 
-  getAttemptMemberReport(eventId: number, quizIds: string[]): Observable<AttemptMemberReport[]> {
-    var params = new HttpParams({fromObject: {quiz: quizIds}});
+  getAttemptMemberReport(eventId: number, quizIds: string[], memberEntityId: string[]): Observable<AttemptMemberReport[]> {
+    var params = {quiz: quizIds, member_entity: memberEntityId};
     return this.http.get<AttemptMemberReport[]>(`${environment.worldskillsApiEndpoint}/quizzes/attempt_member_report/${eventId}`, {params});
   }
 }
