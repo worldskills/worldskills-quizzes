@@ -1,4 +1,6 @@
 {
+  "filter_by_position": "Filter by Position",
+  "th_position": "Position",
   "th_expert": "Expert",
   "no_experts_found": "No Expert found",
   "ap_report": "Access Programme Report",
