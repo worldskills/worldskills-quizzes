@@ -1,4 +1,6 @@
 {
+  "ap_complete_tooltip": "Access Programme has been completed.",
+  "ap_pending_tooltip": "Access Programme has not yet been completed. This is a manual process and might take some days to update.",
   "filter_by_position": "Filter by Position",
   "th_position": "Position",
   "th_expert": "Expert",
