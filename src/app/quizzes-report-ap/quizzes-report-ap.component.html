@@ -27,8 +27,22 @@
           <tr *ngFor="let person of people" [ngClass]="{'table-danger': !person.training?.passed}">
             <td>{{person.first_name}} {{person.last_name}}</td>
             <td>
-              <fa-icon *ngIf="person.training?.passed" [icon]="faCheck" class="text-success" title="{{ 'ap_complete_tooltip' | translate }}"></fa-icon>
-              <fa-icon *ngIf="!person.training?.passed" [icon]="faTimes" class="text-danger" title="{{ 'ap_pending_tooltip' | translate }}"></fa-icon>
+              <ng-template #reportAP>
+                <div *ngIf="person.training?.passed">
+                  <small>
+                    {{ 'ap_complete_tooltip' | translate }}
+                    <br>
+                    {{person.training.completion_date | date: "dd.MM.yyyy 'at' HH:mm"}}
+                  </small>
+                </div>
+                <div *ngIf="!person.training?.passed">
+                  <small>
+                    {{ 'ap_pending_tooltip' | translate }}
+                  </small>
+                </div>
+              </ng-template>
+              <fa-icon *ngIf="person.training?.passed" [icon]="faCheck" class="text-success" [ngbPopover]="reportAP" style="cursor: pointer"></fa-icon>
+              <fa-icon *ngIf="!person.training?.passed" [icon]="faTimes" class="text-danger" [ngbPopover]="reportAP" title="{{ 'ap_pending_tooltip' | translate }}"></fa-icon>
             </td>
             <td *ngFor="let quiz of quizzes">
               <ng-template #reportQuiz>
@@ -37,7 +51,7 @@
                   <small><a [routerLink]="['/quizzes/report', eventId, 'quiz', quiz.id, 'attempts', attempt.id]" target="_blank">{{attempt.finished|date:"dd.MM.yyyy 'at' HH:mm"}}</a></small>
                 </div>
               </ng-template>
-              <fa-icon *ngIf="person.report?.quizzes[quiz.id]?.length > 0" [icon]="faCheck" class="text-success"  [ngbPopover]="reportQuiz" style="cursor: pointer"></fa-icon>
+              <fa-icon *ngIf="person.report?.quizzes[quiz.id]?.length > 0" [icon]="faCheck" class="text-primary" [ngbPopover]="reportQuiz" style="cursor: pointer"></fa-icon>
             </td>
           </tr>
           <tr *ngIf="people.length === 0">
@@ -64,6 +78,14 @@
           <col width="90%"/>
         </colgroup>
         <tbody>
+          <tr>
+            <td><fa-icon [icon]="faCheck" class="text-success"></fa-icon></td>
+            <td>{{ 'ap_complete_tooltip' | translate }}</td>
+          </tr>
+          <tr>
+            <td><fa-icon [icon]="faCheck" class="text-primary"></fa-icon></td>
+            <td>{{ 'attempt_submitted' | translate }}</td>
+          </tr>
           <tr>
             <td>{{ 'th_ap' | translate }}</td>
             <td>{{ 'access_programme' | translate }}</td>
