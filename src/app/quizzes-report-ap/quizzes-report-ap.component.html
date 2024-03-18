@@ -45,7 +45,7 @@
                 </div>
               </ng-template>
               <fa-icon *ngIf="person.training?.passed" [icon]="faCheck" class="text-success" [ngbPopover]="reportAP" style="cursor: pointer"></fa-icon>
-              <fa-icon *ngIf="!person.training?.passed" [icon]="faTimes" class="text-danger" [ngbPopover]="reportAP" title="{{ 'ap_pending_tooltip' | translate }}"></fa-icon>
+              <fa-icon *ngIf="!person.training?.passed" [icon]="faTimes" class="text-danger" [ngbPopover]="reportAP" style="cursor: pointer"></fa-icon>
             </td>
             <td *ngFor="let quiz of quizzes">
               <ng-template #reportQuiz>
