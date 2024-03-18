@@ -1,7 +1,8 @@
-import { WsEntityModel } from "@worldskills/worldskills-angular-lib";
+import { I18nText, WsEntityModel } from "@worldskills/worldskills-angular-lib";
 
 export interface Member {
   id: number;
+  name: I18nText
   ws_entity: WsEntityModel
 }
 
