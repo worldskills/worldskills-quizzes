@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="float-right">
-      <select name="member" class="form-control mt-4" [(ngModel)]="selectedMember" [compareWith]="compareMember" (ngModelChange)="changeMember()" [disabled]="members.length <= 1">
+      <select name="member" class="form-control mt-4" [(ngModel)]="selectedMember" [compareWith]="compareMember" (ngModelChange)="changeMember()" *ngIf="members.length > 1">
         <option *ngFor="let member of members" [ngValue]="member">{{ member.name.text }}</option>
       </select>
     </div>
