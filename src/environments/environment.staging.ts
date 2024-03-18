@@ -7,6 +7,7 @@ export const environment = {
   worldskillsAuthorizeRedirect: 'https://quiz.worldskills.show/',
   worldskillsAuthorizeUserinfoEndpoint: 'https://auth.worldskills.show/auth/users/loggedIn',
   worldskillsAuthUriPatterns: ['api.worldskills.show'],
+  worldskillsPeopleLink: 'https://people.worldskills.show',
   sentryEnvironment: 'staging',
   loadChildEntityRoles: true,
   filterAuthRoles: [1300]

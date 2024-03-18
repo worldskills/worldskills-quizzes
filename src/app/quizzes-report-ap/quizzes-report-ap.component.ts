@@ -14,6 +14,7 @@ import { OrgService } from 'src/services/org/org.service';
 import { Member } from 'src/types/member';
 import { Event } from 'src/types/event';
 import { PersonSearch } from 'src/types/person';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-quizzes-report-ap',
@@ -48,6 +49,7 @@ export class QuizzesReportApComponent implements OnInit {
   faCheck = faCheck;
   faTimes = faTimes;
   faUser = faUser;
+  peopleLink: string;
   loading = false;
   eventId: number;
   event: Event;
@@ -71,6 +73,8 @@ export class QuizzesReportApComponent implements OnInit {
   ngOnInit(): void {
 
     this.appService.showBreadcrumbs.next(false);
+
+    this.peopleLink = environment.worldskillsPeopleLink;
 
     this.loading = true;
 
