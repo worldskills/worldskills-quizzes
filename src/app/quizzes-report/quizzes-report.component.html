@@ -20,7 +20,7 @@
         <ng-template [ngIf]="reports && !loading" [ngIfElse]="loader">
           <tr *ngFor="let report of reports">
             <td>{{report.person.id || '-'}}</td>
-            <td>{{report.person.firstName}} {{report.person.lastName}}</td>
+            <td>{{report.person.first_name}} {{report.person.last_name}}</td>
             <td *ngFor="let quiz of quizzes">
               <ng-template #reportQuiz>
                 <div><small>{{quiz.title.text}}</small></div>

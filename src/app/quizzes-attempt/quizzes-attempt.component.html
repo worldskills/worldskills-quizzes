@@ -2,7 +2,7 @@
   <div class="row">
     <div class="offset-sm-2 col-sm-8">
 
-      <p class="text-muted">{{ 'started_by' | translate }} <a routerLink="/quizzes/{{attempt.quiz.id}}/attempts/people/{{attempt.person.id}}">{{attempt.person.firstName}} {{attempt.person.lastName}}</a>
+      <p class="text-muted">{{ 'started_by' | translate }} <a routerLink="/quizzes/{{attempt.quiz.id}}/attempts/people/{{attempt.person.id}}">{{attempt.person.first_name}} {{attempt.person.last_name}}</a>
         {{ 'on' | translate }} {{attempt.started|date:"d MMMM yyyy 'at' HH:mm"}}
       <p>
 

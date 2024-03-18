@@ -36,7 +36,7 @@
         <tbody>
         <ng-template [ngIf]="reports && !loading" [ngIfElse]="loader">
           <tr *ngFor="let report of reports | attemptsFilter:filterPerson:filterPosition:filterMember">
-            <td><a routerLink="/quizzes/{{report.quiz.id}}/attempts/people/{{report.person.id}}">{{report.person.firstName}} {{report.person.lastName}}</a></td>
+            <td><a routerLink="/quizzes/{{report.quiz.id}}/attempts/people/{{report.person.id}}">{{report.person.first_name}} {{report.person.last_name}}</a></td>
             <td>{{report.position?.position.name.text || '-'}}</td>
             <td>{{report.position?.member?.name.text || '-'}}</td>
             <td>{{report.attempts_count}}</td>

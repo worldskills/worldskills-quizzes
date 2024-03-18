@@ -4,7 +4,7 @@
 
       <h2>{{ attempt.quiz.title.text }}</h2>
 
-      <p class="text-muted">{{ 'submitted_by' | translate }} {{attempt.person.firstName}} {{attempt.person.lastName}} {{ 'on' | translate }} {{attempt.finished|date:"d MMMM yyyy 'at' HH:mm"}}<p>
+      <p class="text-muted">{{ 'submitted_by' | translate }} {{attempt.person.first_name}} {{attempt.person.last_name}} {{ 'on' | translate }} {{attempt.finished|date:"d MMMM yyyy 'at' HH:mm"}}<p>
 
       <div *ngIf="attempt.state === 'running'" class="alert alert-warning" role="alert">
         {{ 'message_attempt_not_submitted' | translate }}

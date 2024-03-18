@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, combineLatest} from 'rxjs';
 import {Quiz} from '../../types/quiz';
-import {faCheck, faTimes, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faTimes, faUser, faSortDown, faSortUp} from '@fortawesome/free-solid-svg-icons';
 
 import {AppService} from "../../services/app/app.service";
 import {QuizService} from '../../services/quiz/quiz.service';
@@ -49,11 +49,15 @@ export class QuizzesReportApComponent implements OnInit {
   faCheck = faCheck;
   faTimes = faTimes;
   faUser = faUser;
+  faSortUp = faSortUp;
+  faSortDown = faSortDown;
   peopleLink: string;
   loading = false;
   eventId: number;
   event: Event;
   selectedMember?: Member;
+  sort = 'name';
+  reverse = false;
   members: Member[] = [];
   quizzes: Quiz[] = [];
   people: PersonSearch[] = [];
@@ -163,5 +167,25 @@ export class QuizzesReportApComponent implements OnInit {
         person.report = this.reports.filter(report => report.person.id === person.id).shift();
       }
     });
+  }
+
+  sortBy(sort: string) {
+    this.reverse = (this.sort === sort) ? !this.reverse : false;
+    this.sort = sort;
+    this.people.sort(function (a, b) {
+      if (sort === 'ap') {
+        if (a.training?.passed === b.training?.passed) {
+          return 0;
+        } else if (a.training?.passed) {
+          return 1;
+        }
+        return -1;
+      } else {
+        return a.last_name.localeCompare(b.last_name);
+      }
+    });
+    if (this.reverse) {
+      this.people.reverse();
+    }
   }
 }

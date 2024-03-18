@@ -2,8 +2,8 @@ import { AttemptMemberReport } from "./attempt-member-report";
 
 export interface PersonSearch {
   id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   person?: Person;
   report?: AttemptMemberReport;
   training: any;
@@ -11,8 +11,8 @@ export interface PersonSearch {
 
 export interface Person {
   id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   trainings: any[];
 }
 

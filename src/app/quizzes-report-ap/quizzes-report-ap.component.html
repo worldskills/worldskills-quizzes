@@ -17,8 +17,21 @@
         </colgroup>
         <thead>
         <tr>
-          <th>{{ 'th_expert' | translate }}</th>
-          <th>{{ 'th_ap' | translate }}</th>
+          <th>
+            <a [routerLink]="" (click)="sortBy('name')">
+              {{ 'th_expert' | translate }}
+              <fa-icon [icon]="faSortUp" *ngIf="sort === 'name' && !reverse"></fa-icon>
+              <fa-icon [icon]="faSortDown" *ngIf="sort === 'name' && reverse"></fa-icon>
+            </a>
+            
+          </th>
+          <th>
+            <a [routerLink]="" (click)="sortBy('ap')">
+              {{ 'th_ap' | translate }}
+              <fa-icon [icon]="faSortUp" *ngIf="sort === 'ap' && !reverse"></fa-icon>
+              <fa-icon [icon]="faSortDown" *ngIf="sort === 'ap' && reverse"></fa-icon>
+            </a>
+          </th>
           <th *ngFor="let quiz of quizzes; index as i" title="{{ quiz.title.text }}">{{ i + 1 }}</th>
         </tr>
         </thead>
