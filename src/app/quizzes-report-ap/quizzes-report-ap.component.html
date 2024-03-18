@@ -25,7 +25,10 @@
         <tbody>
         <ng-template [ngIf]="people && !loading" [ngIfElse]="loader">
           <tr *ngFor="let person of people" [ngClass]="{'table-danger': !person.training?.passed}">
-            <td>{{person.first_name}} {{person.last_name}}</td>
+            <td>
+              <a href="https://people.worldskills.org/people/{{person.id}}" target="_blank"><fa-icon [icon]="faUser"></fa-icon></a>
+              {{person.first_name}} {{person.last_name}}
+            </td>
             <td>
               <ng-template #reportAP>
                 <div *ngIf="person.training?.passed">

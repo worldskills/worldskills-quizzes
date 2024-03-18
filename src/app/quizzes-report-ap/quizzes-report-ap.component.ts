@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, combineLatest} from 'rxjs';
 import {Quiz} from '../../types/quiz';
-import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faTimes, faUser} from '@fortawesome/free-solid-svg-icons';
 
 import {AppService} from "../../services/app/app.service";
 import {QuizService} from '../../services/quiz/quiz.service';
@@ -47,6 +47,7 @@ export class QuizzesReportApComponent implements OnInit {
 
   faCheck = faCheck;
   faTimes = faTimes;
+  faUser = faUser;
   loading = false;
   eventId: number;
   event: Event;
