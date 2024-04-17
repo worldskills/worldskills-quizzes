@@ -16,8 +16,8 @@ export class QuizzesQuizAttemptsFilterPipePipe implements PipeTransform {
 
     return reports
       .filter(report => (report.person.first_name + ' ' + report.person.last_name).toLowerCase().indexOf(filterPerson.toLowerCase()) > -1)
-      .filter(report => report.position?.position.name.text.toLowerCase().indexOf(filterPosition.toLowerCase()) > -1)
-      .filter(report => report.position?.member?.name.text.toLowerCase().indexOf(filterMember.toLowerCase()) > -1);
+      .filter(report => !filterPosition || report.position?.position.name.text.toLowerCase().indexOf(filterPosition.toLowerCase()) > -1)
+      .filter(report => !filterMember || report.position?.member?.name.text.toLowerCase().indexOf(filterMember.toLowerCase()) > -1);
   }
 
 }
