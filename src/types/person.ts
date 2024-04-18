@@ -6,7 +6,8 @@ export interface PersonSearch {
   last_name: string;
   person?: Person;
   report?: AttemptMemberReport;
-  training: any;
+  task: any;
+  loaded: boolean;
 }
 
 export interface Person {

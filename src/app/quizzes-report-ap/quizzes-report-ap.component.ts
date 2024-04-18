@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, combineLatest} from 'rxjs';
 import {Quiz} from '../../types/quiz';
-import {faCheck, faTimes, faUser, faSortDown, faSortUp} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faTimes, faUser, faSortDown, faSortUp, faHourglassHalf} from '@fortawesome/free-solid-svg-icons';
 
 import {AppService} from "../../services/app/app.service";
 import {QuizService} from '../../services/quiz/quiz.service';
 import {AttemptMemberReportService} from '../../services/attempt-member-report/attempt-member-report.service';
 import { EventsService } from 'src/services/events/events.service';
 import { PeopleService } from 'src/services/people/people.service';
+import { CentresService } from 'src/services/centres/centres.service';
 import { AuthService, NgAuthService, UserRoleUtil } from '@worldskills/worldskills-angular-lib';
 import { OrgService } from 'src/services/org/org.service';
 import { Member } from 'src/types/member';
@@ -31,7 +32,9 @@ export class QuizzesReportApComponent implements OnInit {
 
   readonly QUIZZES_APP_ID = 1300;
 
-  readonly TRAINING_ACCESS_PROGRAMME_ID = 1;
+  readonly CENTRES_NAME = 'Expert Centre';
+
+  readonly CENTRES_TASK_NAME = 'Access Programme';
 
   readonly QUIZ_ACCESS_PROGRAMME_IDS = [
     302,
@@ -51,6 +54,7 @@ export class QuizzesReportApComponent implements OnInit {
   faUser = faUser;
   faSortUp = faSortUp;
   faSortDown = faSortDown;
+  faHourglassHalf = faHourglassHalf;
   peopleLink: string;
   loading = false;
   eventId: number;
@@ -70,6 +74,7 @@ export class QuizzesReportApComponent implements OnInit {
     private authService: NgAuthService,
     private eventService: EventsService,
     private peopleService: PeopleService,
+    private centresService: CentresService,
     private orgService: OrgService,
     private route: ActivatedRoute,
   ) { }
@@ -155,17 +160,28 @@ export class QuizzesReportApComponent implements OnInit {
         return b.attempts_count - a.attempts_count;
       });
 
-      // find reports for each person
-      for (let person of this.people) {
+      // find centre
+      this.centresService.getCentres(this.eventId, {l: 'en'}).subscribe(centres => {
+        const centre = centres.centres.filter(centre => centre.name.text === this.CENTRES_NAME).shift();
 
-        // load full person
-        this.peopleService.getPersonPublic(person.id).subscribe(fullPerson => {
-          person.person = fullPerson;
-          person.training = fullPerson.trainings.filter(training => training.training.id === this.TRAINING_ACCESS_PROGRAMME_ID).shift();
-        });
+        if (centre) {
 
-        person.report = this.reports.filter(report => report.person.id === person.id).shift();
-      }
+          // find reports for each person
+          for (let person of this.people) {
+
+            // load centres task
+            this.centresService.getPersonTasks(centre.id, person.id, {l: 'en'}).subscribe(personTasks => {
+              person.task = personTasks.tasks.filter(task => task.name.text === this.CENTRES_TASK_NAME).shift();
+              if (person.task) {
+                person.task.passed = (person.task.status === 'COMPLETE');
+              }
+              person.loaded = true;
+            });
+    
+            person.report = this.reports.filter(report => report.person.id === person.id).shift();
+          }
+        }
+      });
     });
   }
 
@@ -174,9 +190,9 @@ export class QuizzesReportApComponent implements OnInit {
     this.sort = sort;
     this.people.sort(function (a, b) {
       if (sort === 'ap') {
-        if (a.training?.passed === b.training?.passed) {
+        if (a.task?.passed === b.task?.passed) {
           return 0;
-        } else if (a.training?.passed) {
+        } else if (a.task?.passed) {
           return 1;
         }
         return -1;

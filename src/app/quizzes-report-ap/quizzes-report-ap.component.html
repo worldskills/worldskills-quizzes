@@ -37,28 +37,29 @@
         </thead>
         <tbody>
         <ng-template [ngIf]="people && !loading" [ngIfElse]="loader">
-          <tr *ngFor="let person of people" [ngClass]="{'table-danger': !person.training?.passed}">
+          <tr *ngFor="let person of people" [ngClass]="{'table-danger': person.loaded && !person.task?.passed}">
             <td>
               <a href="{{peopleLink}}/people/{{person.id}}" target="_blank"><fa-icon [icon]="faUser"></fa-icon></a>
               {{person.last_name}}, {{person.first_name}}
             </td>
             <td>
               <ng-template #reportAP>
-                <div *ngIf="person.training?.passed">
+                <div *ngIf="person.task?.passed">
                   <small>
                     {{ 'ap_complete_tooltip' | translate }}
                     <br>
-                    {{person.training.completion_date | date: "dd.MM.yyyy 'at' HH:mm"}}
+                    {{person.task?.last_updated | date: "dd.MM.yyyy 'at' HH:mm"}}
                   </small>
                 </div>
-                <div *ngIf="!person.training?.passed">
+                <div *ngIf="!person.task?.passed">
                   <small>
                     {{ 'ap_pending_tooltip' | translate }}
                   </small>
                 </div>
               </ng-template>
-              <fa-icon *ngIf="person.training?.passed" [icon]="faCheck" class="text-success" [ngbPopover]="reportAP" style="cursor: pointer"></fa-icon>
-              <fa-icon *ngIf="!person.training?.passed" [icon]="faTimes" class="text-danger" [ngbPopover]="reportAP" style="cursor: pointer"></fa-icon>
+              <fa-icon *ngIf="person.loaded && person.task?.passed" [icon]="faCheck" class="text-success" [ngbPopover]="reportAP" style="cursor: pointer"></fa-icon>
+              <fa-icon *ngIf="person.loaded && !person.task?.passed" [icon]="faTimes" class="text-danger" [ngbPopover]="reportAP" style="cursor: pointer"></fa-icon>
+              <fa-icon *ngIf="!person.loaded" [icon]="faHourglassHalf" class="text-muted"></fa-icon>
             </td>
             <td *ngFor="let quiz of quizzes">
               <ng-template #reportQuiz>
