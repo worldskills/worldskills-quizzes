@@ -32,7 +32,7 @@ export class QuizzesReportApComponent implements OnInit {
 
   readonly QUIZZES_APP_ID = 1300;
 
-  readonly CENTRES_NAME = 'Expert Centre';
+  readonly CENTRES_ID = 55; // TODO load dynamically based on event ID
 
   readonly CENTRES_TASK_NAME = 'Access Programme';
 
@@ -160,28 +160,20 @@ export class QuizzesReportApComponent implements OnInit {
         return b.attempts_count - a.attempts_count;
       });
 
-      // find centre
-      this.centresService.getCentres(this.eventId, {l: 'en'}).subscribe(centres => {
-        const centre = centres.centres.filter(centre => centre.name.text === this.CENTRES_NAME).shift();
+      // find reports for each person
+      for (let person of this.people) {
 
-        if (centre) {
-
-          // find reports for each person
-          for (let person of this.people) {
-
-            // load centres task
-            this.centresService.getPersonTasks(centre.id, person.id, {l: 'en'}).subscribe(personTasks => {
-              person.task = personTasks.tasks.filter(task => task.name.text === this.CENTRES_TASK_NAME).shift();
-              if (person.task) {
-                person.task.passed = (person.task.status === 'COMPLETE');
-              }
-              person.loaded = true;
-            });
-    
-            person.report = this.reports.filter(report => report.person.id === person.id).shift();
+        // load centres task
+        this.centresService.getPersonTasks(this.CENTRES_ID, person.id, {l: 'en'}).subscribe(personTasks => {
+          person.task = personTasks.tasks.filter(task => task.name.text === this.CENTRES_TASK_NAME).shift();
+          if (person.task) {
+            person.task.passed = (person.task.status === 'COMPLETE');
           }
-        }
-      });
+          person.loaded = true;
+        });
+
+        person.report = this.reports.filter(report => report.person.id === person.id).shift();
+      }
     });
   }
 
