@@ -9,6 +9,11 @@ if (environment.sentryEnvironment) {
   Sentry.init({
     dsn: 'https://c6e8727b810d47b8b6bd60f12cf3fa7a@o200076.ingest.sentry.io/5655956',
     environment: environment.sentryEnvironment,
+    integrations: [
+      Sentry.replayIntegration(),
+    ],
+    replaysSessionSampleRate: 1.0,
+    replaysOnErrorSampleRate: 1.0,
   });
 }
 
