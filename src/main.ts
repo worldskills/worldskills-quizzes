@@ -15,7 +15,7 @@ if (environment.sentryEnvironment) {
         blockAllMedia: false,
       }),
     ],
-    replaysSessionSampleRate: 1.0,
+    replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,
   });
 }
