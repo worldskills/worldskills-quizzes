@@ -39,6 +39,10 @@ export class AppComponent implements OnInit {
     this.languages = this.localeContextService.languages;
     this.authService.currentUser.subscribe(currentUser => {
           this.currentUser = currentUser
+          let username = currentUser?.first_name + ' ' + currentUser?.last_name;
+          if (currentUser.puppeteer) {
+            username += ` (Puppet of ${currentUser.puppeteer.first_name} ${currentUser.puppeteer.last_name})`;
+          }
           Sentry.setUser({
             id: currentUser?.person_id,
             username: currentUser?.first_name + ' ' + currentUser?.last_name,
