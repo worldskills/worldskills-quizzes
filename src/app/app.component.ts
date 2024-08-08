@@ -5,6 +5,7 @@ import {BreadcrumbsService, Language, NgAuthService, User, WorldskillsAngularLib
 import {LocaleContextService} from '../services/locale-context/locale-context.service';
 import {environment} from '../environments/environment';
 import {AppService} from '../services/app/app.service';
+import * as Sentry from "@sentry/angular";
 
 @Component({
   selector: 'app-root',
@@ -36,7 +37,13 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.appService.showBreadcrumbs.subscribe(showBreadcrumb => setTimeout(() => (this.showBreadcrumb = showBreadcrumb)));
     this.languages = this.localeContextService.languages;
-    this.authService.currentUser.subscribe(currentUser => (this.currentUser = currentUser)),
+    this.authService.currentUser.subscribe(currentUser => {
+          this.currentUser = currentUser
+          Sentry.setUser({
+            id: currentUser?.person_id,
+            username: currentUser?.first_name + ' ' + currentUser?.last_name,
+          });
+      }),
       combineLatest([this.localeContextService.subject, this.localeContextService.lock])
         .subscribe(([language, lock]) =>
           setTimeout(() => {
