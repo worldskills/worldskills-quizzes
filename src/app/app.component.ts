@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     this.authService.currentUser.subscribe(currentUser => {
           this.currentUser = currentUser
           let username = currentUser?.first_name + ' ' + currentUser?.last_name;
-          if (currentUser.puppeteer) {
+          if (currentUser?.puppeteer) {
             username += ` (Puppet of ${currentUser.puppeteer.first_name} ${currentUser.puppeteer.last_name})`;
           }
           Sentry.setUser({
