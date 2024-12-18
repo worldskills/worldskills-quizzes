@@ -24,30 +24,50 @@ import { environment } from 'src/environments/environment';
 })
 export class QuizzesReportApComponent implements OnInit {
 
+  readonly CONFIGS = {
+    579: {
+      MEMBER_ID: 1,
+      ENTITY_ID: 1,
+      QUIZZES_APP_ID: 1300,
+      CENTRES_ID: 55,
+      CENTRES_TASK_NAME: 'Access Programme',
+      QUIZ_ACCESS_PROGRAMME_IDS: [
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+      ],
+    },
+    612: {
+      MEMBER_ID: 2,
+      ENTITY_ID: 2,
+      CENTRES_ID: 66,
+      CENTRES_TASK_NAME: 'Access Programme',
+      QUIZ_ACCESS_PROGRAMME_IDS: [
+        419,
+        420,
+        421,
+        422,
+        423,
+        424,
+        425,
+        426,
+        427,
+      ]
+    }
+  }
+
   readonly BASE_POSITION_ID_EXPERT = 1;
-
-  readonly MEMBER_ID_WSI = 1;
-
-  readonly WS_ENTITY_ID_WSI = 1;
 
   readonly QUIZZES_APP_ID = 1300;
 
-  readonly CENTRES_ID = 55; // TODO load dynamically based on event ID
-
-  readonly CENTRES_TASK_NAME = 'Access Programme';
-
-  readonly QUIZ_ACCESS_PROGRAMME_IDS = [
-    302,
-    303,
-    304,
-    305,
-    306,
-    307,
-    308,
-    309,
-    310,
-    311,
-  ];
+  config;
 
   faCheck = faCheck;
   faTimes = faTimes;
@@ -90,9 +110,12 @@ export class QuizzesReportApComponent implements OnInit {
     this.eventId = this.route.snapshot.params.eventId;
     const eventObservable = this.eventService.getEvent(this.eventId);
 
+    this.config = this.CONFIGS[this.eventId];
+    console.log(this.config);
+
     const membersObservable = this.orgService.getMembers({
       limit: 100,
-      member_of: this.MEMBER_ID_WSI,
+      member_of: this.config.MEMBER_ID,
       sort: '1058',
       l: 'en',
     });
@@ -102,7 +125,7 @@ export class QuizzesReportApComponent implements OnInit {
       this.event = event;
 
       if (currentUser && currentUser.roles) {
-        const canViewAllMembers = UserRoleUtil.userHasRolesOfEntity(currentUser, this.QUIZZES_APP_ID, this.WS_ENTITY_ID_WSI, 'Admin', 'ViewAllAttempts');
+        const canViewAllMembers = UserRoleUtil.userHasRolesOfEntity(currentUser, this.QUIZZES_APP_ID, this.config.ENTITY_ID, 'Admin', 'ViewAllAttempts');
         if (canViewAllMembers) {
           this.members = members.members;
         } else {
@@ -119,7 +142,7 @@ export class QuizzesReportApComponent implements OnInit {
     });
 
     let quizObservables: Observable<Quiz>[] = [];
-    for (let quizId of this.QUIZ_ACCESS_PROGRAMME_IDS) {
+    for (let quizId of this.config.QUIZ_ACCESS_PROGRAMME_IDS) {
       quizObservables.push(this.quizService.fetch(quizId))
     }
     combineLatest(quizObservables).subscribe((quizzes) => {
@@ -149,7 +172,7 @@ export class QuizzesReportApComponent implements OnInit {
       limit: 1000,
       event: this.eventId,
     })
-    const reportObservable = this.attemptMemberReportService.getAttemptMemberReport(this.eventId, this.QUIZ_ACCESS_PROGRAMME_IDS.map(String), [this.selectedMember.ws_entity.id + '']);
+    const reportObservable = this.attemptMemberReportService.getAttemptMemberReport(this.eventId, this.config.QUIZ_ACCESS_PROGRAMME_IDS.map(String), [this.selectedMember.ws_entity.id + '']);
     combineLatest([peopleObservable, reportObservable]).subscribe(([people, reports]) => {
 
       this.loading = false;
@@ -164,8 +187,8 @@ export class QuizzesReportApComponent implements OnInit {
       for (let person of this.people) {
 
         // load centres task
-        this.centresService.getPersonTasks(this.CENTRES_ID, person.id, {l: 'en'}).subscribe(personTasks => {
-          person.task = personTasks.tasks.filter(task => task.name.text === this.CENTRES_TASK_NAME).shift();
+        this.centresService.getPersonTasks(this.config.CENTRES_ID, person.id, {l: 'en'}).subscribe(personTasks => {
+          person.task = personTasks.tasks.filter(task => task.name.text === this.config.CENTRES_TASK_NAME).shift();
           if (person.task) {
             person.task.passed = (person.task.status === 'COMPLETE');
           }
